@@ -358,7 +358,6 @@ function send_command (device_id,action,value){
   data = '';
   var path = '/device/setCommand';
   var post_data;
-  //update_position, shock_bpass, tilt_bpass, webasto, ign, arm, poke, add_sens_bpass, out, checkballance, checktemp
   switch (action) {
       case 'checkballance':
           path = '/device/balance';
