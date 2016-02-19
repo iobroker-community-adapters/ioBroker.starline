@@ -1,0 +1,28 @@
+{
+    "common": {
+        "name":                     "starline",
+        "version":                  "0.0.3",
+        "title":                    "Autoalarm StarLine adapter",
+        "desc":                     {
+ 			             "en": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
+ 			             "de": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
+ 			             "ru": "ioBroker драйвер для автосигнализации StarLine Телематика 2.0"
+	},
+        "platform":                 "Javascript/Node.js",
+        "mode":                     "daemon",
+        "icon":                     "starline.png",
+        "enabled":                  true,
+	"extIcon":                  "https://raw.githubusercontent.com/instalator/ioBroker.starline/master/admin/starline.png",
+	"keywords":                 ["starline", "vis"],
+        "readme":                   "https://github.com/instalator/ioBroker.starline/blob/master/README.md",
+	"loglevel":                 "info",
+        "type":                     "common adapters",
+        "restartAdapters":          ["vis"]
+    },
+    "native": {
+        "login": "",
+        "password": ""
+    },
+    "objects": [
+    ]
+}
