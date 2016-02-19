@@ -11,7 +11,7 @@
  var header;
  var data = '';
  var flag_subscribe = false;
- var control_action = ['hijack', 'update_position', 'shock_bpass', 'tilt_bpass', 'webasto', 'ign', 'arm', 'poke', 'add_sens_bpass', 'out', 'checkballance', 'checktemp'];
+ var control_action = ['valet', 'hijack', 'update_position', 'shock_bpass', 'tilt_bpass', 'webasto', 'ign', 'arm', 'poke', 'add_sens_bpass', 'out', 'checkballance', 'checktemp'];
  
  var adapter = utils.adapter('starline');
 // is called when adapter shuts down - callback has to be called under any circumstances!
