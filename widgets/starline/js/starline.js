@@ -39,12 +39,14 @@ vis.binds.starline = {
     },
 	createWidget: function (widgetID, view, data, style) {
         var $div = $('#' + widgetID);
+		
         // if nothing found => wait
         if (!$div.length) {
             return setTimeout(function () {
                 vis.binds.starline.createWidget(widgetID, view, data, style);
             }, 100);
         }
+		 //$this.find(".ctemp_value").append('vis.states[data.oid + '.val']');
 
         var text = '';
         /*text += 'OID: ' + data.oid + '</div><br>';
@@ -54,11 +56,11 @@ vis.binds.starline = {
         text += 'Browser instance: ' + vis.instance + '<br>';
         text += 'htmlText: <textarea readonly style="width:100%">' + (data.htmlText || '') + '</textarea><br>';*/
 
-        $('#' + widgetID).html(text);
+       // $('#' + widgetID).html(text);
 
         // subscribe on updates of value
-        if (vis.states[data.oid + '.val']) {
-            vis.states.bind(data.oid + '.val', function (e, newVal, oldVal) {
+        if (vis.states[data.oid + '.balance.val']) {
+            vis.states.bind(data.oid + '.balance.val', function (e, newVal, oldVal) {
                 $div.find('.starline-value').html(newVal);
             });
         }
