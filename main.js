@@ -82,7 +82,7 @@ var options = {
   };
 	var req = https.request(options, function (res) {
         //res.setEncoding('utf8');
-	    adapter.log.debug('goto_web - ответ от сервера statusCode: ' + res.statusCode);
+	    adapter.log.debug('goto_web - response from the server statusCode: ' + res.statusCode);
       res.on('data', function (chunk) {
       	data += chunk;
       });
@@ -127,7 +127,7 @@ var options = {
     };
 var req = https.request(options, function (res) {
   //res.setEncoding('utf8');
-        adapter.log.debug('auth_web - ответ от сервера statusCode: ' + res.statusCode);
+        adapter.log.debug('auth_web - response from the server statusCode: ' + res.statusCode);
         res.on('data', function (chunk) {
         	data += chunk;
         });
@@ -169,14 +169,14 @@ var options = {
 	    };	
 		var req = https.request(options, function (res) {
 			//res.setEncoding('utf8');
-			adapter.log.debug('get_data - ответ от сервера statusCode: ' + res.statusCode);
+			adapter.log.debug('get_data - response from the server statusCode: ' + res.statusCode);
 			
 			res.on('data', function (chunk) {
 				getdata += chunk;
 			});
 			res.on('end', function () {
 				if (res.statusCode == 200){
-					adapter.log.debug('Получены данные:' + getdata);
+					adapter.log.debug('Received data:' + getdata);
 					parse_data (getdata);
 				}
 			});
@@ -264,10 +264,10 @@ function parse_data (getdata){
   			setObjectfun (device[t]+'.position.y',result.answer.devices[t].position.y);
   			setObjectfun (device[t]+'.position.dir',result.answer.devices[t].position.dir);
   		}	
-		adapter.log.info('Данные успешно получены, перезапуск через 2 минуты.');
+		adapter.log.info('Data received restart in 1 minutes.');
   		setTimeout(function () {
                   	get_data ();
-              	}, 120000);
+              	}, 60000);
   	}
   	if (result.result == 0){
   	  error('Error get Parse Data:' + result.answer.error);
@@ -276,12 +276,12 @@ function parse_data (getdata){
 		reAuth ();
   	}
 	} catch (e) {
-		adapter.log.error('ОШИБКА ПАРСИНГА ДАННЫХ');
+		adapter.log.error('Parse error DATA');
 		reAuth ();
 	}
 }
 function reAuth (){
-	adapter.log.error('Повторная авторизация и получение данных через 10 минут.');
+	adapter.log.error('Re-authorization, and receiving data in 10 minutes.');
 	setTimeout(function () {
          	goto_web ();
     }, 600000);
@@ -296,12 +296,12 @@ function getSesId (head,notoken){
 				  	if (pos != -1) {
 				  	  sesId = sesId.substring(0, pos);
 				  	} else {
-				  	  error('не удалось получить token');
+				  	  error('failed to get token');
 				  	  return;
 				  	}
 				  adapter.log.debug('PHPSESSID=' + sesId);
 				}	else {
-				  error('не удалось получить PHPSESSID');
+				  error('failed to get PHPSESSID');
 				  return;
 				}
 		    if (notoken != 'notoken'){
@@ -311,12 +311,12 @@ function getSesId (head,notoken){
 					if (pos_t != -1) {
 					  token = token.substring(0, pos_t);
 					} else {
-					  error('не удалось получить token');
+					  error('failed to get token');
 					  return;
 					}
 				  adapter.log.debug('token=' + token);
 				}	else {
-				  error('не удалось получить token');
+				  error('failed to get token');
 				  return;
 				}
 			}
@@ -398,7 +398,7 @@ var options = {
 	    };	
 		var req = https.request(options, function (res) {
 			//res.setEncoding('utf8');
-			adapter.log.debug('send_command - ответ от сервера statusCode: ' + res.statusCode);
+			adapter.log.debug('send_command - response from the server statusCode: ' + res.statusCode);
 
 			res.on('data', function (chunk) {
 				data += chunk;
@@ -408,12 +408,12 @@ var options = {
 		try{
         result = JSON.parse(data);
         	if (result.state){
-        		adapter.log.info('Отправлена команда: #Устройства - ' + device_id+'/ Команда - '+action+'/ Значение - '+value);
+        		adapter.log.info('It sent command: Device number - ' + device_id+' * Command - '+action+' * Value - '+value);
 		      } else {
-		        adapter.log.info('Ошибка отправки команды - '+result.desc.action[0]);
+		        adapter.log.info('Error sending command - '+result.desc.action[0]);
 		      }
 		} catch (e) {
-  		adapter.log.error('Отправка команды ошибка парсинга ответа' + JSON.stringify(e));
+  		adapter.log.error('Send command. Parsing error response' + JSON.stringify(e));
 	  }
 				setTimeout(function () {
                 	get_data ();
@@ -429,20 +429,8 @@ var options = {
 	
 }
 function error (error){
-  switch (error) {
-  case 1:
-    adapter.log.error('ОШИБКА 1');
-    break;
-  case 2:
-    adapter.log.error('ОШИБКА 2');
-    break;
-  case 3:
-    adapter.log.error('ОШИБКА 3');
-    break;
-  default:
-    	adapter.log.error('ОШИБКА '+error);
+	adapter.log.error('ERROR '+error);
   	reAuth ();
-  }
 }
 /*******************************************************************/
 function main() {
