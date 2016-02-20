@@ -1,9 +1,9 @@
 /*
-    ioBroker.template Widget-Set
+    ioBroker.starline Widget-Set
 
-    version: "0.5.0"
+    version: "0.0.1"
 
-    Copyright 10.2015-2016 @@Author@@<@@email@@>
+    Copyright 10.2015-2016 instalator <vvvalt@mail.ru>
 
 */
 "use strict";
@@ -30,7 +30,7 @@ $.extend(true, systemDictionary, {
 
 // this code can be placed directly in template.html
 vis.binds.starline = {
-    version: "0.5.0",
+    version: "0.0.1",
     showVersion: function () {
         if (vis.binds.starline.version) {
             console.log('Version starline: ' + vis.binds.starline.version);
