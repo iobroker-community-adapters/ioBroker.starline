@@ -103,28 +103,17 @@
 <script id="tplStarlineShowInstance"
         type="text/ejs"
         class="vis-tpl"
-        data-vis-prev='<div id="prev_tplMysetShowInstance" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 280px; height: 159px;" > <div class="myset-class vis-widget-prev-body " style="padding:2px"> OID: hm-rpc.0.EEQ0006629.1.STATE<br> OID value: true<br> Color: <span style="color: rgb(128, 0, 0);">#800000</span><br> htmlText: <textarea readonly="" style="width:100%">asda</textarea></div>'
-        data-vis-attrs="oid/id;myColor/color;htmlText/text;"
-        data-vis-attrs0="group.extraTemplate;extraAttr"
+        data-vis-prev='<div id="prev_tplMysetShowInstance" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 260px; > <div class="myset-class vis-widget-prev-body " style="padding:2px"></div>'
+        data-vis-attrs="oid/id;"
         data-vis-set="starline"
-        data-vis-type="helper"
+        data-vis-type="val"
+		data-vis-beta="true"
         data-vis-name="Show car status">
-        data-vis-beta="true"
- /*   <div class="vis-widget <%== this.data.attr('class') %>" style="width:230px; height:210px;" id="<%= this.data.attr('wid') %>" >
-        <div class="starline-class vis-widget-body <%== this.data.attr('class') %>" style="padding:2px" >
-            OID: <%= this.data.attr('oid') %><br>
-            OID value: <%== vis.states[this.data.attr('oid') + '.val'] %><br>
-			Color: <span style="color: <%= this.data.attr('myColor') %>"><%= this.data.attr('myColor') %></span><br>
-			extraAttr: <%== this.data.attr('extraAttr') %><br>
-			Browser instance: <%= vis.instance %><br>
-			htmlText: <textarea readonly style="width: calc(100% - 10px)"><%== this.data.attr('htmlText') %></textarea><br>
-        </div>
-    </div>*/
-    <div class="vis-widget <%== this.data.attr('class') %>" style="width:260px;" id="<%= this.data.attr('wid') %>" >
-	<div class="menu-item offline active" style="width: 260px;">
-        <div class="menu-item-link cleafix">
-            <div class="menu-item-gpsgsm-container">
-				<div class="menu-item-gpsgsm-status">
+       
+    <div class="vis-widget <%== this.data.attr('class') %>" style="width:260px; height:237px" id="<%= this.data.attr('wid') %>" >
+        <div class="starline_header">
+            <div class="gpsgsm-cont">
+				<div class="gpsgsm-status">
 					<div class="clearfix">
 						<div style="float:left"><div class="gsm-status" title="" data-level="2"></div>
 							<div align="center" class="greyColor" style="color:#59626E;font-size:90%">gsm</div>
@@ -139,18 +128,16 @@
             </div>
             <div class="menu-item-title-container">
                 <div class="menu-status onoff off"></div>
-                <div class="menu-title">
                     <div>outlander</div>
                     <span>Данные на 24.06.2015, 23:29</span>
-                </div>
             </div>
         </div>
 
-			<div class="menu-item-tabs-content">
+			<div class="starline_body">
 				<div data-id="info" style="padding-top: 1px; position: relative; opacity: 1; overflow: hidden;">
-					<div class="valet-mode-border"><div class="valet-mode-content">Сервисный<br>режим</div></div>
-					<div class="hijack-mode-border"><div class="hijack-mode-content">Режим<br>антиограбления</div></div>
-					<div class="menu-item-tab-car-status" style="height: 133px;">
+					<div class="valet-border"><div class="valet-content">Сервисный<br>режим</div></div>
+					<div class="hijack-border"><div class="hijack-content">Режим<br>антиограбления</div></div>
+					<div class="car-status" style="height: 133px;">
 						<div class="car-tiltsensor-red"></div>
 						<div class="car-hammer1-red"></div>
 						<div class="car-hammer2-red"></div>
@@ -192,23 +179,7 @@
 					</ul></div>
 				</div>
 			</div>
-    </div>
 </div>
-</script>
-
-<script id="tplStarlineHelper"
-        type="text/ejs"
-        class="vis-tpl"
-        data-vis-prev='<div id="prev_tplTemplateHelper" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 280px; height: 159px;" > <div class="myset-class vis-widget-prev-body " style="padding:2px"> OID: hm-rpc.0.EEQ0006629.1.STATE<br> OID value: true<br> Color: <span style="color: rgb(128, 0, 0);">#800000</span><br> htmlText: <textarea readonly="" style="width:100%">asda</textarea></div>'
-        data-vis-attrs="oid/id;myColor/color;htmlText/text;"
-        data-vis-attrs0="group.extraTemplate;extraAttr"
-        data-vis-set="starline"
-        data-vis-type="helper"
-        data-vis-name="Helper">
-        data-vis-beta="true"
-    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow:visible; width: 230px; height: 210px" id="<%= this.data.attr('wid') %>"><%
-        vis.binds.starline.createWidget(this.data.wid, this.view, this.data, this.style);
-    %></div>
 </script>
 
 
