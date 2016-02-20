@@ -329,6 +329,7 @@ function setObjectfun (name,state,device){
 					  adapter.setObject(device +'.control.'+control_action[t], {
 					type: 'state',
 						common: {
+						name: device +'.control.'+control_action[t],
 						type: 'state',
 						role: 'indicator'
 					},
@@ -346,6 +347,7 @@ function setObjectfun (name,state,device){
   adapter.setObject(name, {
     	type: 'state',
       	common: {
+      		name: name,
       		type: 'state',
       		role: 'indicator'
       	},
