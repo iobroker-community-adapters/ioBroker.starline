@@ -220,10 +220,10 @@ overflow:hidden
 .menuSettings{
 width:auto!important
 }
-.menu-item-tab-car-controls ul li.sim_balance{
+.menu-item-tab-car-controls ul li.balance{
 float:left;text-align:center;width:60px;margin-right:1px;padding:5px 0 3px
 }
-.sim_balance_icon{
+.balance_icon{
 width:30px;height:22px;margin:0 auto 4px;background:url(../img/status.png) no-repeat 0 0
 }
 .menu-item-tab-car-controls ul li.battery{
@@ -244,7 +244,7 @@ float:left;text-align:center;width:60px;padding:5px 0 3px
 .etemp_icon{
 width:30px;height:22px;margin:0 auto 4px;background:url(../img/status.png) no-repeat -93px 0
 }
-.menu-item-tab-car-controls ul li.sim_balance:hover,.menu-item-tab-car-controls ul li.battery:hover,.menu-item-tab-car-controls ul li.ctemp:hover,.menu-item-tab-car-controls ul li.etemp:hover{
+.menu-item-tab-car-controls ul li.balance:hover,.menu-item-tab-car-controls ul li.battery:hover,.menu-item-tab-car-controls ul li.ctemp:hover,.menu-item-tab-car-controls ul li.etemp:hover{
 background:#2a333d
 }
 .clearfix{*zoom:1
