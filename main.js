@@ -296,7 +296,7 @@ function getSesId (head,notoken){
 				  	if (pos != -1) {
 				  	  sesId = sesId.substring(0, pos);
 				  	} else {
-				  	  error('failed to get token');
+				  	  error('failed to get PHPSESSID');
 				  	  return;
 				  	}
 				  adapter.log.debug('PHPSESSID=' + sesId);
