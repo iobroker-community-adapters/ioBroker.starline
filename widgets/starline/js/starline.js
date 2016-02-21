@@ -38,7 +38,10 @@ vis.binds.starline = {
         }
     },
 	createWidget: function (widgetID, view, data, style) {
+		var $div = $('#' + widgetID);
+		
 		var ctemp = vis.states[data.oid + '.ctemp.val'];
+		
 		var gsm_lvl = vis.states[data.oid + '.gsm_lvl'+'.val'];
 		var gsm = 0;
 			if (gsm_lvl >= 1 && gsm_lvl <=7){gsm = 1}
@@ -58,12 +61,9 @@ vis.binds.starline = {
 		var valet = vis.states[data.oid + '.car_state.valet.val'];
 		var arm = vis.states[data.oid + '.car_state.arm.val'];
 		
+
 		
 		
-		
-		
-		
-		var $div = $('#' + widgetID);
 		
 		
         // if nothing found => wait
