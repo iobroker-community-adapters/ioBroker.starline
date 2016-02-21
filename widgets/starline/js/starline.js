@@ -144,14 +144,6 @@ text += '					<li id="t2" class="etemp" title="Температура двига
 text += '					</ul></div>';
 text += '				</div>';
 text += '			</div>';
-		
-            
-        /*text += 'OID: ' + data.oid + '</div><br>';
-        text += 'OID value: <span class="myset-value">' + vis.states[data.oid + '.val'] + '</span><br>';
-        text += 'Color: <span style="color: ' + data.myColor + '">' + data.myColor + '</span><br>';
-        text += 'extraAttr: ' + data.extraAttr + '<br>';
-        text += 'Browser instance: ' + vis.instance + '<br>';
-        text += 'htmlText: <textarea readonly style="width:100%">' + (data.htmlText || '') + '</textarea><br>';*/
 
         $('#' + widgetID).html(text);
 		
@@ -165,11 +157,19 @@ text += '			</div>';
 			$('.car-arm > .s4').attr('style', 'opacity: 1');
 			$('.car-arm > .s5').attr('style', 'opacity: 1');
 		}
+		
+		$( "li.balance" ).bind( "click", function() {
+			vis.setValue(data.oid + '.control.checkballance', 1);
+		});
+		
+		$( "li.ctemp, li.etemp").bind( "click", function() {
+			vis.setValue(data.oid + '.control.checktemp', 1);
+		});
 
         // subscribe on updates of value
         if (vis.states[data.oid + '.ctemp.val']) {
             vis.states.bind(data.oid + '.ctemp.val', function (e, newVal, oldVal) {
-                $span.find('.ctemp_value').html(newVal);
+                $div.find('.ctemp_value').html(newVal);
             });
         }
     }
