@@ -39,7 +39,7 @@ vis.binds.starline = {
     },
 	createWidget: function (widgetID, view, data, style) {
 		var ctemp = vis.states[data.oid + '.ctemp.val'];
-		var gsm_lvl = vis.states[data.oid + '.gsm_lvl.val'];
+		var gsm_lvl = vis.states[data.oid + '.gsm_lvl'+'.val'];
 		var gsm = 0;
 			if (gsm_lvl >= 1 && gsm_lvl <=7){gsm = 1}
 			if (gsm_lvl >= 7 && gsm_lvl <14){gsm = 2}

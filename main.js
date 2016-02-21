@@ -42,8 +42,9 @@ adapter.on('stateChange', function (id, state) {
       		if (err || !state) {
       		} else {
       		  var deviceId = parseInt(state.val);
+			  adapter.log.error('parseInt(state.val) ' + deviceId);  
+			  adapter.setState(alias +'.control.'+action, {ack: true});
       		  send_command (deviceId,action,value_command);
-      			adapter.log.error('parseInt(state.val) ' + deviceId);  
       		}
       	});
           adapter.log.info('stateChange ' + id + ' - ' + JSON.stringify(state));
