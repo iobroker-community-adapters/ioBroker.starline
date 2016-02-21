@@ -11,6 +11,7 @@
  var header;
  var data = '';
  var flag_subscribe = false;
+ var reload_data;
  var control_action = ['valet', 'hijack', 'update_position', 'shock_bpass', 'tilt_bpass', 'webasto', 'ign', 'arm', 'poke', 'add_sens_bpass', 'out', 'checkballance', 'checktemp'];
  
  var adapter = utils.adapter('starline');
@@ -266,7 +267,7 @@ function parse_data (getdata){
   			setObjectfun (device[t]+'.position.dir',result.answer.devices[t].position.dir);
   		}	
 		adapter.log.info('Data received restart in 1 minutes.');
-  		setTimeout(function () {
+  		reload_data = setTimeout(function () {
                   	get_data ();
               	}, 60000);
   	}
@@ -284,6 +285,7 @@ function parse_data (getdata){
 function reAuth (){
 	adapter.log.error('Re-authorization, and receiving data in 10 minutes.');
 	setTimeout(function () {
+			clearTimeout(reload_data);
          	goto_web ();
     }, 600000);
 }
@@ -419,6 +421,7 @@ var options = {
   		adapter.log.error('Send command. Parsing error response' + JSON.stringify(e));
 	  }
 				setTimeout(function () {
+					clearTimeout(reload_data);
                 	get_data ();
             	}, 1000);
 			});
