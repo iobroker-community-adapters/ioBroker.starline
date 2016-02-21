@@ -325,7 +325,7 @@ text += '    </div>';
 				vis.setValue(data.oid + '.control.ign', 0);
 			}
 		});
-		$( "div..s2-control-icon-poke" ).bind( "click", function() {
+		$( "div.s2-control-icon-poke" ).bind( "click", function() {
 			alert(event.target.nodeName);
 			vis.setValue(data.oid + '.control.poke', 1);
 		});		
