@@ -41,19 +41,27 @@ vis.binds.starline = {
 		var ctemp = vis.states[data.oid + '.ctemp.val'];
 		var gsm_lvl = vis.states[data.oid + '.gsm_lvl.val'];
 		var gsm = 0;
-		if (gsm_lvl >= 1 && gsm_lvl <=7){gsm = 1}
-		if (gsm_lvl >= 7 && gsm_lvl <14){gsm = 2}
-		if (gsm_lvl >= 14 && gsm_lvl <21){gsm = 3}
-		if (gsm_lvl >= 21 && gsm_lvl <28){gsm = 4}
-		if (gsm_lvl >= 28 && gsm_lvl <=30){gsm = 5}
+			if (gsm_lvl >= 1 && gsm_lvl <=7){gsm = 1}
+			if (gsm_lvl >= 7 && gsm_lvl <14){gsm = 2}
+			if (gsm_lvl >= 14 && gsm_lvl <21){gsm = 3}
+			if (gsm_lvl >= 21 && gsm_lvl <28){gsm = 4}
+			if (gsm_lvl >= 28 && gsm_lvl <=30){gsm = 5}
 		
 		var gps_lvl = vis.states[data.oid + '.gps_lvl.val'];
 		var gps = 0;
-        if (gps_lvl >= 1 && gsm_lvl <=7){gps = 1}
-		if (gps_lvl >= 7 && gsm_lvl <14){gps = 2}
-		if (gps_lvl >= 14 && gsm_lvl <21){gps = 3}
+			if (gps_lvl >= 1 && gsm_lvl <=7){gps = 1}
+			if (gps_lvl >= 7 && gsm_lvl <14){gps = 2}
+			if (gps_lvl >= 14 && gsm_lvl <21){gps = 3}
 		
 		var alias = vis.states[data.oid + '.alias.val'];
+		
+		var valet = vis.states[data.oid + '.car_state.valet.val'];
+		var arm = vis.states[data.oid + '.car_state.arm.val'];
+		
+		
+		
+		
+		
 		
 		var $div = $('#' + widgetID);
 		
@@ -67,7 +75,7 @@ vis.binds.starline = {
 		
 
         var text = '';
-text += data.oid;
+//text += data.oid;
 text += '<div class="starline_header">';
 text += '<div class="gpsgsm-cont">';
 text += '				<div class="gpsgsm-status">';
@@ -146,6 +154,17 @@ text += '			</div>';
         text += 'htmlText: <textarea readonly style="width:100%">' + (data.htmlText || '') + '</textarea><br>';*/
 
         $('#' + widgetID).html(text);
+		
+		if (valet == 1){
+			$('.valet-border').attr('style', 'display: block'); // 
+		}
+		if (arm == 1){
+			$('.car-arm > .s1').attr('style', 'opacity: 1');
+			$('.car-arm > .s2').attr('style', 'opacity: 1');
+			$('.car-arm > .s3').attr('style', 'opacity: 1');
+			$('.car-arm > .s4').attr('style', 'opacity: 1');
+			$('.car-arm > .s5').attr('style', 'opacity: 1');
+		}
 
         // subscribe on updates of value
         if (vis.states[data.oid + '.ctemp.val']) {
