@@ -39,10 +39,16 @@ vis.binds.starline = {
     },
 	createWidget: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
+		// if nothing found => wait
+        if (!$div.length) {
+            return setTimeout(function () {
+                vis.binds.starline.createWidget(widgetID, view, data, style);
+            }, 100);
+        }
 		
 		var ctemp = vis.states[data.oid + '.ctemp.val'];
 		
-		var gsm_lvl = vis.states[data.oid + '.gsm_lvl'+'.val'];
+		var gsm_lvl = vis.states[data.oid + '.gsm_lvl.val'];
 		var gsm = 0;
 			if (gsm_lvl >= 1 && gsm_lvl <=7){gsm = 1}
 			if (gsm_lvl >= 7 && gsm_lvl <14){gsm = 2}
@@ -60,22 +66,29 @@ vis.binds.starline = {
 		
 		var valet = vis.states[data.oid + '.car_state.valet.val'];
 		var arm = vis.states[data.oid + '.car_state.arm.val'];
-		
-
-		
-		
-		
-		
-        // if nothing found => wait
-        if (!$div.length) {
-            return setTimeout(function () {
-                vis.binds.starline.createWidget(widgetID, view, data, style);
-            }, 100);
-        }
-		
+		var date;
+		var hijack;
+		var tilt;
+		var hammer1;
+		var hammer2;
+		var trunk;
+		var trunk_r;
+		var doors;
+		var doors_r;
+		var ign;
+		var run;
+		var run_r;
+		var hood;
+		var hood_r;
+		var parking;
+		var parking_r;
+		var key;
+		var key_r;
+		var neutral;
+		var hfree;
 
         var text = '';
-//text += data.oid;
+//text +=	arr2;
 text += '<div class="starline_header">';
 text += '<div class="gpsgsm-cont">';
 text += '				<div class="gpsgsm-status">';
@@ -150,13 +163,40 @@ text += '			</div>';
 		if (valet == 1){
 			$('.valet-border').attr('style', 'display: block'); // 
 		}
+		if (hijack == 1){
+			$('.hijack-border').attr('style', 'display: block'); // 
+		}
 		if (arm == 1){
 			$('.car-arm > .s1').attr('style', 'opacity: 1');
 			$('.car-arm > .s2').attr('style', 'opacity: 1');
 			$('.car-arm > .s3').attr('style', 'opacity: 1');
 			$('.car-arm > .s4').attr('style', 'opacity: 1');
 			$('.car-arm > .s5').attr('style', 'opacity: 1');
+			if (hammer1 == 1){$('.car-hammer1-red').attr('style', 'opacity: 1');}
+			if (hammer2 == 1){$('.car-hammer2-red').attr('style', 'opacity: 1');}
+			if (trunk_r == 1){$('.car-trunk-red').attr('style', 'opacity: 1');}
+			if (doors_r == 1){$('.car-doors-red').attr('style', 'opacity: 1');}
+			if (run_r == 1){$('.car-run-red').attr('style', 'opacity: 1');}
+			if (hood_r == 1){$('.car-hood-red').attr('style', 'opacity: 1');}
+			if (parking_r == 1){$('.car-parking-red').attr('style', 'opacity: 1');}
+			if (key_r == 1){$('.car-key-red').attr('style', 'opacity: 1');}
 		}
+		if (arm !=1){
+			if (trunk == 1){$('.car-trunk').attr('style', 'opacity: 1');}
+			if (doors == 1){$('.car-doors').attr('style', 'opacity: 1');}
+			if (run == 1){$('.car-run').attr('style', 'opacity: 1');}
+			if (hood == 1){$('.car-hood').attr('style', 'opacity: 1');}
+			if (parking == 1){$('.car-parking').attr('style', 'opacity: 1');}
+			if (key == 1){$('.car-key').attr('style', 'opacity: 1');}
+		}
+		
+		if (neutral == 1){$('.car-neutral').attr('style', 'opacity: 1');}
+		if (hfree == 1){$('.car-hfree').attr('style', 'opacity: 1');}
+		if (ign == 1){
+			$('.car-ign > .light').attr('style', 'opacity: 1');
+			$('.car-ign > .s1').attr('style', 'opacity: 1');
+		}
+		
 		
 		$( "li.balance" ).bind( "click", function() {
 			vis.setValue(data.oid + '.control.checkballance', 1);
@@ -175,4 +215,4 @@ text += '			</div>';
     }
 };
 	
-vis.binds.starline.showVersion();
+//vis.binds.starline.showVersion();
