@@ -46,7 +46,15 @@ vis.binds.starline = {
 		if (gsm_lvl >= 14 && gsm_lvl <21){gsm = 3}
 		if (gsm_lvl >= 21 && gsm_lvl <28){gsm = 4}
 		if (gsm_lvl >= 28 && gsm_lvl <=30){gsm = 5}
-        
+		
+		var gps_lvl = vis.states[data.oid + '.gps_lvl.val'];
+		var gps = 0;
+        if (gps_lvl >= 1 && gsm_lvl <=7){gps = 1}
+		if (gps_lvl >= 7 && gsm_lvl <14){gps = 2}
+		if (gps_lvl >= 14 && gsm_lvl <21){gps = 3}
+		
+		var alias = vis.states[data.oid + '.alias.val'];
+		
 		var $div = $('#' + widgetID);
 		
 		
@@ -68,7 +76,7 @@ text += '						<div style="float:left"><div class="gsm-status" title="" data-lev
 text += '							<div align="center" class="greyColor" style="color:#59626E;font-size:90%">gsm</div>';
 text += '						</div>';
 text += '						<div style="float:left;margin-left:10px;">';
-text += '							<div title="" class="gps-status" data-level="3"></div>';
+text += '							<div title="" class="gps-status" data-level="'+gps+'"></div>';
 text += '							<div class="greyColor" align="center" style="color:#59626E;font-size:90%">gps</div>';
 text += '						</div>';
 text += '						<div style="float:right"></div>';
@@ -77,8 +85,8 @@ text += '				</div>';
 text += '            </div>';
 text += '            <div class="menu-item-title-container">';
 text += '                <div class="menu-status onoff off"></div>';
-text += '                    <div>outlander</div>';
-text += '                    <span>Данные на 24.06.2015, 23:29</span>';
+text += '                    <div>'+alias+'</div>';
+text += '                    <span>Данные на '+'24.06.2015, 23:29'+'</span>';
 text += '            </div>';
 text += '        </div>';
 text += '';
