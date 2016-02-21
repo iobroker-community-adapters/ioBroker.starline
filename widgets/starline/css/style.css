@@ -278,7 +278,6 @@ opacity:.8
 }
 100%{opacity:1
 }
-
 }
 @-webkit-keyframes blink{
 0%{opacity:1
@@ -287,7 +286,6 @@ opacity:.8
 }
 100%{opacity:1
 }
-
 }
 @-moz-keyframes blink{
 0%{opacity:1
@@ -296,7 +294,6 @@ opacity:.8
 }
 100%{opacity:1
 }
-
 }
 @-o-keyframes blink{
 0%{opacity:1
@@ -305,6 +302,198 @@ opacity:.8
 }
 100%{opacity:1
 }
+}
+
+.s2-toggle-edit-button{
+cursor:pointer;margin:2px 0 0 6px;width:44px;height:44px;background:url(../img/icons-edit-buttons.png) no-repeat center bottom;opacity:.3;transition:opacity .3s ease;-webkit-transition:opacity .3s ease;-moz-transition:opacity .3s ease
+}
+.s2-toggle-edit-button:hover{
+opacity:.7
+}
+.s2-toggle-edit-button.disable:hover{
+opacity:.3;cursor:default
+}
+.s2-control-scroll.editing .s2-toggle-edit-button{
+opacity:1
+}
+.s2-toggle-edit-buttons{
+position:absolute;z-index:10;margin:-18px 0 0 5px
+}
+.s2-toggle-edit-buttons,.s2-control-scroll .s2-toggle-edit-buttons>a{
+transition:opacity .3s ease;-webkit-transition:opacity .3s ease;-moz-transition:opacity .3s ease
+}
+.s2-control-scroll .s2-toggle-edit-buttons>a{
+display:block;border-radius:50%;width:20px;height:20px;background:#28303b url(../img/icon-edit-blue.png) no-repeat center 4px;border:1px solid #151b24;opacity:.6;box-shadow:inset 0 1px 0 #39505e
+}
+.s2-control-button .s2-control-icon-reset{
+position:absolute;z-index:10;opacity:1;margin:-5px 0 0 31px;transition:all .3s ease;-webkit-transition:all .3s ease;-moz-transition:all .3s ease
+}
+.s2-control-button .s2-control-icon-reset a{
+display:none;opacity:0;margin-top:-5px;border-radius:50%;width:20px;height:20px;background:#28303b url(../img/icon-button-control-delete.png) no-repeat center center;border:1px solid #151b24;box-shadow:inset 0 1px 0 #39505e
+}
+.s2-control-button.s2-control-circle .s2-control-icon-reset{
+margin:4px 0 0 42px
+}
+.s2-control-button{
+cursor:pointer;position:relative
+}
+.s2-control-button,.s2-control-button .s2-control-push{
+transition:opacity .3s ease;-webkit-transition:opacity .3s ease;-moz-transition:opacity .3s ease
+}
+.s2-control-left2{
+float:left;margin-top:10px;width:50px;height:49px
+}
+.s2-control-left2 .s2-control-push{
+z-index:2;position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-left-push.png) no-repeat left top;opacity:0
+}
+.s2-control-left2 .s2-control-icon{
+z-index:1;position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-left.png) no-repeat left top
+}
+.s2-control-left2 .s2-control-icon>div{
+margin:6px 0 0 7px
+}
+.s2-control-left2.on .s2-control-icon{
+background:url(../img/button2-left-on.png) no-repeat left top
+}
+.s2-control-left1{
+float:left;margin-top:10px;width:57px;height:49px
+}
+.s2-control-left1 .s2-control-push{
+z-index:2;position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-left-push.png) no-repeat left top;opacity:0
+}
+.s2-control-left1 .s2-control-icon{
+z-index:1;position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-left.png) no-repeat left top
+}
+.s2-control-left1 .s2-control-icon>div{
+margin:6px 0 0 6px
+}
+.s2-control-left1.on .s2-control-icon{
+background:url(../img/button1-left-on.png) no-repeat left top
+}
+.s2-control-circle{
+z-index:5;position:absolute;left:97px;width:70px;height:71px
+}
+.s2-control-circle .s2-control-push{
+z-index:6;position:absolute;left:0;top:0;width:70px;height:71px;background:url(../img/button-circle-push.png) no-repeat left top;opacity:0
+}
+.s2-control-circle .s2-control-icon{
+z-index:5;position:absolute;left:0;top:0;width:70px;height:71px;background:url(../img/button-circle.png) no-repeat center center
+}
+.s2-control-circle .s2-control-icon>div{
+margin:16px 0 0 16px
+}
+.s2-control-circle.on .s2-control-icon{
+background:url(../img/button-circle-on.png) no-repeat left top
+}
+.s2-control-right1{
+float:left;margin:10px 0 0 50px;width:57px;height:49px
+}
+.s2-control-right1 .s2-control-push{
+z-index:2;position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-right-push.png) no-repeat left top;opacity:0
+}
+.s2-control-right1 .s2-control-icon{
+z-index:1;position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-right.png) no-repeat left top
+}
+.s2-control-right1 .s2-control-icon>div{
+margin:6px 0 0 14px
+}
+.s2-control-right1.on .s2-control-icon{
+background:url(../img/button1-right-on.png) no-repeat left top
+}
+.s2-control-right2{
+margin-top:10px;float:left;width:50px;height:49px
+}
+.s2-control-right2 .s2-control-push{
+z-index:2;position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-right-push.png) no-repeat left top;opacity:0
+}
+.s2-control-right2 .s2-control-icon{
+z-index:1;position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-right.png) no-repeat left top
+}
+.s2-control-right2 .s2-control-icon>div{
+margin:6px 0 0 6px
+}
+.s2-control-right2.on .s2-control-icon{
+background:url(../img/button2-right-on.png) no-repeat left top
+}
+.s2-control-button:hover{
+opacity:.7
+}
+.s2-control-left2:active .s2-control-push,.s2-control-left1:active .s2-control-push,.s2-control-circle:active .s2-control-push,.s2-control-right1:active .s2-control-push,.s2-control-right2:active .s2-control-push{
+opacity:.6
+}
+.s2-control-container{
+position:relative;
+height:100%;
+background: #2e3742 none repeat scroll 0 0;
+    color: #fff;
+}
+.s2-control-container:after{
+content:"";display:block;height:0;clear:both;visibility:hidden
+}
+.s2-control-icon div{
+width:36px;height:36px
+}
+.s2-control-button.disabled .s2-control-icon{
+opacity:.2
+}
+.s2-control-button.disabled .s2-control-icon div{
+opacity:.9
+}
+.s2-control-icon-add-command{
+margin:6px 0 0 6px;background:url(../img/buttons-icon-set_black.png) no-repeat -180px 0
+}
+.s2-control-button-toleft{
+z-index:16;opacity:.6;left:-5px;top:13px;position:absolute;width:30px;height:42px;background:#1f2833 url(../img/menu-item-info-arrows-set.png) no-repeat right -84px;transition:opacity .5s ease;-webkit-transition:opacity .5s ease;-moz-transition:opacity .5s ease
+}
+.white .s2-control-button-toleft{
+left:-27px
+}
+.s2-control-button-toleft.off{
+background:#1f2833 url(../img/menu-item-info-arrows-set.png) no-repeat right -126px
+}
+.s2-control-button-toright{
+z-index:16;opacity:.6;right:-2px;top:13px;position:absolute;width:30px;height:42px;background:#1f2833 url(../img/menu-item-info-arrows-set.png) no-repeat left 0;transition:opacity .5s ease;-webkit-transition:opacity .5s ease;-moz-transition:opacity .5s ease
+}
+.s2-control-button-toright.off{
+background:#1f2833 url(../img/menu-item-info-arrows-set.png) no-repeat left -42px
+}
+.s2-control-button-toleft:not(.off):hover,.s2-control-button-toright:not(.off):hover{
+opacity:1;cursor:pointer
+}
+.s2-control-items{
+width:534px;position:absolute;z-index:15;margin:0 0 0 2px
+}
+.s2-control-button.disabled,.s2-control-button.disabled:hover,.s2-control-button.disabled:active,.s2-control-button.disabled:active .s2-control-push{
+cursor:default
+}
+.s2-control-button.disabled[data-id="add-command"]{cursor:pointer
+}
+.s2-loader{
+position:absolute;z-index:997
+}
+.s2-loader div.s2-loader-background{
+position:absolute;z-index:998;left:0;top:0;background:#181f27;opacity:.9;width:100%;height:100%
+}
+.s2-loader div.s2-loader-process{
+position:absolute;z-index:999;width:100%;text-align:center;top:50%;margin-top:-10px
+}
+.s2-loader div.s2-loader-text{
+margin-top:10px;color:#04c1e3;font-size:120%;letter-spacing:.04em
+}
+.s2-loader div.s2-loader-icon span{
+width:50px;height:50px;display:inline-block;background:#181f27;border-radius:50%;border:2px solid #04c1e3
+}
+.s2-loader div.s2-loader-icon span span{
+display:inline-block;background:#04c1e3;border-radius:2px;width:1px;height:30px;margin:9px 0 0 1px;transform-origin:50% 50%;-webkit-transform-origin:50% 50%;-moz-transform-origin:50% 50%;-o-transform-origin:50% 50%;-ms-transform-origin:50% 50%;animation:1s loaderRotate linear;-webkit-animation:1s loaderRotate linear;-moz-animation:1s loaderRotate linear;-o-animation:1s loaderRotate linear;-ms-animation:1s loaderRotate linear;animation-iteration-count:infinite;-webkit-animation-iteration-count:infinite;-moz-animation-iteration-count:infinite;-o-animation-iteration-count:infinite;-ms-animation-iteration-count:infinite
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -448,9 +637,7 @@ left:100%!important;margin-left:6px;right:auto!important;background:#181f27!impo
 }
 
 }
-.s2-control-items{
-width:534px;position:absolute;z-index:15;margin:0 0 0 2px
-}
+
 
 @media (max-width:360px){.s2-control-items{
 margin:2px 0 0 2px

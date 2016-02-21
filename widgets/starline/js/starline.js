@@ -37,12 +37,12 @@ vis.binds.starline = {
             vis.binds.starline.version = null;
         }
     },
-	createWidget: function (widgetID, view, data, style) {
+	createWidgetStatus: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
 		// if nothing found => wait
         if (!$div.length) {
             return setTimeout(function () {
-                vis.binds.starline.createWidget(widgetID, view, data, style);
+                vis.binds.starline.createWidgetStatus(widgetID, view, data, style);
             }, 100);
         }
 		
@@ -206,6 +206,150 @@ text += '			</div>';
 			vis.setValue(data.oid + '.control.checktemp', 1);
 		});
 
+        // subscribe on updates of value
+        if (vis.states[data.oid + '.ctemp.val']) {
+            vis.states.bind(data.oid + '.ctemp.val', function (e, newVal, oldVal) {
+                $div.find('.ctemp_value').html(newVal);
+            });
+        }
+    },
+	
+	createWidgetControl: function (widgetID, view, data, style) {
+		var $div = $('#' + widgetID);
+		// if nothing found => wait
+        if (!$div.length) {
+            return setTimeout(function () {
+                vis.binds.starline.createWidgetControl(widgetID, view, data, style);
+            }, 100);
+        }
+			
+		var alias = vis.states[data.oid + '.alias.val'];
+		
+		var valet = vis.states[data.oid + '.car_state.valet.val'];
+		var arm = vis.states[data.oid + '.car_state.arm.val'];
+		var ign;
+
+        var text = '';
+//text +=	arr2;
+text += '<div class="s2-control-container" style="padding: 0px; top: 0px; width: 317px; height:73px; overflow: hidden; padding: 0px; outline: none;">';
+text += '		<div class="s2-control-button-toleft off"></div>';
+text += '		<div class="s2-control-button-toright"></div>';
+text += '		<div class="s2-control-scroll" style="width:267px;height:73px;overflow:hidden;position:relative;margin: 0 auto">';
+text += '			<div class="s2-control-items">';
+text += '				<div class="s2-control-item" style="width:267px;float:left;position:relative;">';
+text += '					<div title="Включение режима антиограбления" data-id="hijack" data-number="0" data-command="31" class="hijack s2-control-button s2-control-left2">';
+text += '						<div class="s2-control-push"></div>';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-hijack" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px 0px;"></div>';
+text += '						</div>';
+text += '					</div>';
+text += '					<div title="Снятие/постановка на охрану" data-id="arm" data-number="1" data-command="5" class="arm s2-control-button s2-control-left1">';
+text += '						<div class="s2-control-push"></div>';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-arm" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px 0px;"></div>';
+text += '						</div>';
+text += '					</div>';
+text += '					<div title="Включение/выключение двигателя" data-id="ign" data-number="2" data-command="7" class="ign s2-control-button s2-control-circle">	';
+text += '						<div class="s2-control-push"></div>	';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-ign" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px 0px;"></div>';
+text += '						</div>';
+text += '					</div>';
+text += '					<div title="Сигнал" data-id="poke" data-number="3" data-command="36" class="poke s2-control-button s2-control-right1">';
+text += '						<div class="s2-control-push"></div>';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-poke" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -144px 0px;"></div>';
+text += '						</div>';
+text += '					</div>';
+text += '					<div title="Управление предпусковым подогревом двигателя" data-id="webasto" data-number="4" data-command="81" class="webasto s2-control-button s2-control-right2">';
+text += '						<div class="s2-control-push"></div>	';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-webasto" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px 0px no-repeat; z-index: 10;">	</div>';
+text += '						</div>		';
+text += '					</div>';
+text += '				</div>';
+text += '				<div class="s2-control-item" style="width:267px;float:left;position:relative;">	';
+text += '					<div title="Выключение датчика удара" data-id="shock_bpass" data-number="5" data-command="12" class="shock_bpass s2-control-button s2-control-left2">	';
+text += '						<div class="s2-control-push"></div>';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-shock_bpass" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px 0px no-repeat;">	</div>	';
+text += '						</div>	';
+text += '					</div>';
+text += '					<div title="Отключение датчика наклона" data-id="tilt_bpass" data-number="6" data-command="15" class="tilt_bpass s2-control-button s2-control-left1">';
+text += '						<div class="s2-control-push"></div>';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-tilt_bpass" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px 0px no-repeat;"></div>';
+text += '						</div>';
+text += '					</div>';
+text += '					<div title="Включить/выключить сервисный режим" data-id="valet" data-number="7" data-command="50" class="valet s2-control-button s2-control-circle">';
+text += '						<div class="s2-control-push"></div>';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-valet" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px 0px no-repeat;"></div>';
+text += '						</div>';
+text += '					</div>';
+text += '					<div title="Запрос координат" data-id="update_position" data-number="8" data-command="43" class="update_position s2-control-button s2-control-right1">';
+text += '						<div class="s2-control-push"></div>';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-update_position" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -360px 0px;"></div>';
+text += '						</div>';
+text += '					</div>	';
+text += '					<div title="Активировать доп канал" data-id="add-command" data-number="9" data-command="0" class="add-command s2-control-button s2-control-right2">	';
+text += '						<div class="s2-control-push"></div>';
+text += '						<div class="s2-control-icon">';
+text += '							<div class="s2-control-icon-out" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -180px 0px;"></div>';
+text += '						</div>';
+text += '					</div>';
+text += '				</div>';
+text += '			</div>';
+text += '		</div>';
+text += '    </div>';
+
+        $('#' + widgetID).html(text);
+		
+		$( ".s2-control-icon-hijack" ).bind( "click", function() {
+			vis.setValue(data.oid + '.control.hijack', 1);
+		});
+		$( ".s2-control-icon-arm" ).bind( "click", function() {
+			if (arm == 0 || arm == 2){
+				vis.setValue(data.oid + '.control.arm', 1);
+			}
+			else {
+				vis.setValue(data.oid + '.control.arm', 0);
+			}
+		});
+		$( ".s2-control-icon-ign" ).bind( "click", function() {
+			if (ign == 0 || ign == 2){
+				vis.setValue(data.oid + '.control.ign', 1);
+			}
+			else {
+				vis.setValue(data.oid + '.control.ign', 0);
+			}
+		});
+		$( "div..s2-control-icon-poke" ).bind( "click", function() {
+			alert(event.target.nodeName);
+			vis.setValue(data.oid + '.control.poke', 1);
+		});		
+		$( ".s2-control-push" ).bind( "click", function() {
+			alert(event.target.nodeName);
+			vis.setValue(data.oid + '.control.webasto', 1);
+		});
+		$( ".s2-control-icon-shock_bpass" ).bind( "click", function() {
+			vis.setValue(data.oid + '.control.shock_bpass', 1);
+		});
+		$( ".s2-control-icon-tilt_bpass" ).bind( "click", function() {
+			vis.setValue(data.oid + '.control.tilt_bpass', 1);
+		});
+		$( ".s2-control-icon-valet" ).bind( "click", function() {
+			vis.setValue(data.oid + '.control.valet', 1);
+		});
+		$( ".s2-control-icon-update_position" ).bind( "click", function() {
+			vis.setValue(data.oid + '.control.update_position', 1);
+		});
+		$( ".s2-control-icon-out" ).bind( "click", function() {
+			vis.setValue(data.oid + '.control.out', 1);
+		});
+		
+		
         // subscribe on updates of value
         if (vis.states[data.oid + '.ctemp.val']) {
             vis.states.bind(data.oid + '.ctemp.val', function (e, newVal, oldVal) {

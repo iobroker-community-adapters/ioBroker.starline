@@ -103,14 +103,28 @@
 <script id="tplStarlineShowInstance"
         type="text/ejs"
         class="vis-tpl"
-        data-vis-prev='<div id="prev_tplMysetShowInstance" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 260px; > <div class="myset-class vis-widget-prev-body " style="padding:2px"></div>'
+        data-vis-prev='<div id="prev_tplMysetShowInstance" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 260px; height:73px; > <div class="myset-class vis-widget-prev-body " style="padding:2px"></div>'
         data-vis-attrs="oid/id;"
         data-vis-set="starline"
         data-vis-type="val"
         data-vis-name="Show car status">
        
-    <div class="vis-widget <%== this.data.attr('class') %>" style="width:260px; height:237px" id="<%= this.data.attr('wid') %>" >
-       <% vis.binds.starline.createWidget(this.data.wid, this.view, this.data, this.style);%>
+    <div class="vis-widget <%== this.data.attr('class') %>" style="width:317px; height:237px" id="<%= this.data.attr('wid') %>" >
+       <% vis.binds.starline.createWidgetStatus(this.data.wid, this.view, this.data, this.style);%>
+</div>
+</script>
+
+<script id="tplStarlineButtonInstance"
+        type="text/ejs"
+        class="vis-tpl"
+        data-vis-prev='<div id="prev_tplStarlineButtonInstance" style="position: relative; text-align: initial;padding: 4px "><div class="vis-widget_prev " style="width: 260px; > <div class="myset-class vis-widget-prev-body " style="padding:2px"></div>'
+        data-vis-attrs="oid/id;"
+        data-vis-set="starline"
+        data-vis-type="val"
+        data-vis-name="Control car alarm">
+       
+    <div class="vis-widget <%== this.data.attr('class') %>" style="width:317px; height:237px" id="<%= this.data.attr('wid') %>" >
+       <% vis.binds.starline.createWidgetControl(this.data.wid, this.view, this.data, this.style);%>
 </div>
 </script>
 
