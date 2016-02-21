@@ -111,74 +111,7 @@
         data-vis-name="Show car status">
        
     <div class="vis-widget <%== this.data.attr('class') %>" style="width:260px; height:237px" id="<%= this.data.attr('wid') %>" >
-        <div class="starline_header">
-            <div class="gpsgsm-cont">
-				<div class="gpsgsm-status">
-					<div class="clearfix">
-						<div style="float:left"><div class="gsm-status" title="" data-level="2"></div>
-							<div align="center" class="greyColor" style="color:#59626E;font-size:90%">gsm</div>
-						</div>
-						<div style="float:left;margin-left:10px;">
-							<div title="" class="gps-status" data-level="3"></div>
-							<div class="greyColor" align="center" style="color:#59626E;font-size:90%">gps</div>
-						</div>
-						<div style="float:right"></div>
-					</div>
-				</div>
-            </div>
-            <div class="menu-item-title-container">
-                <div class="menu-status onoff off"></div>
-                    <div>outlander</div>
-                    <span>Данные на 24.06.2015, 23:29</span>
-            </div>
-        </div>
-
-			<div class="starline_body">
-				<div data-id="info" style="padding-top: 1px; position: relative; opacity: 1; overflow: hidden;">
-					<div class="valet-border"><div class="valet-content">Сервисный<br>режим</div></div>
-					<div class="hijack-border"><div class="hijack-content">Режим<br>антиограбления</div></div>
-					<div class="car-status" style="height: 133px;">
-						<div class="car-tiltsensor-red"></div>
-						<div class="car-hammer1-red"></div>
-						<div class="car-hammer2-red"></div>
-						<div class="car-trunk-red" style="opacity: 0;"></div>
-						<div class="car-trunk" style="opacity: 0;"></div>
-						<div class="car-doors-red" style="opacity: 0;"></div>
-						<div class="car-doors" style="opacity: 0;"></div>
-						<div class="car-ign">
-							<div class="light"></div>
-							<div class="s1"></div>
-							<div class="s2"></div>
-							<div class="s3"></div>
-						</div>
-						<div class="car-arm">
-							<div class="s1"></div>
-							<div class="s2"></div>
-							<div class="s3"></div>
-							<div class="s4"></div>
-							<div class="s5"></div>
-						</div>
-						<div class="car-run"></div>
-						<div class="car-run-red"></div>
-						<div class="car-hood-red" style="opacity: 0;"></div>
-						<div class="car-parking" style="opacity: 0;"></div>
-						<div class="car-parking-red" style="opacity: 0;"></div>
-						<div class="car-hood" style="opacity: 1;"></div>
-						<div class="car-key" style="opacity: 0;"></div>
-						<div class="car-key-red" style="opacity: 0;"></div>
-						<div class="car-neutral" title="Режим «Программная нейтраль» включен" style="opacity: 0;"></div>
-						<div class="car-hfree" title="Режим «Свободные руки» включен" style="opacity: 0;"></div>
-						<div class="car"></div>
-					</div>
-					<div class="menu-item-tab-car-controls">
-					<ul class="under-buttons-panel">
-					<li id="balance" class="balance" title="Баланс SIM-карты"><div class="balance_icon"></div><span class="balance_value"><%== vis.states[this.data.attr('oid') + '.balance.val'] %></span></li>
-					<li id="battery" class="battery" title="Напряжение аккумулятора"><div class="battery_icon"></div><span class="battery_value"><%== vis.states[this.data.attr('oid') + '.battery.val'] %>В</span></li>
-					<li id="t1" class="ctemp" title="Температура в салоне"><div class="ctemp_icon"></div><span class="ctemp_value"><%== vis.states[this.data.attr('oid') + '.ctemp.val'] %>°C</span></li>
-					<li id="t2" class="etemp" title="Температура двигателя"><div class="etemp_icon"></div><span class="etemp_value"><%== vis.states[this.data.attr('oid') + '.etemp.val'] %>°C</span></li>
-					</ul></div>
-				</div>
-			</div>
+       <% vis.binds.starline.createWidget(this.data.wid, this.view, this.data, this.style);%>
 </div>
 </script>
 

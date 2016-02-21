@@ -38,7 +38,17 @@ vis.binds.starline = {
         }
     },
 	createWidget: function (widgetID, view, data, style) {
-        var $div = $('#' + widgetID);
+		var ctemp = vis.states[data.oid + '.ctemp.val'];
+		var gsm_lvl = vis.states[data.oid + '.gsm_lvl.val'];
+		var gsm = 0;
+		if (gsm_lvl >= 1 && gsm_lvl <=7){gsm = 1}
+		if (gsm_lvl >= 7 && gsm_lvl <14){gsm = 2}
+		if (gsm_lvl >= 14 && gsm_lvl <21){gsm = 3}
+		if (gsm_lvl >= 21 && gsm_lvl <28){gsm = 4}
+		if (gsm_lvl >= 28 && gsm_lvl <=30){gsm = 5}
+        
+		var $div = $('#' + widgetID);
+		
 		
         // if nothing found => wait
         if (!$div.length) {
@@ -46,9 +56,80 @@ vis.binds.starline = {
                 vis.binds.starline.createWidget(widgetID, view, data, style);
             }, 100);
         }
-		 //$this.find(".ctemp_value").append('vis.states[data.oid + '.val']');
+		
 
         var text = '';
+text += data.oid;
+text += '<div class="starline_header">';
+text += '<div class="gpsgsm-cont">';
+text += '				<div class="gpsgsm-status">';
+text += '					<div class="clearfix">';
+text += '						<div style="float:left"><div class="gsm-status" title="" data-level="'+gsm+'"></div>';
+text += '							<div align="center" class="greyColor" style="color:#59626E;font-size:90%">gsm</div>';
+text += '						</div>';
+text += '						<div style="float:left;margin-left:10px;">';
+text += '							<div title="" class="gps-status" data-level="3"></div>';
+text += '							<div class="greyColor" align="center" style="color:#59626E;font-size:90%">gps</div>';
+text += '						</div>';
+text += '						<div style="float:right"></div>';
+text += '					</div>';
+text += '				</div>';
+text += '            </div>';
+text += '            <div class="menu-item-title-container">';
+text += '                <div class="menu-status onoff off"></div>';
+text += '                    <div>outlander</div>';
+text += '                    <span>Данные на 24.06.2015, 23:29</span>';
+text += '            </div>';
+text += '        </div>';
+text += '';
+text += '			<div class="starline_body">';
+text += '				<div data-id="info" style="padding-top: 1px; position: relative; opacity: 1; overflow: hidden;">';
+text += '					<div class="valet-border"><div class="valet-content">Сервисный<br>режим</div></div>';
+text += '					<div class="hijack-border"><div class="hijack-content">Режим<br>антиограбления</div></div>';
+text += '					<div class="car-status" style="height: 133px;">';
+text += '						<div class="car-tiltsensor-red"></div>';
+text += '						<div class="car-hammer1-red"></div>';
+text += '						<div class="car-hammer2-red"></div>';
+text += '						<div class="car-trunk-red" style="opacity: 0;"></div>';
+text += '						<div class="car-trunk" style="opacity: 0;"></div>';
+text += '						<div class="car-doors-red" style="opacity: 0;"></div>';
+text += '						<div class="car-doors" style="opacity: 0;"></div>';
+text += '						<div class="car-ign">';
+text += '							<div class="light"></div>';
+text += '							<div class="s1"></div>';
+text += '							<div class="s2"></div>';
+text += '							<div class="s3"></div>';
+text += '						</div>';
+text += '						<div class="car-arm">';
+text += '							<div class="s1"></div>';
+text += '							<div class="s2"></div>';
+text += '							<div class="s3"></div>';
+text += '							<div class="s4"></div>';
+text += '							<div class="s5"></div>';
+text += '						</div>';
+text += '						<div class="car-run"></div>';
+text += '						<div class="car-run-red"></div>';
+text += '						<div class="car-hood-red" style="opacity: 0;"></div>';
+text += '						<div class="car-parking" style="opacity: 0;"></div>';
+text += '						<div class="car-parking-red" style="opacity: 0;"></div>';
+text += '						<div class="car-hood" style="opacity: 1;"></div>';
+text += '						<div class="car-key" style="opacity: 0;"></div>';
+text += '						<div class="car-key-red" style="opacity: 0;"></div>';
+text += '						<div class="car-neutral" title="Режим «Программная нейтраль» включен" style="opacity: 0;"></div>';
+text += '						<div class="car-hfree" title="Режим «Свободные руки» включен" style="opacity: 0;"></div>';
+text += '						<div class="car"></div>';
+text += '					</div>';
+text += '					<div class="menu-item-tab-car-controls">';
+text += '					<ul class="under-buttons-panel">';
+text += '					<li id="balance" class="balance" title="Баланс SIM-карты"><div class="balance_icon"></div><span class="balance_value">'+ vis.states[data.oid + '.balance.val'] +'</span></li>';
+text += '					<li id="battery" class="battery" title="Напряжение аккумулятора"><div class="battery_icon"></div><span class="battery_value">'+ vis.states[data.oid + '.battery.val'] +'В</span></li>';
+text += '					<li id="t1" class="ctemp" title="Температура в салоне"><div class="ctemp_icon"></div><span class="ctemp_value">'+ ctemp +'°C</span></li>';
+text += '					<li id="t2" class="etemp" title="Температура двигателя"><div class="etemp_icon"></div><span class="etemp_value">'+ vis.states[data.oid + '.etemp.val'] +'°C</span></li>';
+text += '					</ul></div>';
+text += '				</div>';
+text += '			</div>';
+		
+            
         /*text += 'OID: ' + data.oid + '</div><br>';
         text += 'OID value: <span class="myset-value">' + vis.states[data.oid + '.val'] + '</span><br>';
         text += 'Color: <span style="color: ' + data.myColor + '">' + data.myColor + '</span><br>';
@@ -56,12 +137,12 @@ vis.binds.starline = {
         text += 'Browser instance: ' + vis.instance + '<br>';
         text += 'htmlText: <textarea readonly style="width:100%">' + (data.htmlText || '') + '</textarea><br>';*/
 
-       // $('#' + widgetID).html(text);
+        $('#' + widgetID).html(text);
 
         // subscribe on updates of value
-        if (vis.states[data.oid + '.balance.val']) {
-            vis.states.bind(data.oid + '.balance.val', function (e, newVal, oldVal) {
-                $div.find('.starline-value').html(newVal);
+        if (vis.states[data.oid + '.ctemp.val']) {
+            vis.states.bind(data.oid + '.ctemp.val', function (e, newVal, oldVal) {
+                $span.find('.ctemp_value').html(newVal);
             });
         }
     }
