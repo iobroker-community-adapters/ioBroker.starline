@@ -100,7 +100,7 @@ text += '				</div>';
 text += '            </div>';
 text += '            <div class="menu-item-title-container">';
 text += '                <div class="menu-status onoff off"></div>';
-text += '                    <div>'+alias+'</div>';
+text += '                    <div class="alias_value">'+alias+'</div>';
 text += '                    <span>Данные на '+theDate+'</span>';
 text += '            </div>';
 text += '        </div>';
