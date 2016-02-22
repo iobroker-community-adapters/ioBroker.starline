@@ -47,9 +47,8 @@ vis.binds.starline = {
         }
 
 		var date = vis.states[data.oid + '.alias.ts'];
-		
-				var theDate = new Date(date * 1000);
-				theDate = theDate.toGMTString();	
+		var theDate = new Date(date * 1000);
+			theDate = theDate.toGMTString();	
 		
 		var ctemp = vis.states[data.oid + '.ctemp.val'];
 		var gsm_lvl = vis.states[data.oid + '.gsm_lvl.val'];
@@ -70,6 +69,7 @@ vis.binds.starline = {
 		
 		var valet = vis.states[data.oid + '.car_state.valet.val'];
 		var arm = vis.states[data.oid + '.car_state.arm.val'];
+		var status = vis.states[data.oid + '.status.val'];
 		var hijack;
 		var tilt;
 		var hammer1;
@@ -163,6 +163,11 @@ text += '			</div>';
 
         $('#' + widgetID).html(text);
 		
+		if (status == 1){
+			$('.menu-status').removeClass("off");
+			$('.menu-status').addClass("on");
+		}
+		
 		if (valet == 1){
 			$('.valet-border').attr('style', 'display: block'); // 
 		}
@@ -242,7 +247,7 @@ text += '		<div class="s2-control-button-toleft off"></div>';
 text += '		<div class="s2-control-button-toright"></div>';
 text += '		<div class="s2-control-scroll" style="width:267px;height:73px;overflow:hidden;position:relative;margin: 0 auto">';
 text += '			<div class="s2-control-items">';
-text += '				<div class="s2-control-itemA" style="width:267px;float:left;position:relative;">';
+text += '				<div class="s2-control-item" style="width:267px;float:left;position:relative;">';
 text += '					<div title="Включение режима антиограбления" data-id="hijack" data-number="0" data-command="31" class="hijack s2-control-button s2-control-left2">';
 text += '						<div class="s2-control-push"></div>';
 text += '						<div class="s2-control-icon">';
@@ -373,12 +378,12 @@ text += '    </div>';
 			vis.setValue(data.oid + '.control.out', 1);
 		});
 		$( ".s2-control-button-toright" ).bind( "click", function() {
-			$('.s2-control-itemA').attr('style', 'display: none'); 
+			$('.s2-control-items').animate({ "marginLeft": "-=267px" }, "slow" );
 			$('.s2-control-button-toleft').removeClass("off");
 			$('.s2-control-button-toright').addClass("off");
 		});
 		$( ".s2-control-button-toleft" ).bind( "click", function() {
-			$('.s2-control-itemA').attr('style', 'display: block'); 
+			$('.s2-control-items').animate({ "marginLeft": "+=267px" }, "slow" );
 			$('.s2-control-button-toright').removeClass("off");
 			$('.s2-control-button-toleft').addClass("off");
 		});
