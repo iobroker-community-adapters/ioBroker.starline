@@ -45,9 +45,13 @@ vis.binds.starline = {
                 vis.binds.starline.createWidgetStatus(widgetID, view, data, style);
             }, 100);
         }
+
+		var date = vis.states[data.oid + '.alias.ts'];
+		
+				var theDate = new Date(date * 1000);
+				theDate = theDate.toGMTString();	
 		
 		var ctemp = vis.states[data.oid + '.ctemp.val'];
-		
 		var gsm_lvl = vis.states[data.oid + '.gsm_lvl.val'];
 		var gsm = 0;
 			if (gsm_lvl >= 1 && gsm_lvl <=7){gsm = 1}
@@ -66,7 +70,6 @@ vis.binds.starline = {
 		
 		var valet = vis.states[data.oid + '.car_state.valet.val'];
 		var arm = vis.states[data.oid + '.car_state.arm.val'];
-		var date;
 		var hijack;
 		var tilt;
 		var hammer1;
@@ -107,7 +110,7 @@ text += '            </div>';
 text += '            <div class="menu-item-title-container">';
 text += '                <div class="menu-status onoff off"></div>';
 text += '                    <div>'+alias+'</div>';
-text += '                    <span>Данные на '+'--'+'</span>';
+text += '                    <span>Данные на '+theDate+'</span>';
 text += '            </div>';
 text += '        </div>';
 text += '';
