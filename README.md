@@ -14,11 +14,10 @@
   - Запрос координат автомобиля
   - Отключение датчиков удара и наклона
 
-ToDo
-- Виджет для vis
-
-
 ## Changelog
+
+#### 0.1.0
+* (instalator) add widget
 
 #### 0.0.3
 * (instalator) added monitoring function
