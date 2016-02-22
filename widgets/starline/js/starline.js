@@ -1,13 +1,9 @@
 /*
     ioBroker.starline Widget-Set
-
-    version: "0.0.1"
-
+    version: "0.1.0"
     Copyright 10.2015-2016 instalator <vvvalt@mail.ru>
-
 */
 "use strict";
-
 // add translations for edit mode
 if (vis.editMode) {
     $.extend(true, systemDictionary, {
@@ -30,7 +26,7 @@ $.extend(true, systemDictionary, {
 
 // this code can be placed directly in template.html
 vis.binds.starline = {
-    version: "0.0.1",
+    version: "0.1.0",
     showVersion: function () {
         if (vis.binds.starline.version) {
             console.log('Version starline: ' + vis.binds.starline.version);
@@ -45,11 +41,10 @@ vis.binds.starline = {
                 vis.binds.starline.createWidgetStatus(widgetID, view, data, style);
             }, 100);
         }
-
 		var date = vis.states[data.oid + '.alias.ts'];
 		var theDate = new Date(date * 1000);
 			theDate = theDate.toGMTString();	
-		
+
 		var ctemp = vis.states[data.oid + '.ctemp.val'];
 		var gsm_lvl = vis.states[data.oid + '.gsm_lvl.val'];
 		var gsm = 0;
@@ -58,15 +53,12 @@ vis.binds.starline = {
 			if (gsm_lvl >= 14 && gsm_lvl <21){gsm = 3}
 			if (gsm_lvl >= 21 && gsm_lvl <28){gsm = 4}
 			if (gsm_lvl >= 28 && gsm_lvl <=30){gsm = 5}
-		
 		var gps_lvl = vis.states[data.oid + '.gps_lvl.val'];
 		var gps = 0;
 			if (gps_lvl >= 1 && gsm_lvl <=7){gps = 1}
 			if (gps_lvl >= 7 && gsm_lvl <14){gps = 2}
 			if (gps_lvl >= 14 && gsm_lvl <21){gps = 3}
-		
 		var alias = vis.states[data.oid + '.alias.val'];
-		
 		var valet = vis.states[data.oid + '.car_state.valet.val'];
 		var arm = vis.states[data.oid + '.car_state.arm.val'];
 		var status = vis.states[data.oid + '.status.val'];
@@ -91,7 +83,6 @@ vis.binds.starline = {
 		var hfree;
 
         var text = '';
-//text +=	arr2;
 text += '<div class="starline_header">';
 text += '<div class="gpsgsm-cont">';
 text += '				<div class="gpsgsm-status">';
@@ -216,9 +207,9 @@ text += '			</div>';
 		});
 
         // subscribe on updates of value
-        if (vis.states[data.oid + '.ctemp.val']) {
-            vis.states.bind(data.oid + '.ctemp.val', function (e, newVal, oldVal) {
-                $div.find('.ctemp_value').html(newVal);
+        if (vis.states[data.oid + '.alias.val']) {
+            vis.states.bind(data.oid + '.alias.val', function (e, newVal, oldVal) {
+                $div.find('.alias_value').html(newVal);
             });
         }
     },
@@ -397,14 +388,12 @@ text += '    </div>';
 		if (tilt_bpass == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
 		if (valet == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
 		
-		
         // subscribe on updates of value
-        if (vis.states[data.oid + '.ctemp.val']) {
-            vis.states.bind(data.oid + '.ctemp.val', function (e, newVal, oldVal) {
-                $div.find('.ctemp_value').html(newVal);
+        if (vis.states[data.oid + '.alias.val']) {
+            vis.states.bind(data.oid + '.alias.val', function (e, newVal, oldVal) {
+                $div.find('.alias_value').html(newVal);
             });
         }
     }
 };
-	
-//vis.binds.starline.showVersion();
+vis.binds.starline.showVersion();
