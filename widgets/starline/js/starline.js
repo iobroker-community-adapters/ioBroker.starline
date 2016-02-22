@@ -180,14 +180,14 @@ text += '			</div>';
 			$('.car-arm > .s3').attr('style', 'opacity: 1');
 			$('.car-arm > .s4').attr('style', 'opacity: 1');
 			$('.car-arm > .s5').attr('style', 'opacity: 1');
-			if (hammer1 == 1){$('.car-hammer1-red').attr('style', 'opacity: 1');}
-			if (hammer2 == 1){$('.car-hammer2-red').attr('style', 'opacity: 1');}
-			if (trunk_r == 1){$('.car-trunk-red').attr('style', 'opacity: 1');}
-			if (doors_r == 1){$('.car-doors-red').attr('style', 'opacity: 1');}
-			if (run_r == 1){$('.car-run-red').attr('style', 'opacity: 1');}
-			if (hood_r == 1){$('.car-hood-red').attr('style', 'opacity: 1');}
-			if (parking_r == 1){$('.car-parking-red').attr('style', 'opacity: 1');}
-			if (key_r == 1){$('.car-key-red').attr('style', 'opacity: 1');}
+			if (hammer1 == 1){$('.car-hammer1-red').attr('style', 'opacity: 1');$('.car-hammer1-red').addClass("blink_me");}
+			if (hammer2 == 1){$('.car-hammer2-red').attr('style', 'opacity: 1');$('.car-hammer2-red').addClass("blink_me");}
+			if (trunk_r == 1){$('.car-trunk-red').attr('style', 'opacity: 1');$('.car-trunk-red').addClass("blink_me");}
+			if (doors_r == 1){$('.car-doors-red').attr('style', 'opacity: 1');$('.car-doors-red').addClass("blink_me");}
+			if (run_r == 1){$('.car-run-red').attr('style', 'opacity: 1');$('.car-run-red').addClass("blink_me");}
+			if (hood_r == 1){$('.car-hood-red').attr('style', 'opacity: 1');$('.car-hood-red').addClass("blink_me");}
+			if (parking_r == 1){$('.car-parking-red').attr('style', 'opacity: 1');$('.car-parking-red').addClass("blink_me");}
+			if (key_r == 1){$('.car-key-red').attr('style', 'opacity: 1');$('.car-key-red').addClass("blink_me");}
 		}
 		if (arm !=1){
 			if (trunk == 1){$('.car-trunk').attr('style', 'opacity: 1');}
@@ -202,6 +202,7 @@ text += '			</div>';
 		if (hfree == 1){$('.car-hfree').attr('style', 'opacity: 1');}
 		if (ign == 1){
 			$('.car-ign > .light').attr('style', 'opacity: 1');
+			$('.car-ign > .light').addClass("blink_me");
 			$('.car-ign > .s1').attr('style', 'opacity: 1');
 		}
 		
@@ -242,72 +243,72 @@ text += '			</div>';
 
         var text = '';
 //text +=	arr2;
-text += '<div class="s2-control-container" style="padding: 0px; top: 0px; width: 317px; height:73px; overflow: hidden; padding: 0px; outline: none;">';
-text += '		<div class="s2-control-button-toleft off"></div>';
-text += '		<div class="s2-control-button-toright"></div>';
-text += '		<div class="s2-control-scroll" style="width:267px;height:73px;overflow:hidden;position:relative;margin: 0 auto">';
-text += '			<div class="s2-control-items">';
-text += '				<div class="s2-control-item" style="width:267px;float:left;position:relative;">';
-text += '					<div title="Включение режима антиограбления" data-id="hijack" data-number="0" data-command="31" class="hijack s2-control-button s2-control-left2">';
-text += '						<div class="s2-control-push"></div>';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-hijack" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px 0px;"></div>';
+text += '<div class="control-container" style="padding: 0px; top: 0px; width: 317px; height:73px; overflow: hidden; padding: 0px; outline: none;">';
+text += '		<div class="control-button-toleft off"></div>';
+text += '		<div class="control-button-toright"></div>';
+text += '		<div class="control-scroll" style="width:267px;height:73px;overflow:hidden;position:relative;margin: 0 auto">';
+text += '			<div class="control-items">';
+text += '				<div class="control-item" style="width:267px;float:left;position:relative;">';
+text += '					<div title="Включение режима антиограбления" data-id="hijack" data-number="0" data-command="31" class="hijack control-button control-left2">';
+text += '						<div class="control-push"></div>';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-hijack" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px 0px;"></div>';
 text += '						</div>';
 text += '					</div>';
-text += '					<div title="Снятие/постановка на охрану" data-id="arm" data-number="1" data-command="5" class="arm s2-control-button s2-control-left1">';
-text += '						<div class="s2-control-push"></div>';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-arm" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px 0px;"></div>';
+text += '					<div title="Снятие/постановка на охрану" data-id="arm" data-number="1" data-command="5" class="arm control-button control-left1">';
+text += '						<div class="control-push"></div>';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-arm" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px 0px;"></div>';
 text += '						</div>';
 text += '					</div>';
-text += '					<div title="Включение/выключение двигателя" data-id="ign" data-number="2" data-command="7" class="ign s2-control-button s2-control-circle">	';
-text += '						<div class="s2-control-push"></div>	';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-ign" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px 0px;"></div>';
+text += '					<div title="Включение/выключение двигателя" data-id="ign" data-number="2" data-command="7" class="ign control-button control-circle">	';
+text += '						<div class="control-push"></div>	';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-ign" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px 0px;"></div>';
 text += '						</div>';
 text += '					</div>';
-text += '					<div title="Сигнал" data-id="poke" data-number="3" data-command="36" class="poke s2-control-button s2-control-right1">';
-text += '						<div class="s2-control-push"></div>';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-poke" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -144px 0px;"></div>';
+text += '					<div title="Сигнал" data-id="poke" data-number="3" data-command="36" class="poke control-button control-right1">';
+text += '						<div class="control-push"></div>';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-poke" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -144px 0px;"></div>';
 text += '						</div>';
 text += '					</div>';
-text += '					<div title="Управление предпусковым подогревом двигателя" data-id="webasto" data-number="4" data-command="81" class="webasto s2-control-button s2-control-right2">';
-text += '						<div class="s2-control-push"></div>	';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-webasto" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px 0px no-repeat;">	</div>';
+text += '					<div title="Управление предпусковым подогревом двигателя" data-id="webasto" data-number="4" data-command="81" class="webasto control-button control-right2">';
+text += '						<div class="control-push"></div>	';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-webasto" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px 0px no-repeat;">	</div>';
 text += '						</div>';
 text += '					</div>';
 text += '				</div>';
-text += '				<div class="s2-control-item" style="width:267px;float:left;position:relative;">	';
-text += '					<div title="Выключение датчика удара" data-id="shock_bpass" data-number="5" data-command="12" class="shock_bpass s2-control-button s2-control-left2">	';
-text += '						<div class="s2-control-push"></div>';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-shock_bpass" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px 0px no-repeat;">	</div>	';
+text += '				<div class="control-item" style="width:267px;float:left;position:relative;">	';
+text += '					<div title="Выключение датчика удара" data-id="shock_bpass" data-number="5" data-command="12" class="shock_bpass control-button control-left2">	';
+text += '						<div class="control-push"></div>';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-shock_bpass" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px 0px no-repeat;">	</div>	';
 text += '						</div>	';
 text += '					</div>';
-text += '					<div title="Отключение датчика наклона" data-id="tilt_bpass" data-number="6" data-command="15" class="tilt_bpass s2-control-button s2-control-left1">';
-text += '						<div class="s2-control-push"></div>';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-tilt_bpass" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px 0px no-repeat;"></div>';
+text += '					<div title="Отключение датчика наклона" data-id="tilt_bpass" data-number="6" data-command="15" class="tilt_bpass control-button control-left1">';
+text += '						<div class="control-push"></div>';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-tilt_bpass" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px 0px no-repeat;"></div>';
 text += '						</div>';
 text += '					</div>';
-text += '					<div title="Включить/выключить сервисный режим" data-id="valet" data-number="7" data-command="50" class="valet s2-control-button s2-control-circle">';
-text += '						<div class="s2-control-push"></div>';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-valet" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px 0px no-repeat;"></div>';
+text += '					<div title="Включить/выключить сервисный режим" data-id="valet" data-number="7" data-command="50" class="valet control-button control-circle">';
+text += '						<div class="control-push"></div>';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-valet" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px 0px no-repeat;"></div>';
 text += '						</div>';
 text += '					</div>';
-text += '					<div title="Запрос координат" data-id="update_position" data-number="8" data-command="43" class="update_position s2-control-button s2-control-right1">';
-text += '						<div class="s2-control-push"></div>';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-update_position" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -360px 0px;"></div>';
+text += '					<div title="Запрос координат" data-id="update_position" data-number="8" data-command="43" class="update_position control-button control-right1">';
+text += '						<div class="control-push"></div>';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-update_position" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -360px 0px;"></div>';
 text += '						</div>';
 text += '					</div>	';
-text += '					<div title="Активировать доп канал" data-id="add-command" data-number="9" data-command="0" class="add-command s2-control-button s2-control-right2">	';
-text += '						<div class="s2-control-push"></div>';
-text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-out" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -180px 0px;"></div>';
+text += '					<div title="Активировать доп канал" data-id="add-command" data-number="9" data-command="0" class="add-command control-button control-right2">	';
+text += '						<div class="control-push"></div>';
+text += '						<div class="control-icon">';
+text += '							<div class="control-icon-out" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -180px 0px;"></div>';
 text += '						</div>';
 text += '					</div>';
 text += '				</div>';
@@ -317,10 +318,10 @@ text += '    </div>';
 
         $('#' + widgetID).html(text);
 		
-		$( ".s2-control-icon-hijack" ).bind( "click", function() {
+		$( ".control-icon-hijack" ).bind( "click", function() {
 			vis.setValue(data.oid + '.control.hijack', 1);
 		});
-		$( ".s2-control-icon-arm" ).bind( "click", function() {
+		$( ".control-icon-arm" ).bind( "click", function() {
 			if (arm == 0 || arm == 2){
 				vis.setValue(data.oid + '.control.arm', 1);
 			}
@@ -328,7 +329,7 @@ text += '    </div>';
 				vis.setValue(data.oid + '.control.arm', 0);
 			}
 		});
-		$( ".s2-control-icon-ign" ).bind( "click", function() {
+		$( ".control-icon-ign" ).bind( "click", function() {
 			if (ign == 0 || ign == 2){
 				vis.setValue(data.oid + '.control.ign', 1);
 			}
@@ -336,10 +337,10 @@ text += '    </div>';
 				vis.setValue(data.oid + '.control.ign', 0);
 			}
 		});
-		$( ".s2-control-icon-poke" ).bind( "click", function() {
+		$( ".control-icon-poke" ).bind( "click", function() {
 			vis.setValue(data.oid + '.control.poke', 1);
 		});		
-		$( ".s2-control-icon-webasto" ).bind( "click", function() {
+		$( ".control-icon-webasto" ).bind( "click", function() {
 			if (webasto == 0 || webasto == 2){
 				vis.setValue(data.oid + '.control.webasto', 1);
 			}
@@ -347,7 +348,7 @@ text += '    </div>';
 				vis.setValue(data.oid + '.control.webasto', 0);
 			}
 		});
-		$( ".s2-control-icon-shock_bpass" ).bind( "click", function() {
+		$( ".control-icon-shock_bpass" ).bind( "click", function() {
 			if (shock_bpass == 0 || shock_bpass == 2){
 				vis.setValue(data.oid + '.control.shock_bpass', 1);
 			}
@@ -355,7 +356,7 @@ text += '    </div>';
 				vis.setValue(data.oid + '.control.shock_bpass', 0);
 			}
 		});
-		$( ".s2-control-icon-tilt_bpass" ).bind( "click", function() {
+		$( ".control-icon-tilt_bpass" ).bind( "click", function() {
 			if (tilt_bpass == 0 || tilt_bpass == 2){
 				vis.setValue(data.oid + '.control.tilt_bpass', 1);
 			}
@@ -363,7 +364,7 @@ text += '    </div>';
 				vis.setValue(data.oid + '.control.tilt_bpass', 0);
 			}
 		});
-		$( ".s2-control-icon-valet" ).bind( "click", function() {
+		$( ".control-icon-valet" ).bind( "click", function() {
 			if (tilt_bpass == 0 || tilt_bpass == 2){
 				vis.setValue(data.oid + '.control.valet', 1);
 			}
@@ -371,44 +372,30 @@ text += '    </div>';
 				vis.setValue(data.oid + '.control.valet', 0);
 			}
 		});
-		$( ".s2-control-icon-update_position" ).bind( "click", function() {
+		$( ".control-icon-update_position" ).bind( "click", function() {
 			vis.setValue(data.oid + '.control.update_position', 1);
 		});
-		$( ".s2-control-icon-out" ).bind( "click", function() {
+		$( ".control-icon-out" ).bind( "click", function() {
 			vis.setValue(data.oid + '.control.out', 1);
 		});
-		$( ".s2-control-button-toright" ).bind( "click", function() {
-			$('.s2-control-items').animate({ "marginLeft": "-=267px" }, "slow" );
-			$('.s2-control-button-toleft').removeClass("off");
-			$('.s2-control-button-toright').addClass("off");
+		$( ".control-button-toright" ).bind( "click", function() {
+			$('.control-items').animate({ "marginLeft": "-=267px" }, "slow" );
+			$('.control-button-toleft').removeClass("off");
+			$('.control-button-toright').addClass("off");
 		});
-		$( ".s2-control-button-toleft" ).bind( "click", function() {
-			$('.s2-control-items').animate({ "marginLeft": "+=267px" }, "slow" );
-			$('.s2-control-button-toright').removeClass("off");
-			$('.s2-control-button-toleft').addClass("off");
+		$( ".control-button-toleft" ).bind( "click", function() {
+			$('.control-items').animate({ "marginLeft": "+=267px" }, "slow" );
+			$('.control-button-toright').removeClass("off");
+			$('.control-button-toleft').addClass("off");
 		});
 		
-		if (hijack == 1){
-			$('.s2-control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');
-		}
-		if (arm == 1){
-			$('.s2-control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');
-		}
-		if (ign == 1){
-			$('.s2-control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');
-		}
-		if (webasto == 1){
-			$('.s2-control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');
-		}
-		if (shock_bpass == 1){
-			$('.s2-control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');
-		}
-		if (tilt_bpass == 1){
-			$('.s2-control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');
-		}
-		if (valet == 1){
-			$('.s2-control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');
-		}
+		if (hijack == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');}
+		if (arm == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');}
+		if (ign == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');}
+		if (webasto == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');}
+		if (shock_bpass == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');}
+		if (tilt_bpass == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
+		if (valet == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
 		
 		
         // subscribe on updates of value
