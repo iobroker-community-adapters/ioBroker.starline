@@ -107,7 +107,7 @@ text += '            </div>';
 text += '            <div class="menu-item-title-container">';
 text += '                <div class="menu-status onoff off"></div>';
 text += '                    <div>'+alias+'</div>';
-text += '                    <span>Данные на '+'24.06.2015, 23:29'+'</span>';
+text += '                    <span>Данные на '+'--'+'</span>';
 text += '            </div>';
 text += '        </div>';
 text += '';
@@ -222,12 +222,15 @@ text += '			</div>';
                 vis.binds.starline.createWidgetControl(widgetID, view, data, style);
             }, 100);
         }
-			
-		var alias = vis.states[data.oid + '.alias.val'];
 		
 		var valet = vis.states[data.oid + '.car_state.valet.val'];
 		var arm = vis.states[data.oid + '.car_state.arm.val'];
-		var ign;
+		var ign = vis.states[data.oid + '.car_state.ign.val'];
+		var hijack = vis.states[data.oid + '.car_state.hijack.val'];
+		var webasto = vis.states[data.oid + '.car_state.webasto.val'];
+		var shock_bpass = vis.states[data.oid + '.car_state.shock_bpass.val'];
+		var tilt_bpass = vis.states[data.oid + '.car_state.tilt_bpass.val'];
+		
 
         var text = '';
 //text +=	arr2;
@@ -236,7 +239,7 @@ text += '		<div class="s2-control-button-toleft off"></div>';
 text += '		<div class="s2-control-button-toright"></div>';
 text += '		<div class="s2-control-scroll" style="width:267px;height:73px;overflow:hidden;position:relative;margin: 0 auto">';
 text += '			<div class="s2-control-items">';
-text += '				<div class="s2-control-item" style="width:267px;float:left;position:relative;">';
+text += '				<div class="s2-control-itemA" style="width:267px;float:left;position:relative;">';
 text += '					<div title="Включение режима антиограбления" data-id="hijack" data-number="0" data-command="31" class="hijack s2-control-button s2-control-left2">';
 text += '						<div class="s2-control-push"></div>';
 text += '						<div class="s2-control-icon">';
@@ -264,8 +267,8 @@ text += '					</div>';
 text += '					<div title="Управление предпусковым подогревом двигателя" data-id="webasto" data-number="4" data-command="81" class="webasto s2-control-button s2-control-right2">';
 text += '						<div class="s2-control-push"></div>	';
 text += '						<div class="s2-control-icon">';
-text += '							<div class="s2-control-icon-webasto" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px 0px no-repeat; z-index: 10;">	</div>';
-text += '						</div>		';
+text += '							<div class="s2-control-icon-webasto" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px 0px no-repeat;">	</div>';
+text += '						</div>';
 text += '					</div>';
 text += '				</div>';
 text += '				<div class="s2-control-item" style="width:267px;float:left;position:relative;">	';
@@ -325,22 +328,40 @@ text += '    </div>';
 				vis.setValue(data.oid + '.control.ign', 0);
 			}
 		});
-		$( "div.s2-control-icon-poke" ).bind( "click", function() {
-			alert(event.target.nodeName);
+		$( ".s2-control-icon-poke" ).bind( "click", function() {
 			vis.setValue(data.oid + '.control.poke', 1);
 		});		
-		$( ".s2-control-push" ).bind( "click", function() {
-			alert(event.target.nodeName);
-			vis.setValue(data.oid + '.control.webasto', 1);
+		$( ".s2-control-icon-webasto" ).bind( "click", function() {
+			if (webasto == 0 || webasto == 2){
+				vis.setValue(data.oid + '.control.webasto', 1);
+			}
+			else {
+				vis.setValue(data.oid + '.control.webasto', 0);
+			}
 		});
 		$( ".s2-control-icon-shock_bpass" ).bind( "click", function() {
-			vis.setValue(data.oid + '.control.shock_bpass', 1);
+			if (shock_bpass == 0 || shock_bpass == 2){
+				vis.setValue(data.oid + '.control.shock_bpass', 1);
+			}
+			else {
+				vis.setValue(data.oid + '.control.shock_bpass', 0);
+			}
 		});
 		$( ".s2-control-icon-tilt_bpass" ).bind( "click", function() {
-			vis.setValue(data.oid + '.control.tilt_bpass', 1);
+			if (tilt_bpass == 0 || tilt_bpass == 2){
+				vis.setValue(data.oid + '.control.tilt_bpass', 1);
+			}
+			else {
+				vis.setValue(data.oid + '.control.tilt_bpass', 0);
+			}
 		});
 		$( ".s2-control-icon-valet" ).bind( "click", function() {
-			vis.setValue(data.oid + '.control.valet', 1);
+			if (tilt_bpass == 0 || tilt_bpass == 2){
+				vis.setValue(data.oid + '.control.valet', 1);
+			}
+			else {
+				vis.setValue(data.oid + '.control.valet', 0);
+			}
 		});
 		$( ".s2-control-icon-update_position" ).bind( "click", function() {
 			vis.setValue(data.oid + '.control.update_position', 1);
@@ -348,6 +369,38 @@ text += '    </div>';
 		$( ".s2-control-icon-out" ).bind( "click", function() {
 			vis.setValue(data.oid + '.control.out', 1);
 		});
+		$( ".s2-control-button-toright" ).bind( "click", function() {
+			$('.s2-control-itemA').attr('style', 'display: none'); 
+			$('.s2-control-button-toleft').removeClass("off");
+			$('.s2-control-button-toright').addClass("off");
+		});
+		$( ".s2-control-button-toleft" ).bind( "click", function() {
+			$('.s2-control-itemA').attr('style', 'display: block'); 
+			$('.s2-control-button-toright').removeClass("off");
+			$('.s2-control-button-toleft').addClass("off");
+		});
+		
+		if (hijack == 1){
+			$('.s2-control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');
+		}
+		if (arm == 1){
+			$('.s2-control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');
+		}
+		if (ign == 1){
+			$('.s2-control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');
+		}
+		if (webasto == 1){
+			$('.s2-control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');
+		}
+		if (shock_bpass == 1){
+			$('.s2-control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');
+		}
+		if (tilt_bpass == 1){
+			$('.s2-control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');
+		}
+		if (valet == 1){
+			$('.s2-control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');
+		}
 		
 		
         // subscribe on updates of value

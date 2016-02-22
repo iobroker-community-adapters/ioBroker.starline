@@ -9,6 +9,7 @@ position:absolute;width:100%
 */
 
 .starline_header{
+height: 47px;
 border:0;
 background:#1f2833;
 border-top:1px solid #293442;
@@ -344,7 +345,7 @@ transition:opacity .3s ease;-webkit-transition:opacity .3s ease;-moz-transition:
 float:left;margin-top:10px;width:50px;height:49px
 }
 .s2-control-left2 .s2-control-push{
-z-index:2;position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-left-push.png) no-repeat left top;opacity:0
+/*z-index:2;*/position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-left-push.png) no-repeat left top;opacity:0
 }
 .s2-control-left2 .s2-control-icon{
 z-index:1;position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-left.png) no-repeat left top
@@ -359,7 +360,7 @@ background:url(../img/button2-left-on.png) no-repeat left top
 float:left;margin-top:10px;width:57px;height:49px
 }
 .s2-control-left1 .s2-control-push{
-z-index:2;position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-left-push.png) no-repeat left top;opacity:0
+/*z-index:2;*/position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-left-push.png) no-repeat left top;opacity:0
 }
 .s2-control-left1 .s2-control-icon{
 z-index:1;position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-left.png) no-repeat left top
@@ -374,7 +375,7 @@ background:url(../img/button1-left-on.png) no-repeat left top
 z-index:5;position:absolute;left:97px;width:70px;height:71px
 }
 .s2-control-circle .s2-control-push{
-z-index:6;position:absolute;left:0;top:0;width:70px;height:71px;background:url(../img/button-circle-push.png) no-repeat left top;opacity:0
+/*z-index:6;*/position:absolute;left:0;top:0;width:70px;height:71px;background:url(../img/button-circle-push.png) no-repeat left top;opacity:0
 }
 .s2-control-circle .s2-control-icon{
 z-index:5;position:absolute;left:0;top:0;width:70px;height:71px;background:url(../img/button-circle.png) no-repeat center center
@@ -389,7 +390,7 @@ background:url(../img/button-circle-on.png) no-repeat left top
 float:left;margin:10px 0 0 50px;width:57px;height:49px
 }
 .s2-control-right1 .s2-control-push{
-z-index:2;position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-right-push.png) no-repeat left top;opacity:0
+/*z-index:2;*/position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-right-push.png) no-repeat left top;opacity:0
 }
 .s2-control-right1 .s2-control-icon{
 z-index:1;position:absolute;left:0;top:0;width:57px;height:49px;background:url(../img/button1-right.png) no-repeat left top
@@ -404,7 +405,14 @@ background:url(../img/button1-right-on.png) no-repeat left top
 margin-top:10px;float:left;width:50px;height:49px
 }
 .s2-control-right2 .s2-control-push{
-z-index:2;position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-right-push.png) no-repeat left top;opacity:0
+/*z-index:2;*/
+position:absolute;
+left:0;
+top:0;
+width:50px;
+height:49px;
+background:url(../img/button2-right-push.png) no-repeat left top;
+opacity:0
 }
 .s2-control-right2 .s2-control-icon{
 z-index:1;position:absolute;left:0;top:0;width:50px;height:49px;background:url(../img/button2-right.png) no-repeat left top
