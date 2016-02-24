@@ -99,6 +99,7 @@ var options = {
 	req.end();
 		req.on('error', function (err) {
         	adapter.log.error('Error: goto_web - ' + err);
+        	reAuth ();
     });
 }
 function auth_web (){
@@ -146,6 +147,7 @@ var req = https.request(options, function (res) {
     });
 	req.on('error', function (err) {
         	adapter.log.error('Error: auth_web - ' + err);
+        	reAuth ();
 	});
 	req.write(post_data);
 	req.end();
@@ -186,6 +188,7 @@ var options = {
 		req.end();
 		req.on('error', function (err) {
 				adapter.log.error('Error: get_data - ' + err);
+				reAuth ();
 			});
 }
 function parse_data (getdata){
