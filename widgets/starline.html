@@ -10,12 +10,83 @@
         type="text/ejs"
         class="vis-tpl"
         data-vis-prev='<img src="widgets/starline/img/state.png"></img>'
-        data-vis-attrs="oid/id;"
+		data-vis-attrs="oid_alias/id/changeOid;oid_ctemp/id;oid_gsm_lvl/id;oid_gps_lvl/id;oid_car_state_valet/id;oid_status/id;oid_car_state_arm/id;oid_control_checkballance/id;oid_control_checktemp/id;"
+        data-vis-attrs="group.alarm;oid_hijack/id;oid_tilt/id;oid_hammer1/id;oid_hammer2/id;oid_trunk/id;oid_trunk_r/id;oid_doors/id;oid_doors_r/id;oid_ign/id;oid_run/id;oid_run_r/id;oid_hood/id;oid_hood_r/id;"
+		data-vis-attrs="oid_parking/id;oid_parking_r/id;oid_key/id;oid_key_r/id;oid_neutral/id;oid_hfree/id;"
         data-vis-set="starline"
         data-vis-type="val"
 		data-vis-beta="true"
         data-vis-name="Show car status">
     <div class="vis-widget <%== this.data.attr('class') %>" style="width:317px; height:237px" id="<%= this.data.attr('wid') %>" >
+		<div class="starline_header">
+			<div class="gpsgsm-cont">
+				<div class="gpsgsm-status">
+					<div class="clearfix">
+						<div style="float:left"><div class="gsm-status" title="" data-level=""></div>
+							<div align="center" class="greyColor" style="color:#59626E;font-size:90%">gsm</div>
+						</div>
+						<div style="float:left;margin-left:10px;">
+							<div title="" class="gps-status" data-level=""></div>
+							<div class="greyColor" align="center" style="color:#59626E;font-size:90%">gps</div>
+						</div>
+						<div style="float:right"></div>
+					</div>
+				</div>
+            </div>
+            <div class="menu-item-title-container">
+                <div class="menu-status onoff off"></div>
+                    <div class="alias_value"></div>
+                    <span class="date">Данные на </span>
+            </div>
+        </div>
+
+			<div class="starline_body">
+				<div data-id="info" style="padding-top: 1px; position: relative; overflow: hidden;">
+					<div class="valet-border"><div class="valet-content" style="display: none;">Сервисный<br>режим</div></div>
+					<div class="hijack-border"><div class="hijack-content" style="display: none;">Режим<br>антиограбления</div></div>
+					<div class="car-status" style="height: 133px;">
+						<div class="car-tiltsensor-red" style="display: none;"></div>
+						<div class="car-hammer1-red" style="display: none;"></div>
+						<div class="car-hammer2-red" style="display: none;"></div>
+						<div class="car-trunk-red" style="display: none;"></div>
+						<div class="car-trunk"     style="display: none;"></div>
+						<div class="car-doors-red" style="display: none;"></div>
+						<div class="car-doors"     style="display: none;"></div>
+						<div class="car-ign">
+							<div class="light" style="display: none;"></div>
+							<div class="s1" style="display: none;"></div>
+							<div class="s2" style="display: none;"></div>
+							<div class="s3" style="display: none;"></div>
+						</div>
+						<div class="car-arm">
+							<div class="s1" style="display: none;"></div>
+							<div class="s2" style="display: none;"></div>
+							<div class="s3" style="display: none;"></div>
+							<div class="s4" style="display: none;"></div>
+							<div class="s5" style="display: none;"></div>
+						</div>
+						<div class="car-run" style="display: none;"></div>
+						<div class="car-run-red" style="display: none;"></div>
+						<div class="car-hood-red" style="display: none;"></div>
+						<div class="car-parking" style="display: none;;"></div>
+						<div class="car-parking-red" style="display: none;"></div>
+						<div class="car-hood"  style="display: none;"></div>
+						<div class="car-key" style="display: none;"></div>
+						<div class="car-key-red" style="display: none;"></div>
+						<div class="car-neutral" title="Режим «Программная нейтраль» включен" style="display: none;"></div>
+						<div class="car-hfree" title="Режим «Свободные руки» включен" style=display: none;"></div>
+						<div class="car"></div>
+					</div>
+					<div class="menu-item-tab-car-controls">
+						<ul class="under-buttons-panel">
+							<li class="balance" title="Баланс SIM-карты"><div class="balance_icon"></div><span class="balance_value"></span></li>
+							<li class="battery" title="Напряжение аккумулятора"><div class="battery_icon"></div><span class="battery_value"></span>В</li>
+							<li class="t1 ctemp" title="Температура в салоне"><div class="ctemp_icon"></div><span class="ctemp_value"></span>°C</li>
+							<li class="t2 etemp" title="Температура двигателя"><div class="etemp_icon"></div><span class="etemp_value"></span>°C</li>
+						</ul>
+					</div>
+				</div>
+			</div>
        <% vis.binds.starline.createWidgetStatus(this.data.wid, this.view, this.data, this.style);%>
 	</div>
 </script>
