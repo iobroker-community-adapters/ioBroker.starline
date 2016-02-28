@@ -33,6 +33,36 @@ vis.binds.starline = {
             vis.binds.starline.version = null;
         }
     },
+	states: {
+		oid_alias: 					{val: undefined, selector: '.alias_value', 		blink: false, objName: 'alias'},
+		oid_ctemp: 					{val: undefined, selector: '', 					blink: false, objName: 'ctemp'},
+		oid_gsm_lvl: 				{val: undefined, selector: '', 					blink: false},
+		oid_gps_lvl: 				{val: undefined, selector: '', 					blink: false},
+		oid_car_state_valet: 		{val: undefined, selector: '', 					blink: false},
+		oid_status: 				{val: undefined, selector: '', 					blink: false},
+		oid_car_state_arm:			{val: undefined, selector: '.car-arm > .s1, .car-arm > .s2, .car-arm > .s3, .car-arm > .s4, .car-arm > .s5', blink: false},
+		oid_control_checkballance:  {val: undefined, selector: '', 					blink: false, objName: 'balance'},
+		oid_control_checktemp: 		{val: undefined, selector: '', 					blink: false, objName: 'battery'},
+		oid_hijack:                 {val: undefined, selector: '', 					blink: false},
+		oid_tilt:                 	{val: undefined, selector: '', 					blink: false},
+		oid_hammer1:                {val: undefined, selector: '.car-hammer1-red', 	blink: true},
+		oid_hammer2:                {val: undefined, selector: '.car-hammer2-red', 	blink: true},
+		oid_trunk:                  {val: undefined, selector: '', 					blink: false},
+		oid_trunk_r:                {val: undefined, selector: '.car-trunk-red', 	blink: true},
+		oid_doors:                  {val: undefined, selector: '', 					blink: false},
+		oid_doors_r:                {val: undefined, selector: '', 					blink: false},
+		oid_ign:                    {val: undefined, selector: '.car-ign > .light', blink: true},
+		oid_run:                    {val: undefined, selector: '', 					blink: false},
+		oid_run_r:                  {val: undefined, selector: '', 					blink: false},
+		oid_hood:                   {val: undefined, selector: '', 					blink: false},
+		oid_hood_r:                 {val: undefined, selector: '', 					blink: false},
+		oid_parking:                {val: undefined, selector: '', 					blink: false},
+		oid_parking_r:              {val: undefined, selector: '', 					blink: false},
+		oid_key:                    {val: undefined, selector: '', 					blink: false},
+		oid_key_r:                  {val: undefined, selector: '', 					blink: false},
+		oid_neutral:                {val: undefined, selector: '', 					blink: false},
+		oid_hfree:                  {val: undefined, selector: '', 					blink: false}
+	},
 	createWidgetStatus: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
 		// if nothing found => wait
@@ -41,177 +71,118 @@ vis.binds.starline = {
                 vis.binds.starline.createWidgetStatus(widgetID, view, data, style);
             }, 100);
         }
-		var date = vis.states[data.oid + '.alias.ts'];
-		var theDate = new Date(date * 1000);
-			theDate = theDate.toGMTString();	
 
-		var ctemp = vis.states[data.oid + '.ctemp.val'];
-		var gsm_lvl = vis.states[data.oid + '.gsm_lvl.val'];
-		var gsm = 0;
-			if (gsm_lvl >= 1 && gsm_lvl <=7){gsm = 1}
-			if (gsm_lvl >= 7 && gsm_lvl <14){gsm = 2}
-			if (gsm_lvl >= 14 && gsm_lvl <21){gsm = 3}
-			if (gsm_lvl >= 21 && gsm_lvl <28){gsm = 4}
-			if (gsm_lvl >= 28 && gsm_lvl <=30){gsm = 5}
-		var gps_lvl = vis.states[data.oid + '.gps_lvl.val'];
-		var gps = 0;
-			if (gps_lvl >= 1 && gsm_lvl <=7){gps = 1}
-			if (gps_lvl >= 7 && gsm_lvl <14){gps = 2}
-			if (gps_lvl >= 14 && gsm_lvl <21){gps = 3}
-		var alias = vis.states[data.oid + '.alias.val'];
-		var valet = vis.states[data.oid + '.car_state.valet.val'];
-		var arm = vis.states[data.oid + '.car_state.arm.val'];
-		var status = vis.states[data.oid + '.status.val'];
-		var hijack;
-		var tilt;
-		var hammer1;
-		var hammer2;
-		var trunk;
-		var trunk_r;
-		var doors;
-		var doors_r;
-		var ign;
-		var run;
-		var run_r;
-		var hood;
-		var hood_r;
-		var parking;
-		var parking_r;
-		var key;
-		var key_r;
-		var neutral;
-		var hfree;
+		function setVisible(selector, isVisible, isBlink) {
+			if (isVisible) {
+				$(selector).show();
 
-        var text = '';
-text += '<div class="starline_header">';
-text += '<div class="gpsgsm-cont">';
-text += '				<div class="gpsgsm-status">';
-text += '					<div class="clearfix">';
-text += '						<div style="float:left"><div class="gsm-status" title="" data-level="'+gsm+'"></div>';
-text += '							<div align="center" class="greyColor" style="color:#59626E;font-size:90%">gsm</div>';
-text += '						</div>';
-text += '						<div style="float:left;margin-left:10px;">';
-text += '							<div title="" class="gps-status" data-level="'+gps+'"></div>';
-text += '							<div class="greyColor" align="center" style="color:#59626E;font-size:90%">gps</div>';
-text += '						</div>';
-text += '						<div style="float:right"></div>';
-text += '					</div>';
-text += '				</div>';
-text += '            </div>';
-text += '            <div class="menu-item-title-container">';
-text += '                <div class="menu-status onoff off"></div>';
-text += '                    <div class="alias_value">'+alias+'</div>';
-text += '                    <span>Данные на '+theDate+'</span>';
-text += '            </div>';
-text += '        </div>';
-text += '';
-text += '			<div class="starline_body">';
-text += '				<div data-id="info" style="padding-top: 1px; position: relative; opacity: 1; overflow: hidden;">';
-text += '					<div class="valet-border"><div class="valet-content">Сервисный<br>режим</div></div>';
-text += '					<div class="hijack-border"><div class="hijack-content">Режим<br>антиограбления</div></div>';
-text += '					<div class="car-status" style="height: 133px;">';
-text += '						<div class="car-tiltsensor-red"></div>';
-text += '						<div class="car-hammer1-red"></div>';
-text += '						<div class="car-hammer2-red"></div>';
-text += '						<div class="car-trunk-red" style="opacity: 0;"></div>';
-text += '						<div class="car-trunk" style="opacity: 0;"></div>';
-text += '						<div class="car-doors-red" style="opacity: 0;"></div>';
-text += '						<div class="car-doors" style="opacity: 0;"></div>';
-text += '						<div class="car-ign">';
-text += '							<div class="light"></div>';
-text += '							<div class="s1"></div>';
-text += '							<div class="s2"></div>';
-text += '							<div class="s3"></div>';
-text += '						</div>';
-text += '						<div class="car-arm">';
-text += '							<div class="s1"></div>';
-text += '							<div class="s2"></div>';
-text += '							<div class="s3"></div>';
-text += '							<div class="s4"></div>';
-text += '							<div class="s5"></div>';
-text += '						</div>';
-text += '						<div class="car-run"></div>';
-text += '						<div class="car-run-red"></div>';
-text += '						<div class="car-hood-red" style="opacity: 0;"></div>';
-text += '						<div class="car-parking" style="opacity: 0;"></div>';
-text += '						<div class="car-parking-red" style="opacity: 0;"></div>';
-text += '						<div class="car-hood" style="opacity: 1;"></div>';
-text += '						<div class="car-key" style="opacity: 0;"></div>';
-text += '						<div class="car-key-red" style="opacity: 0;"></div>';
-text += '						<div class="car-neutral" title="Режим «Программная нейтраль» включен" style="opacity: 0;"></div>';
-text += '						<div class="car-hfree" title="Режим «Свободные руки» включен" style="opacity: 0;"></div>';
-text += '						<div class="car"></div>';
-text += '					</div>';
-text += '					<div class="menu-item-tab-car-controls">';
-text += '					<ul class="under-buttons-panel">';
-text += '					<li id="balance" class="balance" title="Баланс SIM-карты"><div class="balance_icon"></div><span class="balance_value">'+ vis.states[data.oid + '.balance.val'] +'</span></li>';
-text += '					<li id="battery" class="battery" title="Напряжение аккумулятора"><div class="battery_icon"></div><span class="battery_value">'+ vis.states[data.oid + '.battery.val'] +'В</span></li>';
-text += '					<li id="t1" class="ctemp" title="Температура в салоне"><div class="ctemp_icon"></div><span class="ctemp_value">'+ ctemp +'°C</span></li>';
-text += '					<li id="t2" class="etemp" title="Температура двигателя"><div class="etemp_icon"></div><span class="etemp_value">'+ vis.states[data.oid + '.etemp.val'] +'°C</span></li>';
-text += '					</ul></div>';
-text += '				</div>';
-text += '			</div>';
+			} else {
+				$(selector).hide();
+			}
+			if (isBlink) {
+				$(selector).addClass('blink_me');
+			} else {
+				$(selector).removeClass('blink_me');
+			}
+		}
 
-        $('#' + widgetID).html(text);
-		
-		if (status == 1){
-			$('.menu-status').removeClass("off");
-			$('.menu-status').addClass("on");
-		}
-		
-		if (valet == 1){
-			$('.valet-border').attr('style', 'display: block'); // 
-		}
-		if (hijack == 1){
-			$('.hijack-border').attr('style', 'display: block'); // 
-		}
-		if (arm == 1){
-			$('.car-arm > .s1').attr('style', 'opacity: 1');
-			$('.car-arm > .s2').attr('style', 'opacity: 1');
-			$('.car-arm > .s3').attr('style', 'opacity: 1');
-			$('.car-arm > .s4').attr('style', 'opacity: 1');
-			$('.car-arm > .s5').attr('style', 'opacity: 1');
-			if (hammer1 == 1){$('.car-hammer1-red').attr('style', 'opacity: 1');$('.car-hammer1-red').addClass("blink_me");}
-			if (hammer2 == 1){$('.car-hammer2-red').attr('style', 'opacity: 1');$('.car-hammer2-red').addClass("blink_me");}
-			if (trunk_r == 1){$('.car-trunk-red').attr('style', 'opacity: 1');$('.car-trunk-red').addClass("blink_me");}
-			if (doors_r == 1){$('.car-doors-red').attr('style', 'opacity: 1');$('.car-doors-red').addClass("blink_me");}
-			if (run_r == 1){$('.car-run-red').attr('style', 'opacity: 1');$('.car-run-red').addClass("blink_me");}
-			if (hood_r == 1){$('.car-hood-red').attr('style', 'opacity: 1');$('.car-hood-red').addClass("blink_me");}
-			if (parking_r == 1){$('.car-parking-red').attr('style', 'opacity: 1');$('.car-parking-red').addClass("blink_me");}
-			if (key_r == 1){$('.car-key-red').attr('style', 'opacity: 1');$('.car-key-red').addClass("blink_me");}
-		}
-		if (arm !=1){
-			if (trunk == 1){$('.car-trunk').attr('style', 'opacity: 1');}
-			if (doors == 1){$('.car-doors').attr('style', 'opacity: 1');}
-			if (run == 1){$('.car-run').attr('style', 'opacity: 1');}
-			if (hood == 1){$('.car-hood').attr('style', 'opacity: 1');}
-			if (parking == 1){$('.car-parking').attr('style', 'opacity: 1');}
-			if (key == 1){$('.car-key').attr('style', 'opacity: 1');}
-		}
-		
-		if (neutral == 1){$('.car-neutral').attr('style', 'opacity: 1');}
-		if (hfree == 1){$('.car-hfree').attr('style', 'opacity: 1');}
-		if (ign == 1){
-			$('.car-ign > .light').attr('style', 'opacity: 1');
-			$('.car-ign > .light').addClass("blink_me");
-			$('.car-ign > .s1').attr('style', 'opacity: 1');
-		}
-		
-		
-		$( "li.balance" ).bind( "click", function() {
-			vis.setValue(data.oid + '.control.checkballance', 1);
-		});
-		
-		$( "li.ctemp, li.etemp").bind( "click", function() {
-			vis.setValue(data.oid + '.control.checktemp', 1);
-		});
+		function updateStates() {
+			var states = JSON.parse(JSON.stringify(vis.binds.starline.states));
 
-        // subscribe on updates of value
-        if (vis.states[data.oid + '.alias.val']) {
-            vis.states.bind(data.oid + '.alias.val', function (e, newVal, oldVal) {
-                $div.find('.alias_value').html(newVal);
-            });
-        }
+			// read all states
+			for (var s in states) {
+				if (data[s] && data[s] !== 'nothing_selected') states[s].val = vis.states[data[s] + '.val'];
+			}
+
+			// convert time
+			if (states.oid_alias) {
+				var date = new Date(1000 * vis.states[data.oid_alias + '.ts']).toGMTString();
+				$div.find('.date').html('Данные на ' + date);
+			}
+
+			// convert gsm
+			if (states.oid_gsm_lvl.val >= 1  && states.oid_gsm_lvl.val <= 7)  {
+				states.oid_gsm_lvl.val = 1;
+			} else
+			if (states.oid_gsm_lvl.val >= 7  && states.oid_gsm_lvl.val <  14) {
+				states.oid_gsm_lvl.val = 2;
+			} else
+			if (states.oid_gsm_lvl.val >= 14 && states.oid_gsm_lvl.val <  21) {
+				states.oid_gsm_lvl.val = 3;
+			} else
+			if (states.oid_gsm_lvl.val >= 21 && states.oid_gsm_lvl.val <  28) {
+				states.oid_gsm_lvl.val = 4;
+			} else
+			if (states.oid_gsm_lvl.val >= 28 && states.oid_gsm_lvl.val <= 30) {
+				states.oid_gsm_lvl.val = 5;
+			}
+
+			if (states.oid_gps_lvl.val >= 1  && states.oid_gps_lvl.val <= 7) {
+				states.oid_gps_lvl.val = 1;
+			} else
+			if (states.oid_gps_lvl.val >= 7  && states.oid_gps_lvl.val < 14) {
+				states.oid_gps_lvl.val = 2;
+			} else
+			if (states.oid_gps_lvl.val >= 14 && states.oid_gps_lvl.val < 21) {
+				states.oid_gps_lvl.val = 3;
+			}
+
+
+			if (states.oid_status.val){
+				$('.menu-status').removeClass('off').addClass('on');
+			} else {
+				$('.menu-status').removeClass('on').addClass('off');
+			}
+
+			if (states.oid_car_state_valet.val){
+				$('.valet-border').show();
+			} else {
+				$('.valet-border').hide();
+			}
+			if (states.oid_hijack.val){
+				$('.hijack-border').show();
+			} else {
+				$('.hijack-border').hide();
+			}
+
+			if (states.oid_car_state_arm.val) {
+				states.oid_trunk.val 	= false;
+				states.oid_doors.val 	= false;
+				states.oid_run.val 		= false;
+				states.oid_hood.val 	= false;
+				states.oid_parking.val 	= false;
+			}
+
+			for (var s in states) {
+				if (states[s].selector) setVisible(states[s].selector, states[s].val, states[s].blink && states[s].val);
+			}
+
+			setVisible('.car-ign > .s1',    states.oid_ign);
+			$('.ctemp_value').html(states.oid_ctemp.val);
+		}
+
+		if (data.oid_control_checkballance && data.oid_control_checkballance !== 'nothing_selected') {
+			$("li.balance").click(function () {
+				vis.setValue(data.oid_control_checkballance, 1);
+			});
+		}
+
+		if (data.oid_control_checktemp && data.oid_control_checktemp !== 'nothing_selected') {
+			$("li.ctemp, li.etemp").click(function () {
+				vis.setValue(data.oid_control_checktemp, 1);
+			});
+		}
+
+		debugger;
+        // subscribe on updates of values
+		for (var s in vis.binds.starline.states) {
+			if (!data[s] || data[s] == 'nothing_selected') continue;
+			vis.states.bind(data[s] + '.val', function () {
+				updateStates();
+			});
+		}
+		// initial update
+		updateStates();
     },
 	
 	createWidgetControl: function (widgetID, view, data, style) {
@@ -396,4 +367,22 @@ text += '    </div>';
         }
     }
 };
+
+if (vis.editMode) {
+	vis.binds.starline.changeOid = function (widgetID, view, newId, attr, isCss) {
+		newId = newId.substring(0, newId.length - attr.length + 'oid_'.length);
+		var changed = [];
+		for (var s in vis.binds.starline.states) {
+			if (s === 'oid_alias' || !vis.binds.starline.states[s].objName) continue;
+			if (vis.objects[newId + vis.binds.starline.states[s].objName]) {
+				changed.push(s);
+				vis.views[view].widgets[widgetID].data[s] 	= newId + vis.binds.starline.states[s].objName;
+				vis.widgets[widgetID].data[s] 				= newId + vis.binds.starline.states[s].objName;
+			}
+		}
+
+		return changed;
+	};
+}
+
 vis.binds.starline.showVersion();
