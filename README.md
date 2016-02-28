@@ -16,6 +16,9 @@
 
 ## Changelog
 
+#### 0.1.1
+* (Bluefox) changed the structure of the widget
+
 #### 0.1.0
 * (instalator) add widget
 
