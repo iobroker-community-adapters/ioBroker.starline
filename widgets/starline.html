@@ -95,12 +95,85 @@
         type="text/ejs"
         class="vis-tpl"
         data-vis-prev='<img src="widgets/starline/img/btn.png"></img>'
-        data-vis-attrs="oid/id;"
+        data-vis-attrs="oid_alias/id/changeOid;oid_car_state_valet/id;oid_car_state_arm/id;oid_car_state_webasto/id;oid_car_state_shock_bpass/id;oid_car_state_tilt_bpass/id;"
+        data-vis-attrs="oid_control_update_position/id;"
         data-vis-set="starline"
         data-vis-type="val"
 		data-vis-beta="true"
         data-vis-name="Control car alarm">
     <div class="vis-widget <%== this.data.attr('class') %>" style="width:317px; height:73px" id="<%= this.data.attr('wid') %>" >
+    <div class="control-container" style="padding: 0px; top: 0px; width: 317px; height:73px; overflow: hidden; padding: 0px; outline: none;">
+		<div class="control-button-toleft off"></div>
+		<div class="control-button-toright"></div>
+		<div class="control-scroll" style="width:267px;height:73px;overflow:hidden;position:relative;margin: 0 auto">
+			<div class="control-items">
+				<div class="control-item" style="width:267px;float:left;position:relative;">
+					<div title="Включение режима антиограбления" data-id="hijack" data-number="0" data-command="31" class="hijack control-button control-left2">
+						<div class="control-push"></div>
+						<div class="control-icon">
+							<div class="control-icon-hijack" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px 0px;"></div>
+						</div>
+					</div>
+					<div title="Снятие/постановка на охрану" data-id="arm" data-number="1" data-command="5" class="arm control-button control-left1">
+						<div class="control-push"></div>
+						<div class="control-icon">
+							<div class="control-icon-arm" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px 0px;"></div>
+						</div>
+					</div>
+					<div title="Включение/выключение двигателя" data-id="ign" data-number="2" data-command="7" class="ign control-button control-circle">
+						<div class="control-push"></div>	
+						<div class="control-icon">
+							<div class="control-icon-ign" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px 0px;"></div>
+						</div>
+					</div>
+					<div title="Сигнал" data-id="poke" data-number="3" data-command="36" class="poke control-button control-right1">
+						<div class="control-push"></div>
+						<div class="control-icon">
+							<div class="control-icon-poke" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -144px 0px;"></div>
+						</div>
+					</div>
+					<div title="Управление предпусковым подогревом двигателя" data-id="webasto" data-number="4" data-command="81" class="webasto control-button control-right2">
+						<div class="control-push"></div>	
+						<div class="control-icon">
+							<div class="control-icon-webasto" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px 0px no-repeat;">	</div>
+						</div>
+					</div>
+				</div>
+				<div class="control-item" style="width:267px;float:left;position:relative;">	
+					<div title="Выключение датчика удара" data-id="shock_bpass" data-number="5" data-command="12" class="shock_bpass control-button control-left2">	
+						<div class="control-push"></div>
+						<div class="control-icon">
+							<div class="control-icon-shock_bpass" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px 0px no-repeat;">	</div>	
+						</div>	
+					</div>
+					<div title="Отключение датчика наклона" data-id="tilt_bpass" data-number="6" data-command="15" class="tilt_bpass control-button control-left1">
+						<div class="control-push"></div>
+						<div class="control-icon">
+							<div class="control-icon-tilt_bpass" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px 0px no-repeat;"></div>
+							</div>
+					</div>
+					<div title="Включить/выключить сервисный режим" data-id="valet" data-number="7" data-command="50" class="valet control-button control-circle">
+						<div class="control-push"></div>
+						<div class="control-icon">
+					<div class="control-icon-valet" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px 0px no-repeat;"></div>
+						</div>
+					</div>
+					<div title="Запрос координат" data-id="update_position" data-number="8" data-command="43" class="update_position control-button control-right1">
+						<div class="control-push"></div>
+						<div class="control-icon">
+							<div class="control-icon-update_position" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -360px 0px;"></div>
+						</div>
+					</div>	
+					<div title="Активировать доп канал" data-id="add-command" data-number="9" data-command="0" class="add-command control-button control-right2">	
+					<div class="control-push"></div>
+						<div class="control-icon">
+						<div class="control-icon-out" style="background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -180px 0px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
        <% vis.binds.starline.createWidgetControl(this.data.wid, this.view, this.data, this.style);%>
 	</div>
 </script>
