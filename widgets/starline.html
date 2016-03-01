@@ -1,5 +1,5 @@
 <!--
-    ioBroker.Starline Widget-Set
+    ioBroker.Starline Widget-Set 
     version: "0.1.0"
     Copyright 10.2015-2016 instalator <vvvalt@mail.ru>
 -->
@@ -10,19 +10,20 @@
         type="text/ejs"
         class="vis-tpl"
         data-vis-prev='<img src="widgets/starline/img/state.png"></img>'
-		data-vis-attrs="oid_alias/id/changeOid;oid_ctemp/id;oid_gsm_lvl/id;oid_gps_lvl/id;oid_car_state_valet/id;oid_status/id;oid_car_state_arm/id;oid_control_checkballance/id;oid_control_checktemp/id;"
-        data-vis-attrs="group.alarm;oid_hijack/id;oid_tilt/id;oid_hammer1/id;oid_hammer2/id;oid_trunk/id;oid_trunk_r/id;oid_doors/id;oid_doors_r/id;oid_ign/id;oid_run/id;oid_run_r/id;oid_hood/id;oid_hood_r/id;"
-		data-vis-attrs="oid_parking/id;oid_parking_r/id;oid_key/id;oid_key_r/id;oid_neutral/id;oid_hfree/id;"
+		data-vis-attrs="oid_alias/id/changeOid;oid_ctemp/id;oid_etemp/id;oid_balance/id;oid_battery/id;oid_gsm_lvl/id;oid_gps_lvl/id;oid_status/id;"
+		data-vis-attrs0="group.alr_state;oid_alr_state_door/id;oid_alr_state_add_h/id;oid_alr_state_add_l/id;oid_alr_state_hbrake/id;oid_alr_state_hood/id;oid_alr_state_ign/id;oid_alr_state_pbrake/id;oid_alr_state_shock_h/id;oid_alr_state_shock_l/id;oid_alr_state_tilt/id;oid_alr_state_trunk/id;"
+		data-vis-attrs1="group.car_state;oid_car_state_arm/id;oid_car_state_door/id;oid_car_state_hijack/id;oid_car_state_valet/id;oid_car_state_hood/id;oid_car_state_ign/id;oid_car_state_trunk/id;oid_car_state_hbrake/id;oid_car_state_pbrake/id;oid_car_state_run/id;"
+		data-vis-attrs2="group.check;oid_checkballance/id;oid_checktemp/id;"
         data-vis-set="starline"
         data-vis-type="val"
 		data-vis-beta="true"
-        data-vis-name="Show car status">
+        data-vis-name="Show car status"> 
     <div class="vis-widget <%== this.data.attr('class') %>" style="width:317px; height:237px" id="<%= this.data.attr('wid') %>" >
 		<div class="starline_header">
 			<div class="gpsgsm-cont">
 				<div class="gpsgsm-status">
 					<div class="clearfix">
-						<div style="float:left"><div class="gsm-status" title="" data-level=""></div>
+						<div style="float:left"><div class="gsm-status" data-level=""></div>
 							<div align="center" class="greyColor" style="color:#59626E;font-size:90%">gsm</div>
 						</div>
 						<div style="float:left;margin-left:10px;">
