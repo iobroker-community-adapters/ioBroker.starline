@@ -97,7 +97,7 @@ vis.binds.starline = {
 			// convert time
 			if (states.oid_alias) {
 				var date = new Date(1000 * vis.states[data.oid_alias + '.ts']).toGMTString();
-				$div.find('.date').html('Данные на ' + date);
+				$div.find('.datedata').html('Данные на ' + date);
 			}
 
 			// convert gsm
