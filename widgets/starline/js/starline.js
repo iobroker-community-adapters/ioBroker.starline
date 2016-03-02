@@ -181,7 +181,7 @@ vis.binds.starline = {
 				if (states.oid_alr_state_shock_l.val == 1){
 					$('.car-hammer1-red').attr('style', 'opacity: 1');
 					$('.car-hammer1-red').addClass("blink_me");
-				}
+				} //else
 				if (states.oid_alr_state_shock_h.val == 1){
 					$('.car-hammer2-red').attr('style', 'opacity: 1');
 					$('.car-hammer2-red').addClass("blink_me");
@@ -233,10 +233,10 @@ vis.binds.starline = {
 				if (states.oid_car_state_ign.val == 1){
 					$('.car-key').attr('style', 'opacity: 1');
 				}
-				if (states.oid_balance.val <=60){
-					$('.balance_icon').addClass("blink_me");
-				}
 			}
+			if (states.oid_balance.val <=60){
+				$('.balance_icon').addClass("blink_me");
+			} else {$('.balance_icon').removeClass("blink_me");}
 
 		/*	if (neutral == 1){$('.car-neutral').attr('style', 'opacity: 1');}
 			if (hfree == 1){$('.car-hfree').attr('style', 'opacity: 1');}*/
