@@ -35,22 +35,22 @@ vis.binds.starline = {
     },
 	states: {
 		//
-		oid_alias: 					{val: undefined, selector: '.alias_value',			blink: false, objName: 'alias'},
-		oid_ctemp: 					{val: undefined, selector: '',						blink: false, objName: 'ctemp'},
-		oid_etemp: 					{val: undefined, selector: '',						blink: false, objName: 'etemp'},
-		oid_balance:  				{val: undefined, selector: '',						blink: false, objName: 'balance'},
-		oid_battery: 				{val: undefined, selector: '',						blink: false, objName: 'battery'},
-		oid_gsm_lvl: 				{val: undefined, selector: '.gsm-status',			blink: false, objName: 'gsm_lvl'},
+		oid_alias:					{val: undefined, selector: '.alias_value',			blink: false, objName: 'alias'},
+		oid_ctemp:					{val: undefined, selector: '',						blink: false, objName: 'ctemp'},
+		oid_etemp:					{val: undefined, selector: '',						blink: false, objName: 'etemp'},
+		oid_balance:				{val: undefined, selector: '',						blink: false, objName: 'balance'},
+		oid_battery:				{val: undefined, selector: '',						blink: false, objName: 'battery'},
+		oid_gsm_lvl:				{val: undefined, selector: '.gsm-status',			blink: false, objName: 'gsm_lvl'},
 		oid_gps_lvl: 				{val: undefined, selector: '.gps-status',	    	blink: false, objName: 'gps_lvl'},
 		oid_status: 				{val: undefined, selector: '.menu-status',			blink: false, objName: 'status'},
 		//
 		oid_car_state_arm:			{val: undefined, selector: '.car-arm > .s1, .car-arm > .s2, .car-arm > .s3, .car-arm > .s4, .car-arm > .s5', blink: false, objName: 'car_state.arm'},
-		oid_car_state_door: 		{val: undefined, selector: '.car-doors',			blink: false, objName: 'car_state.door'},
-		oid_car_state_hijack: 		{val: undefined, selector: '.hijack-border',		blink: false, objName: 'car_state.hijack'},
-		oid_car_state_valet: 		{val: undefined, selector: '.valet-border',			blink: false, objName: 'car_state.valet'},
-		oid_car_state_hood: 		{val: undefined, selector: '.car-hood',				blink: false, objName: 'car_state.hood'},
-		oid_car_state_ign: 			{val: undefined, selector: '.car-ign > .s1, .car-arm > .s2, .car-arm > .s3', blink: false, objName: 'car_state.ign'},
-		oid_car_state_trunk: 		{val: undefined, selector: '.car-trunk',			blink: false, objName: 'car_state.trunk'},
+		oid_car_state_door:			{val: undefined, selector: '.car-doors',			blink: false, objName: 'car_state.door'},
+		oid_car_state_hijack:		{val: undefined, selector: '.hijack-border',		blink: false, objName: 'car_state.hijack'},
+		oid_car_state_valet:		{val: undefined, selector: '.valet-border',			blink: false, objName: 'car_state.valet'},
+		oid_car_state_hood:			{val: undefined, selector: '.car-hood',				blink: false, objName: 'car_state.hood'},
+		oid_car_state_ign:			{val: undefined, selector: '.car-ign > .s1, .car-arm > .s2, .car-arm > .s3', blink: false, objName: 'car_state.ign'},
+		oid_car_state_trunk:		{val: undefined, selector: '.car-trunk',			blink: false, objName: 'car_state.trunk'},
 		oid_car_state_hbrake: 		{val: undefined, selector: '',						blink: false, objName: 'car_state.hbrake'},
 		oid_car_state_pbrake: 		{val: undefined, selector: '',						blink: false, objName: 'car_state.pbrake'},
 		oid_car_state_run: 			{val: undefined, selector: '.car-run',				blink: false, objName: 'car_state.run'},
@@ -352,15 +352,15 @@ vis.binds.starline = {
 		
 		
 		debugger;
-		        // subscribe on updates of values
-				for (var s in vis.binds.starline.states) {
-					if (!data[s] || data[s] == 'nothing_selected') continue;
+		    // subscribe on updates of values
+			for (var s in vis.binds.starline.states) {
+				if (!data[s] || data[s] == 'nothing_selected') continue;
 					vis.states.bind(data[s] + '.val', function () {
 						updateStatesControl();
 					});
 				}
-				// initial update
-				updateStatesControl();
+			// initial update
+			updateStatesControl();
     }*/
 };
 
