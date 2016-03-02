@@ -71,6 +71,16 @@ vis.binds.starline = {
 		oid_checkballance: 			{val: undefined, selector: '',						blink: false, objName: 'control.checkballance'},
 		oid_checktemp: 				{val: undefined, selector: '',						blink: false, objName: 'control.checktemp'}
 	},
+/*	control: {
+		oid_alias: 				{val: undefined, selector: '',		blink: false, objName: 'alias'},
+		oid_car_state_arm:		{val: undefined, selector: '',		blink: false, objName: 'car_state.arm'},
+		oid_car_state_valet: 	{val: undefined, selector: '',		blink: false, objName: 'car_state.valet'},
+		oid_car_state_run: 		{val: undefined, selector: '',		blink: false, objName: 'car_state.run'},
+		oid_car_state_hijack: 	{val: undefined, selector: '',		blink: false, objName: 'car_state.hijack'},
+		oid_alr_state_shock_h:	{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.shock_h'},
+		oid_alr_state_shock_l:	{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.shock_l'},
+		oid_alr_state_tilt:		{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.tilt'},
+	},*/
 	createWidgetStatus: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
 		// if nothing found => wait
@@ -235,104 +245,105 @@ vis.binds.starline = {
             }, 100);
         }
 		
-		var valet = vis.states[data.oid + '.car_state.valet.val'];
-		var arm = vis.states[data.oid + '.car_state.arm.val'];
-		var ign = vis.states[data.oid + '.car_state.ign.val'];
-		var hijack = vis.states[data.oid + '.car_state.hijack.val'];
-		var webasto = vis.states[data.oid + '.car_state.webasto.val'];
-		var shock_bpass = vis.states[data.oid + '.car_state.shock_bpass.val'];
-		var tilt_bpass = vis.states[data.oid + '.car_state.tilt_bpass.val'];
+		function updateStatesControl() {
+			var control = JSON.parse(JSON.stringify(vis.binds.starline.states));
+			
+			// read all states
+			for (var s in states) {
+				if (data[s] && data[s] !== 'nothing_selected') states[s].val = vis.states[data[s] + '.val'];
+			}
+			
+					$( ".control-icon-hijack" ).bind( "click", function() {
+					vis.setValue(data.oid + '.control.hijack', 1);
+				});
+				$( ".control-icon-arm" ).bind( "click", function() {
+					if (arm == 0 || arm == 2){
+						vis.setValue(data.oid + '.control.arm', 1);
+					}
+					else {
+						vis.setValue(data.oid + '.control.arm', 0);
+					}
+				});
+				$( ".control-icon-ign" ).bind( "click", function() {
+					if (ign == 0 || ign == 2){
+						vis.setValue(data.oid + '.control.ign', 1);
+					}
+					else {
+						vis.setValue(data.oid + '.control.ign', 0);
+					}
+				});
+				$( ".control-icon-poke" ).bind( "click", function() {
+					vis.setValue(data.oid + '.control.poke', 1);
+				});		
+				$( ".control-icon-webasto" ).bind( "click", function() {
+					if (webasto == 0 || webasto == 2){
+						vis.setValue(data.oid + '.control.webasto', 1);
+					}
+					else {
+						vis.setValue(data.oid + '.control.webasto', 0);
+					}
+				});
+				$( ".control-icon-shock_bpass" ).bind( "click", function() {
+					if (shock_bpass == 0 || shock_bpass == 2){
+						vis.setValue(data.oid + '.control.shock_bpass', 1);
+					}
+					else {
+						vis.setValue(data.oid + '.control.shock_bpass', 0);
+					}
+				});
+				$( ".control-icon-tilt_bpass" ).bind( "click", function() {
+					if (tilt_bpass == 0 || tilt_bpass == 2){
+						vis.setValue(data.oid + '.control.tilt_bpass', 1);
+					}
+					else {
+						vis.setValue(data.oid + '.control.tilt_bpass', 0);
+					}
+				});
+				$( ".control-icon-valet" ).bind( "click", function() {
+					if (tilt_bpass == 0 || tilt_bpass == 2){
+						vis.setValue(data.oid + '.control.valet', 1);
+					}
+					else {
+						vis.setValue(data.oid + '.control.valet', 0);
+					}
+				});
+				$( ".control-icon-update_position" ).bind( "click", function() {
+					vis.setValue(data.oid + '.control.update_position', 1);
+				});
+				$( ".control-icon-out" ).bind( "click", function() {
+					vis.setValue(data.oid + '.control.out', 1);
+				});
+				$( ".control-button-toright" ).bind( "click", function() {
+					$('.control-items').animate({ "marginLeft": "-=267px" }, "slow" );
+					$('.control-button-toleft').removeClass("off");
+					$('.control-button-toright').addClass("off");
+				});
+				$( ".control-button-toleft" ).bind( "click", function() {
+					$('.control-items').animate({ "marginLeft": "+=267px" }, "slow" );
+					$('.control-button-toright').removeClass("off");
+					$('.control-button-toleft').addClass("off");
+				});
+				
+				if (hijack == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');}
+				if (arm == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');}
+				if (ign == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');}
+				if (webasto == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');}
+				if (shock_bpass == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');}
+				if (tilt_bpass == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
+				if (valet == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
+					
+		}
 		
-
-        
-
-        $('#' + widgetID).html(text);
-		
-		$( ".control-icon-hijack" ).bind( "click", function() {
-			vis.setValue(data.oid + '.control.hijack', 1);
-		});
-		$( ".control-icon-arm" ).bind( "click", function() {
-			if (arm == 0 || arm == 2){
-				vis.setValue(data.oid + '.control.arm', 1);
-			}
-			else {
-				vis.setValue(data.oid + '.control.arm', 0);
-			}
-		});
-		$( ".control-icon-ign" ).bind( "click", function() {
-			if (ign == 0 || ign == 2){
-				vis.setValue(data.oid + '.control.ign', 1);
-			}
-			else {
-				vis.setValue(data.oid + '.control.ign', 0);
-			}
-		});
-		$( ".control-icon-poke" ).bind( "click", function() {
-			vis.setValue(data.oid + '.control.poke', 1);
-		});		
-		$( ".control-icon-webasto" ).bind( "click", function() {
-			if (webasto == 0 || webasto == 2){
-				vis.setValue(data.oid + '.control.webasto', 1);
-			}
-			else {
-				vis.setValue(data.oid + '.control.webasto', 0);
-			}
-		});
-		$( ".control-icon-shock_bpass" ).bind( "click", function() {
-			if (shock_bpass == 0 || shock_bpass == 2){
-				vis.setValue(data.oid + '.control.shock_bpass', 1);
-			}
-			else {
-				vis.setValue(data.oid + '.control.shock_bpass', 0);
-			}
-		});
-		$( ".control-icon-tilt_bpass" ).bind( "click", function() {
-			if (tilt_bpass == 0 || tilt_bpass == 2){
-				vis.setValue(data.oid + '.control.tilt_bpass', 1);
-			}
-			else {
-				vis.setValue(data.oid + '.control.tilt_bpass', 0);
-			}
-		});
-		$( ".control-icon-valet" ).bind( "click", function() {
-			if (tilt_bpass == 0 || tilt_bpass == 2){
-				vis.setValue(data.oid + '.control.valet', 1);
-			}
-			else {
-				vis.setValue(data.oid + '.control.valet', 0);
-			}
-		});
-		$( ".control-icon-update_position" ).bind( "click", function() {
-			vis.setValue(data.oid + '.control.update_position', 1);
-		});
-		$( ".control-icon-out" ).bind( "click", function() {
-			vis.setValue(data.oid + '.control.out', 1);
-		});
-		$( ".control-button-toright" ).bind( "click", function() {
-			$('.control-items').animate({ "marginLeft": "-=267px" }, "slow" );
-			$('.control-button-toleft').removeClass("off");
-			$('.control-button-toright').addClass("off");
-		});
-		$( ".control-button-toleft" ).bind( "click", function() {
-			$('.control-items').animate({ "marginLeft": "+=267px" }, "slow" );
-			$('.control-button-toright').removeClass("off");
-			$('.control-button-toleft').addClass("off");
-		});
-		
-		if (hijack == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');}
-		if (arm == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');}
-		if (ign == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');}
-		if (webasto == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');}
-		if (shock_bpass == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');}
-		if (tilt_bpass == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
-		if (valet == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
-		
-        // subscribe on updates of value
-        if (vis.states[data.oid + '.alias.val']) {
-            vis.states.bind(data.oid + '.alias.val', function (e, newVal, oldVal) {
-                $div.find('.alias_value').html(newVal);
-            });
-        }
+		debugger;
+		        // subscribe on updates of values
+				for (var s in vis.binds.starline.states) {
+					if (!data[s] || data[s] == 'nothing_selected') continue;
+					vis.states.bind(data[s] + '.val', function () {
+						updateStatesControl();
+					});
+				}
+				// initial update
+				updateStatesControl();
     }*/
 };
 
