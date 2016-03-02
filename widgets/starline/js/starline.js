@@ -34,42 +34,38 @@ vis.binds.starline = {
         }
     },
 	states: {
-		//
-		oid_alias:					{val: undefined, selector: '.alias_value',			blink: false, objName: 'alias'},
-		oid_ctemp:					{val: undefined, selector: '',						blink: false, objName: 'ctemp'},
-		oid_etemp:					{val: undefined, selector: '',						blink: false, objName: 'etemp'},
-		oid_balance:				{val: undefined, selector: '',						blink: false, objName: 'balance'},
-		oid_battery:				{val: undefined, selector: '',						blink: false, objName: 'battery'},
-		oid_gsm_lvl:				{val: undefined, selector: '.gsm-status',			blink: false, objName: 'gsm_lvl'},
-		oid_gps_lvl: 				{val: undefined, selector: '.gps-status',	    	blink: false, objName: 'gps_lvl'},
-		oid_status: 				{val: undefined, selector: '.menu-status',			blink: false, objName: 'status'},
-		//
-		oid_car_state_arm:			{val: undefined, selector: '.car-arm > .s1, .car-arm > .s2, .car-arm > .s3, .car-arm > .s4, .car-arm > .s5', blink: false, objName: 'car_state.arm'},
-		oid_car_state_door:			{val: undefined, selector: '.car-doors',			blink: false, objName: 'car_state.door'},
-		oid_car_state_hijack:		{val: undefined, selector: '.hijack-border',		blink: false, objName: 'car_state.hijack'},
-		oid_car_state_valet:		{val: undefined, selector: '.valet-border',			blink: false, objName: 'car_state.valet'},
-		oid_car_state_hood:			{val: undefined, selector: '.car-hood',				blink: false, objName: 'car_state.hood'},
-		oid_car_state_ign:			{val: undefined, selector: '.car-ign > .s1, .car-arm > .s2, .car-arm > .s3', blink: false, objName: 'car_state.ign'},
-		oid_car_state_trunk:		{val: undefined, selector: '.car-trunk',			blink: false, objName: 'car_state.trunk'},
-		oid_car_state_hbrake: 		{val: undefined, selector: '',						blink: false, objName: 'car_state.hbrake'},
-		oid_car_state_pbrake: 		{val: undefined, selector: '',						blink: false, objName: 'car_state.pbrake'},
-		oid_car_state_run: 			{val: undefined, selector: '.car-run',				blink: false, objName: 'car_state.run'},
-		//
-		oid_alr_state_door:			{val: undefined, selector: '.car-doors-red',		blink: false, objName: 'car_alr_state.door'},
-		oid_alr_state_add_h:		{val: undefined, selector: '',						blink: false, objName: 'car_alr_state.add_h'},
-		oid_alr_state_add_l:		{val: undefined, selector: '',						blink: false, objName: 'car_alr_state.add_l'},
-		oid_alr_state_hbrake:		{val: undefined, selector: '',						blink: false, objName: 'car_alr_state.hbrake'},
-		oid_alr_state_hood:			{val: undefined, selector: '.car-hood-red',			blink: false, objName: 'car_alr_state.hood'},
-		oid_alr_state_ign:			{val: undefined, selector: '.car-key-red',			blink: false, objName: 'car_alr_state.ign'},
-		oid_alr_state_pbrake:		{val: undefined, selector: '',						blink: false, objName: 'car_alr_state.pbrake'},
-		oid_alr_state_shock_h:		{val: undefined, selector: '.car-hammer2-red',		blink: false, objName: 'car_alr_state.shock_h'},
-		oid_alr_state_shock_l:		{val: undefined, selector: '.car-hammer1-red',		blink: false, objName: 'car_alr_state.shock_l'},
-		oid_alr_state_tilt:			{val: undefined, selector: '.car-tiltsensor-red',	blink: false, objName: 'car_alr_state.tilt'},
-		oid_alr_state_trunk:		{val: undefined, selector: '.car-trunk-red',		blink: false, objName: 'car_alr_state.trunk'},
-		oid_alr_state_hijack:		{val: undefined, selector: '',						blink: false, objName: 'car_alr_state.hijack'},
-		//
-		oid_checkballance: 			{val: undefined, selector: '',						blink: false, objName: 'control.checkballance'},
-		oid_checktemp: 				{val: undefined, selector: '',						blink: false, objName: 'control.checktemp'}
+		oid_alias:					{val: false, selector: '.alias_value',			blink: false, objName: 'alias'},
+		oid_ctemp:					{val: false, selector: '',						blink: false, objName: 'ctemp'},
+		oid_etemp:					{val: false, selector: '',						blink: false, objName: 'etemp'},
+		oid_balance:				{val: false, selector: '',						blink: false, objName: 'balance'},
+		oid_battery:				{val: false, selector: '',						blink: false, objName: 'battery'},
+		oid_gsm_lvl:				{val: false, selector: '.gsm-status',			blink: false, objName: 'gsm_lvl'},
+		oid_gps_lvl: 				{val: false, selector: '.gps-status',	    	blink: false, objName: 'gps_lvl'},
+		oid_status: 				{val: false, selector: '.menu-status',			blink: false, objName: 'status'},
+		oid_car_state_arm:			{val: false, selector: '.car-arm > .s1, .car-arm > .s2, .car-arm > .s3, .car-arm > .s4, .car-arm > .s5', blink: false, objName: 'car_state.arm'},
+		oid_car_state_door:			{val: false, selector: '.car-doors',			blink: false, objName: 'car_state.door'},
+		oid_car_state_hijack:		{val: false, selector: '.hijack-border',		blink: false, objName: 'car_state.hijack'},
+		oid_car_state_valet:		{val: false, selector: '.valet-border',			blink: false, objName: 'car_state.valet'},
+		oid_car_state_hood:			{val: false, selector: '.car-hood',				blink: false, objName: 'car_state.hood'},
+		oid_car_state_ign:			{val: false, selector: '.car-ign > .s1, .car-arm > .s2, .car-arm > .s3', blink: false, objName: 'car_state.ign'},
+		oid_car_state_trunk:		{val: false, selector: '.car-trunk',			blink: false, objName: 'car_state.trunk'},
+		oid_car_state_hbrake: 		{val: false, selector: '',						blink: false, objName: 'car_state.hbrake'},
+		oid_car_state_pbrake: 		{val: false, selector: '',						blink: false, objName: 'car_state.pbrake'},
+		oid_car_state_run: 			{val: false, selector: '.car-run',				blink: false, objName: 'car_state.run'},
+		oid_alr_state_door:			{val: false, selector: '.car-doors-red',		blink: false, objName: 'car_alr_state.door'},
+		oid_alr_state_add_h:		{val: false, selector: '',						blink: false, objName: 'car_alr_state.add_h'},
+		oid_alr_state_add_l:		{val: false, selector: '',						blink: false, objName: 'car_alr_state.add_l'},
+		oid_alr_state_hbrake:		{val: false, selector: '',						blink: false, objName: 'car_alr_state.hbrake'},
+		oid_alr_state_hood:			{val: false, selector: '.car-hood-red',			blink: false, objName: 'car_alr_state.hood'},
+		oid_alr_state_ign:			{val: false, selector: '.car-key-red',			blink: false, objName: 'car_alr_state.ign'},
+		oid_alr_state_pbrake:		{val: false, selector: '',						blink: false, objName: 'car_alr_state.pbrake'},
+		oid_alr_state_shock_h:		{val: false, selector: '.car-hammer2-red',		blink: false, objName: 'car_alr_state.shock_h'},
+		oid_alr_state_shock_l:		{val: false, selector: '.car-hammer1-red',		blink: false, objName: 'car_alr_state.shock_l'},
+		oid_alr_state_tilt:			{val: false, selector: '.car-tiltsensor-red',	blink: false, objName: 'car_alr_state.tilt'},
+		oid_alr_state_trunk:		{val: false, selector: '.car-trunk-red',		blink: false, objName: 'car_alr_state.trunk'},
+		oid_alr_state_hijack:		{val: false, selector: '',						blink: false, objName: 'car_alr_state.hijack'},
+		oid_checkballance: 			{val: false, selector: '',						blink: false, objName: 'control.checkballance'},
+		oid_checktemp: 				{val: false, selector: '',						blink: false, objName: 'control.checktemp'}
 	},
 /*	control: {
 		oid_alias: 						{val: undefined, selector: '',		blink: false, objName: 'alias'},
@@ -104,7 +100,6 @@ vis.binds.starline = {
 		function setVisible(selector, isVisible, isBlink) {
 			if (isVisible) {
 				$(selector).show();
-
 			} else {
 				$(selector).hide();
 			}
@@ -122,7 +117,7 @@ vis.binds.starline = {
 
 			// read all states
 			for (var s in states) {
-				if (data[s] && data[s] !== 'nothing_selected') states[s].val = vis.states[data[s] + '.val'];
+				if (data[s] && data[s] !== 'nothing_selected') { states[s].val = vis.states[data[s] + '.val']; }
 			}
 
 			// convert time
@@ -134,29 +129,30 @@ vis.binds.starline = {
 			// convert gsm
 			if (states.oid_gsm_lvl.val >= 1  && states.oid_gsm_lvl.val <= 7)  {
 				gsm = 1;
-			} else
-			if (states.oid_gsm_lvl.val >= 7  && states.oid_gsm_lvl.val <  14) {
+			} 
+			else if (states.oid_gsm_lvl.val >= 7  && states.oid_gsm_lvl.val <  14) {
 				gsm = 2;
-			} else
-			if (states.oid_gsm_lvl.val >= 14 && states.oid_gsm_lvl.val <  21) {
+			} 
+			else if (states.oid_gsm_lvl.val >= 14 && states.oid_gsm_lvl.val <  21) {
 				gsm = 3;
-			} else
-			if (states.oid_gsm_lvl.val >= 21 && states.oid_gsm_lvl.val <  28) {
+			} 
+			else if (states.oid_gsm_lvl.val >= 21 && states.oid_gsm_lvl.val <  28) {
 				gsm = 4;
-			} else
-			if (states.oid_gsm_lvl.val >= 28 && states.oid_gsm_lvl.val <= 30) {
+			} 
+			else if (states.oid_gsm_lvl.val >= 28 && states.oid_gsm_lvl.val <= 30) {
 				gsm = 5;
 			}
 
 			if (states.oid_gps_lvl.val >= 1  && states.oid_gps_lvl.val <= 7) {
 				gps = 1;
-			} else
-			if (states.oid_gps_lvl.val >= 7  && states.oid_gps_lvl.val < 14) {
+			} 
+			else if (states.oid_gps_lvl.val >= 7  && states.oid_gps_lvl.val < 14) {
 				gps = 2;
-			} else
-			if (states.oid_gps_lvl.val >= 14 && states.oid_gps_lvl.val < 21) {
+			} 
+			else if (states.oid_gps_lvl.val >= 14 && states.oid_gps_lvl.val < 21) {
 				gps = 3;
 			}
+			
 			if (states.oid_gsm_lvl){
 				$('.gsm-status').attr('data-level', gsm);
 			}
@@ -182,18 +178,42 @@ vis.binds.starline = {
 			}
 			if (states.oid_car_state_arm == 1){
 				$('.car-arm').addClass("on");
-				if (oid_alr_state_shock_l == 1){$('.car-hammer1-red').attr('style', 'opacity: 1');$('.car-hammer1-red').addClass("blink_me");}
-				if (oid_alr_state_shock_h == 1){$('.car-hammer2-red').attr('style', 'opacity: 1');$('.car-hammer2-red').addClass("blink_me");}
-				if (oid_alr_state_tilt == 1){$('.car-tiltsensor-red').attr('style', 'opacity: 1');$('.car-tiltsensor-red').addClass("blink_me");}
-				if (oid_alr_state_trunk == 1){$('.car-trunk-red').attr('style', 'opacity: 1');$('.car-trunk-red').addClass("blink_me");}
-				if (oid_alr_state_door == 1){$('.car-doors-red').attr('style', 'opacity: 1');$('.car-doors-red').addClass("blink_me");}
-				if (oid_alr_state_ign == 1){$('.car-key-red').attr('style', 'opacity: 1');$('.car-key-red').addClass("blink_me");}
-				if (oid_alr_state_hood == 1){$('.car-hood-red').attr('style', 'opacity: 1');$('.car-hood-red').addClass("blink_me");}
-				if (oid_alr_state_pbrake == 1 || oid_alr_state_hbrake == 1){$('.car-parking-red').attr('style', 'opacity: 1');$('.car-parking-red').addClass("blink_me");}
-				/*if (key_r == 1){$('.car-key-red').attr('style', 'opacity: 1');$('.car-key-red').addClass("blink_me");}*/
-			} else if (states.oid_car_state_arm != 1){
+				if (oid_alr_state_shock_l == 1){
+					$('.car-hammer1-red').attr('style', 'opacity: 1');
+					$('.car-hammer1-red').addClass("blink_me");
+				}
+				if (oid_alr_state_shock_h == 1){
+					$('.car-hammer2-red').attr('style', 'opacity: 1');
+					$('.car-hammer2-red').addClass("blink_me");
+				}
+				if (oid_alr_state_tilt == 1){
+					$('.car-tiltsensor-red').attr('style', 'opacity: 1');
+					$('.car-tiltsensor-red').addClass("blink_me");
+				}
+				if (oid_alr_state_trunk == 1){
+					$('.car-trunk-red').attr('style', 'opacity: 1');
+					$('.car-trunk-red').addClass("blink_me");
+				}
+				if (oid_alr_state_door == 1){
+					$('.car-doors-red').attr('style', 'opacity: 1');
+					$('.car-doors-red').addClass("blink_me");
+				}
+				if (oid_alr_state_ign == 1){
+					$('.car-key-red').attr('style', 'opacity: 1');
+					$('.car-key-red').addClass("blink_me");
+				}
+				if (oid_alr_state_hood == 1){
+					$('.car-hood-red').attr('style', 'opacity: 1');
+					$('.car-hood-red').addClass("blink_me");
+				}
+				if (oid_alr_state_pbrake == 1 || oid_alr_state_hbrake == 1){
+					$('.car-parking-red').attr('style', 'opacity: 1');
+					$('.car-parking-red').addClass("blink_me");
+				}
+			}
+			else if (states.oid_car_state_arm != 1){
 				$('.car-arm').removeClass("on");
-				//if (oid_car_state_trunk == 1){$('.car-trunk').attr('style', 'opacity: 1');}
+				if (oid_car_state_trunk == 1){$('.car-trunk').attr('style', 'opacity: 1');}
 				if (oid_car_state_door == 1){$('.car-doors').attr('style', 'opacity: 1');}
 				if (oid_car_state_run == 1){$('.car-run').attr('style', 'opacity: 1');$('.car-ign > .light').attr('style', 'opacity: 1');$('.car-ign > .light').addClass("blink_me");}
 				if (oid_car_state_hood == 1){$('.car-hood').attr('style', 'opacity: 1');}
@@ -245,7 +265,8 @@ vis.binds.starline = {
 		}
 		// initial update
 		updateStates();
-    }//,
+    }
+	
 	
 /*	createWidgetControl: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
@@ -362,23 +383,29 @@ vis.binds.starline = {
 			// initial update
 			updateStatesControl();
     }*/
+	
+
 };
 
 if (vis.editMode) {
-	vis.binds.starline.changeOid = function (widgetID, view, newId, attr, isCss) {
-		newId = newId.substring(0, newId.length - attr.length + 'oid_'.length);
-		var changed = [];
-		for (var s in vis.binds.starline.states) {
-			if (s === 'oid_alias' || !vis.binds.starline.states[s].objName) continue;
-			if (vis.objects[newId + vis.binds.starline.states[s].objName]) {
-				changed.push(s);
-				vis.views[view].widgets[widgetID].data[s] 	= newId + vis.binds.starline.states[s].objName;
-				vis.widgets[widgetID].data[s] 				= newId + vis.binds.starline.states[s].objName;
-			}
-		}
-
-		return changed;
-	};
-}
+ 	vis.binds.starline.changeOid = function (widgetID, view, newId, attr, isCss) {
+		console.log('---------: ' + widgetID +' - '+view+' - '+newId+' - '+attr+' - '+isCss);
+		/*if (newId){
+			newId = newId.substring(0, newId.length - attr.length + 'oid_'.length);
+		}*/
+		newId = newId ? newId.substring(0, newId.length - attr.length + 'oid_'.length) : '';
+ 		var changed = [];
+ 		for (var s in vis.binds.starline.states) {
+ 			if (s === 'oid_alias' || !vis.binds.starline.states[s].objName) continue;
+ 			if (vis.objects[newId + vis.binds.starline.states[s].objName]) {
+ 				changed.push(s);
+ 				vis.views[view].widgets[widgetID].data[s] 	= newId + vis.binds.starline.states[s].objName;
+ 				vis.widgets[widgetID].data[s] 				= newId + vis.binds.starline.states[s].objName;
+ 			}
+ 		}
+ 
+ 		return changed;
+ 	};
+ }
 
 vis.binds.starline.showVersion();
