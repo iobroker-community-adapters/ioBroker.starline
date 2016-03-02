@@ -72,14 +72,25 @@ vis.binds.starline = {
 		oid_checktemp: 				{val: undefined, selector: '',						blink: false, objName: 'control.checktemp'}
 	},
 /*	control: {
-		oid_alias: 				{val: undefined, selector: '',		blink: false, objName: 'alias'},
-		oid_car_state_arm:		{val: undefined, selector: '',		blink: false, objName: 'car_state.arm'},
-		oid_car_state_valet: 	{val: undefined, selector: '',		blink: false, objName: 'car_state.valet'},
-		oid_car_state_run: 		{val: undefined, selector: '',		blink: false, objName: 'car_state.run'},
-		oid_car_state_hijack: 	{val: undefined, selector: '',		blink: false, objName: 'car_state.hijack'},
-		oid_alr_state_shock_h:	{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.shock_h'},
-		oid_alr_state_shock_l:	{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.shock_l'},
-		oid_alr_state_tilt:		{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.tilt'},
+		oid_alias: 						{val: undefined, selector: '',		blink: false, objName: 'alias'},
+		oid_car_state_arm:				{val: undefined, selector: '',		blink: false, objName: 'car_state.arm'},
+		oid_car_state_valet:			{val: undefined, selector: '',		blink: false, objName: 'car_state.valet'},
+		oid_car_state_run:				{val: undefined, selector: '',		blink: false, objName: 'car_state.run'},
+		oid_car_state_hijack:			{val: undefined, selector: '',		blink: false, objName: 'car_state.hijack'},
+		oid_alr_state_shock_h:			{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.shock_h'},
+		oid_alr_state_shock_l:			{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.shock_l'},
+		oid_alr_state_tilt:				{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.tilt'},
+		//
+		oid_control_hijack:				{val: undefined, selector: '',		blink: false, objName: 'control.hijack'},
+		oid_control_arm:				{val: undefined, selector: '',		blink: false, objName: 'control.arm'},
+		oid_control_run:				{val: undefined, selector: '',		blink: false, objName: 'control.run'},
+		oid_control_poke:				{val: undefined, selector: '',		blink: false, objName: 'control.poke'},
+		oid_control_webasto:			{val: undefined, selector: '',		blink: false, objName: 'control.webasto'},
+		oid_control_shock_bpass:		{val: undefined, selector: '',		blink: false, objName: 'control.shock_bpass'},
+		oid_control_tilt_bpass:			{val: undefined, selector: '',		blink: false, objName: 'control.tilt_bpass'},
+		oid_control_valet:				{val: undefined, selector: '',		blink: false, objName: 'control.valet'},
+		oid_control_update_position:	{val: undefined, selector: '',		blink: false, objName: 'control.update_position'},
+		oid_control_out:				{val: undefined, selector: '',		blink: false, objName: 'control.out'}
 	},*/
 	createWidgetStatus: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
@@ -246,24 +257,38 @@ vis.binds.starline = {
         }
 		
 		function updateStatesControl() {
-			var control = JSON.parse(JSON.stringify(vis.binds.starline.states));
+			var control = JSON.parse(JSON.stringify(vis.binds.starline.control));
 			
 			// read all states
-			for (var s in states) {
+			for (var s in control) {
 				if (data[s] && data[s] !== 'nothing_selected') states[s].val = vis.states[data[s] + '.val'];
 			}
+
+				if (oid_car_state_hijack == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');}
+				if (oid_car_state_arm == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');}
+				if (oid_car_state_run == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');}
+				//if (webasto == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');}
+				if (oid_alr_state_shock_h == 1 || oid_alr_state_shock_l == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');}
+				if (oid_alr_state_tilt == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
+				if (oid_car_state_valet == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
+		}
 			
-					$( ".control-icon-hijack" ).bind( "click", function() {
-					vis.setValue(data.oid + '.control.hijack', 1);
+				$(".control-icon-hijack").click(function () {
+					vis.setValue(data.oid_control_hijack', 1);
 				});
-				$( ".control-icon-arm" ).bind( "click", function() {
-					if (arm == 0 || arm == 2){
-						vis.setValue(data.oid + '.control.arm', 1);
-					}
-					else {
-						vis.setValue(data.oid + '.control.arm', 0);
+				
+			//	$( ".control-icon-hijack" ).bind( "click", function() {
+			//		vis.setValue(data.oid + '.control.hijack', 1);
+			//	});
+				$(".control-icon-arm").click(function () {
+					if (oid_car_state_arm == 0 || oid_car_state_arm == 2){
+						vis.setValue(data.oid_control_arm', 1);
+					} else {
+						vis.setValue(data.oid_control_arm', 0);
 					}
 				});
+				
+				
 				$( ".control-icon-ign" ).bind( "click", function() {
 					if (ign == 0 || ign == 2){
 						vis.setValue(data.oid + '.control.ign', 1);
@@ -323,16 +348,8 @@ vis.binds.starline = {
 					$('.control-button-toright').removeClass("off");
 					$('.control-button-toleft').addClass("off");
 				});
-				
-				if (hijack == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');}
-				if (arm == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');}
-				if (ign == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');}
-				if (webasto == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');}
-				if (shock_bpass == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');}
-				if (tilt_bpass == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
-				if (valet == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
-					
-		}
+		
+		
 		
 		debugger;
 		        // subscribe on updates of values
