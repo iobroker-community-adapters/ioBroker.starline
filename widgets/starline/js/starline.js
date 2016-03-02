@@ -67,7 +67,7 @@ vis.binds.starline = {
 		oid_checkballance: 			{val: undefined, selector: '',						blink: false, objName: 'control.checkballance'},
 		oid_checktemp: 				{val: undefined, selector: '',						blink: false, objName: 'control.checktemp'}
 	},
-/*	control: {
+	control: {
 		oid_alias: 						{val: undefined, selector: '',		blink: false, objName: 'alias'},
 		oid_car_state_arm:				{val: undefined, selector: '',		blink: false, objName: 'car_state.arm'},
 		oid_car_state_valet:			{val: undefined, selector: '',		blink: false, objName: 'car_state.valet'},
@@ -87,7 +87,7 @@ vis.binds.starline = {
 		oid_control_valet:				{val: undefined, selector: '',		blink: false, objName: 'control.valet'},
 		oid_control_update_position:	{val: undefined, selector: '',		blink: false, objName: 'control.update_position'},
 		oid_control_out:				{val: undefined, selector: '',		blink: false, objName: 'control.out'}
-	},*/
+	},
 	createWidgetStatus: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
 		// if nothing found => wait
@@ -282,10 +282,10 @@ vis.binds.starline = {
 		}
 		// initial update
 		updateStates();
-    }
+    },
 	
-	
-/*	createWidgetControl: function (widgetID, view, data, style) {
+////////////////////////////////**************************************************************************	
+	createWidgetControl: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
 		// if nothing found => wait
         if (!$div.length) {
@@ -293,7 +293,7 @@ vis.binds.starline = {
                 vis.binds.starline.createWidgetControl(widgetID, view, data, style);
             }, 100);
         }
-		
+		/*
 		function updateStatesControl() {
 			var control = JSON.parse(JSON.stringify(vis.binds.starline.control));
 			
@@ -302,13 +302,13 @@ vis.binds.starline = {
 				if (data[s] && data[s] !== 'nothing_selected') states[s].val = vis.states[data[s] + '.val'];
 			}
 
-				if (oid_car_state_hijack == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');}
-				if (oid_car_state_arm == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');}
-				if (oid_car_state_run == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');}
+				if (states.oid_car_state_hijack.val == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');}
+				if (states.oid_car_state_arm.val == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');}
+				if (states.oid_car_state_run.val == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');}
 				//if (webasto == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');}
-				if (oid_alr_state_shock_h == 1 || oid_alr_state_shock_l == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');}
-				if (oid_alr_state_tilt == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
-				if (oid_car_state_valet == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
+				if (states.oid_alr_state_shock_h.val == 1 || oid_alr_state_shock_l == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');}
+				if (states.oid_alr_state_tilt.val == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
+				if (states.oid_car_state_valet.val == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
 		}
 			
 				$(".control-icon-hijack").click(function () {
@@ -319,7 +319,7 @@ vis.binds.starline = {
 			//		vis.setValue(data.oid + '.control.hijack', 1);
 			//	});
 				$(".control-icon-arm").click(function () {
-					if (oid_car_state_arm == 0 || oid_car_state_arm == 2){
+					if (states.oid_car_state_arm.val == 0 || oid_car_state_arm == 2){
 						vis.setValue(data.oid_control_arm', 1);
 					} else {
 						vis.setValue(data.oid_control_arm', 0);
@@ -327,7 +327,7 @@ vis.binds.starline = {
 				});
 				
 				
-				$( ".control-icon-ign" ).bind( "click", function() {
+		/*		$( ".control-icon-ign" ).bind( "click", function() {
 					if (ign == 0 || ign == 2){
 						vis.setValue(data.oid + '.control.ign', 1);
 					}
@@ -391,15 +391,15 @@ vis.binds.starline = {
 		
 		debugger;
 		    // subscribe on updates of values
-			for (var s in vis.binds.starline.states) {
+			for (var s in vis.binds.starline.control) {
 				if (!data[s] || data[s] == 'nothing_selected') continue;
 					vis.states.bind(data[s] + '.val', function () {
 						updateStatesControl();
 					});
 				}
 			// initial update
-			updateStatesControl();
-    }*/
+			updateStatesControl();*/
+    }
 	
 
 };
@@ -419,6 +419,22 @@ if (vis.editMode) {
  		}
  
  		return changed;
+ 	};
+	
+	vis.binds.starline.changeOid2 = function (widgetID, view, newId, attr, isCss) {
+		//console.log('---------: ' + widgetID +' - '+view+' - '+newId+' - '+attr+' - '+isCss);
+		newId = newId ? newId.substring(0, newId.length - attr.length + 'oid_'.length) : '';
+ 		var changed2 = [];
+ 		for (var s in vis.binds.starline.control) {
+ 			if (s === 'oid_alias' || !vis.binds.starline.control[s].objName) continue;
+ 			if (vis.objects[newId + vis.binds.starline.control[s].objName]) {
+ 				changed2.push(s);
+ 				vis.views[view].widgets[widgetID].data[s] 	= newId + vis.binds.starline.control[s].objName;
+ 				vis.widgets[widgetID].data[s] 				= newId + vis.binds.starline.control[s].objName;
+ 			}
+ 		}
+ 
+ 		return changed2;
  	};
  }
 
