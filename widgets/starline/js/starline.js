@@ -76,13 +76,13 @@ vis.binds.starline = {
 		oid_car_state_valet:			{val: undefined, selector: '',		blink: false, objName: 'car_state.valet'},
 		oid_car_state_run:				{val: undefined, selector: '',		blink: false, objName: 'car_state.run'},
 		oid_car_state_hijack:			{val: undefined, selector: '',		blink: false, objName: 'car_state.hijack'},
-		oid_alr_state_shock_h:			{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.shock_h'},
-		oid_alr_state_shock_l:			{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.shock_l'},
-		oid_alr_state_tilt:				{val: undefined, selector: '',		blink: false, objName: 'car_alr_state.tilt'},
+		oid_car_state_webasto:			{val: undefined, selector: '',		blink: false, objName: 'car_state.webasto'},
+		oid_car_state_shock_bpass:		{val: undefined, selector: '',		blink: false, objName: 'car_state.shock_bpass'},
+		oid_car_state_tilt_bpass:		{val: undefined, selector: '',		blink: false, objName: 'car_state.tilt_bpass'},
 		//
 		oid_control_hijack:				{val: undefined, selector: '',		blink: false, objName: 'control.hijack'},
 		oid_control_arm:				{val: undefined, selector: '',		blink: false, objName: 'control.arm'},
-		oid_control_run:				{val: undefined, selector: '',		blink: false, objName: 'control.run'},
+		oid_control_run:				{val: undefined, selector: '',		blink: false, objName: 'control.ign'},
 		oid_control_poke:				{val: undefined, selector: '',		blink: false, objName: 'control.poke'},
 		oid_control_webasto:			{val: undefined, selector: '',		blink: false, objName: 'control.webasto'},
 		oid_control_shock_bpass:		{val: undefined, selector: '',		blink: false, objName: 'control.shock_bpass'},
@@ -208,8 +208,8 @@ vis.binds.starline = {
 					UnVisible('.car-run');
 					UnVisible('.car-ign > .light');
 				}
-				if (states.oid_car_state_hood.val == 1 && !arm){Visible('.car-hood');
-				} else {UnVisible('.car-hood');}
+				if (states.oid_car_state_hood.val == 1 && !arm){Visible('.car-hood');$('.car-hood').addClass("blink_me");
+				} else {$('.car-hood').removeClass("blink_me"); /*UnVisible('.car-hood');*/}
 				if ((states.oid_car_state_pbrake.val == 1 || states.oid_car_state_hbrake.val == 1) && !arm){Visible('.car-parking');
 				} else {UnVisible('.car-parking');}
 				if (states.oid_car_state_ign.val == 1 && !arm){Visible('.car-key');
@@ -253,7 +253,7 @@ vis.binds.starline = {
 			});
 		}
 
-		debugger;
+		//debugger;
         // subscribe on updates of values
 		for (var s in vis.binds.starline.states) {
 			if (!data[s] || data[s] == 'nothing_selected') continue;
@@ -268,6 +268,7 @@ vis.binds.starline = {
 ////////////////////////////////**************************************************************************	
 	createWidgetControl: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
+		var control;
 		// if nothing found => wait
         if (!$div.length) {
             return setTimeout(function () {
@@ -276,20 +277,33 @@ vis.binds.starline = {
         }
 		
 		function updateStatesControl() {
-			var control = JSON.parse(JSON.stringify(vis.binds.starline.control));
-			
+			control = JSON.parse(JSON.stringify(vis.binds.starline.control));
+
 			// read all states
 			for (var s in control) {
-				if (data[s] && data[s] !== 'nothing_selected') states[s].val = vis.states[data[s] + '.val'];
+				if (data[s] && data[s] !== 'nothing_selected') {control[s].val = vis.states[data[s] + '.val'];}
 			}
 
-				if (states.oid_car_state_hijack.val == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');}
-				if (states.oid_car_state_arm.val == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');}
-				if (states.oid_car_state_run.val == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');}
-				//if (webasto == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -108px -35px no-repeat;');}
-				if (states.oid_alr_state_shock_h.val == 1 || oid_alr_state_shock_l == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');}
-				if (states.oid_alr_state_tilt.val == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
-				if (states.oid_car_state_valet.val == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
+				if (control.oid_car_state_hijack.val == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');
+				} else {$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px 0px;');}
+				
+				if (control.oid_car_state_arm.val == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');
+				} else {$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px 0px;');}
+				
+				if (control.oid_car_state_run.val == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');
+				} else {$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px 0px;');}
+				
+				if (control.oid_car_state_webasto.val == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -108px -35px;');
+				} else {$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -108px 0px;');}
+				
+				if (control.oid_car_state_shock_bpass.val == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');
+				} else {$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -252px 0px;');}
+				
+				if (control.oid_car_state_tilt_bpass.val == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');
+				} else {$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -324px 0px;');}
+				
+				if (control.oid_car_state_valet.val == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');
+				} else {$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -288px 0px;');}
 		}
 				// on click button
 				$(".control-icon-hijack").click(function () {
@@ -297,13 +311,13 @@ vis.binds.starline = {
 				});
 				
 				$(".control-icon-arm").click(function () {
-					if (states.oid_car_state_arm.val == 0 || oid_car_state_arm == 2){
+					if (control.oid_car_state_arm.val == 0 || control.oid_car_state_arm.val == 2){
 						vis.setValue(data.oid_control_arm, 1);
 					} else {vis.setValue(data.oid_control_arm, 0);}
 				});
 				
 				$(".control-icon-ign").click(function () {
-					if (states.oid_control_ign.val == 0 || states.oid_control_ign.val == 2){
+					if (control.oid_control_ign.val == 0 || control.oid_control_ign.val == 2){
 						vis.setValue(data.oid_control_ign, 1);
 					} else {vis.setValue(data.oid_control_ign, 0);}
 				});
@@ -322,17 +336,17 @@ vis.binds.starline = {
 					//}
 				});
 				$(".control-icon-shock_bpass").click(function () {
-					if (states.oid_control_shock_bpass.val == 0 || states.oid_control_shock_bpass.val == 2){
+					if (control.oid_car_state_shock_bpass.val == 0 || control.oid_car_state_shock_bpass.val == 2){
 						vis.setValue(data.oid_control_shock_bpass, 1);
 					} else {vis.setValue(data.oid_control_shock_bpass, 0);}
 				});
 				$(".control-icon-tilt_bpass").click(function () {
-					if (states.oid_control_tilt_bpass.val == 0 || states.oid_control_tilt_bpass.val == 2){
+					if (control.oid_car_state_tilt_bpass.val == 0 || control.oid_car_state_tilt_bpass.val == 2){
 						vis.setValue(data.oid_control_tilt_bpass, 1);
 					} else {vis.setValue(data.oid_control_tilt_bpass, 0);}
 				});
 				$(".control-icon-valet").click(function () {
-					if (states.oid_control_valet.val == 0 || states.oid_control_valet.val == 2){
+					if (control.oid_control_valet.val == 0 || control.oid_control_valet.val == 2){
 						vis.setValue(data.oid_control_valet, 1);
 					} else {vis.setValue(data.oid_control_valet, 0);}
 				});
@@ -354,7 +368,7 @@ vis.binds.starline = {
 					$('.control-button-toleft').addClass("off");
 				});
 				
-		debugger;
+		//debugger;
 		    // subscribe on updates of values
 			for (var s in vis.binds.starline.control) {
 				if (!data[s] || data[s] == 'nothing_selected') continue;
