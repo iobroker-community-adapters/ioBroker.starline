@@ -7,7 +7,7 @@
 // add translations for edit mode
 if (vis.editMode) {
     $.extend(true, systemDictionary, {
-        "myColor":          {"en": "myColor",       "de": "mainColor",  "ru": "Мой цвет"},
+        "Date_on":          {"en": "Date on",       "de": "mainColor",  "ru": "Данные на"},
         "myColor_tooltip":  {
             "en": "Description of\x0AmyColor",
             "de": "Beschreibung von\x0AmyColor",
@@ -21,7 +21,7 @@ if (vis.editMode) {
 
 // add translations for non-edit mode
 $.extend(true, systemDictionary, {
-    "Instance":  {"en": "Instance", "de": "Instanz", "ru": "Инстанция"}
+    "Date_on":          {"en": "Date on",       "de": "mainColor",  "ru": "Данные на"}
 });
 
 // this code can be placed directly in template.html
