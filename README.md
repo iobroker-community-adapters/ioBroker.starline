@@ -15,6 +15,8 @@
   - Отключение датчиков удара и наклона
 
 ## Changelog
+#### 0.1.2
+* (instalator) fix widget for new structure
 
 #### 0.1.1
 * (Bluefox) changed the structure of the widget
