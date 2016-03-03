@@ -22,8 +22,8 @@
 
 .gpsgsm-cont {
     float: right;
-    width: 81px;
-    padding-top: 5px
+    width: 70px;
+    padding-top: 2px
 }
 
 .gpsgsm-status {
@@ -554,7 +554,9 @@ div.no-transition div.s1, div.no-transition div.s2, div.no-transition div.s3, di
 }
 
 .menu-item-title-container {
-    margin-right: 90px
+    margin-right: 90px;
+    height: 45px;
+	padding-top: 6px;
 }
 
 .menu-item-tab-car-controls ul li:hover {

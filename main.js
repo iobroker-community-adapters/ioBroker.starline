@@ -43,7 +43,7 @@ adapter.on('stateChange', function (id, state) {
       		if (err || !state) {
       		} else {
       		  var deviceId = parseInt(state.val);
-			  adapter.log.error('parseInt(state.val) ' + deviceId);  
+			  //adapter.log.error('parseInt(state.val) ' + deviceId);  
 			  adapter.setState(alias +'.control.'+action, {ack: true});
       		  send_command (deviceId,action,value_command);
       		}
@@ -426,7 +426,7 @@ var options = {
 				setTimeout(function () {
 					clearTimeout(reload_data);
                 	get_data ();
-            	}, 1000);
+            	}, 10000);
 			});
 		});
 	req.end();

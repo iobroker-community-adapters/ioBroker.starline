@@ -75,6 +75,7 @@ vis.binds.starline = {
 		oid_car_state_arm:				{val: undefined, selector: '',		blink: false, objName: 'car_state.arm'},
 		oid_car_state_valet:			{val: undefined, selector: '',		blink: false, objName: 'car_state.valet'},
 		oid_car_state_run:				{val: undefined, selector: '',		blink: false, objName: 'car_state.run'},
+		oid_car_state_ign:				{val: undefined, selector: '',		blink: false, objName: 'car_state.ign'},
 		oid_car_state_hijack:			{val: undefined, selector: '',		blink: false, objName: 'car_state.hijack'},
 		oid_car_state_webasto:			{val: undefined, selector: '',		blink: false, objName: 'car_state.webasto'},
 		oid_car_state_shock_bpass:		{val: undefined, selector: '',		blink: false, objName: 'car_state.shock_bpass'},
@@ -82,7 +83,7 @@ vis.binds.starline = {
 		//
 		oid_control_hijack:				{val: undefined, selector: '',		blink: false, objName: 'control.hijack'},
 		oid_control_arm:				{val: undefined, selector: '',		blink: false, objName: 'control.arm'},
-		oid_control_run:				{val: undefined, selector: '',		blink: false, objName: 'control.ign'},
+		oid_control_ign:				{val: undefined, selector: '',		blink: false, objName: 'control.ign'},
 		oid_control_poke:				{val: undefined, selector: '',		blink: false, objName: 'control.poke'},
 		oid_control_webasto:			{val: undefined, selector: '',		blink: false, objName: 'control.webasto'},
 		oid_control_shock_bpass:		{val: undefined, selector: '',		blink: false, objName: 'control.shock_bpass'},
@@ -177,7 +178,8 @@ vis.binds.starline = {
 				$('.car-arm').removeClass("on");
 				arm = false;
 			}
-			
+				if (states.oid_alr_state_ign.val == 1 && arm){Visible('.car-key-red');
+				} else {UnVisible('.car-key-red');}
 				if (states.oid_alr_state_shock_l.val == 1 && arm){Visible('.car-hammer1-red');
 				} else {UnVisible('.car-hammer1-red');}
 				if (states.oid_alr_state_shock_h.val == 1 && arm){Visible('.car-hammer2-red');
@@ -200,10 +202,18 @@ vis.binds.starline = {
 				} else {UnVisible('.car-trunk');}
 				if (states.oid_car_state_door.val == 1 && !arm){Visible('.car-doors');
 				} else {UnVisible('.car-doors');}
-				if (states.oid_car_state_run.val == 1 && !arm){
+				if (states.oid_car_state_ign.val == 1 && !arm){Visible('.car-key');
+				} else {UnVisible('.car-key');}
+				if (states.oid_car_state_run.val == 1){
 					Visible('.car-run');
-					$('.car-ign > .light').attr('style', 'opacity: 1');
-					$('.car-ign > .light').addClass("blink_me");
+					if (arm){
+						$('.car-ign > .light').attr('style', 'opacity: 1');
+						$('.car-ign > .light').addClass("blink_me");
+					}
+					else {
+						$('.car-ign > .light').attr('style', 'opacity: 0');
+						$('.car-ign > .light').removeClass("blink_me");
+					}
 				} else {
 					UnVisible('.car-run');
 					UnVisible('.car-ign > .light');
@@ -212,8 +222,7 @@ vis.binds.starline = {
 				} else {$('.car-hood').removeClass("blink_me"); /*UnVisible('.car-hood');*/}
 				if ((states.oid_car_state_pbrake.val == 1 || states.oid_car_state_hbrake.val == 1) && !arm){Visible('.car-parking');
 				} else {UnVisible('.car-parking');}
-				if (states.oid_car_state_ign.val == 1 && !arm){Visible('.car-key');
-				} else {UnVisible('.car-key');}
+				
 			//******************
 			if (states.oid_balance.val <=60){
 				$('.balance_icon').addClass("blink_me");
@@ -317,7 +326,7 @@ vis.binds.starline = {
 				});
 				
 				$(".control-icon-ign").click(function () {
-					if (control.oid_control_ign.val == 0 || control.oid_control_ign.val == 2){
+					if (control.oid_car_state_run.val == 0 || control.oid_car_state_run.val == 2){
 						vis.setValue(data.oid_control_ign, 1);
 					} else {vis.setValue(data.oid_control_ign, 0);}
 				});
@@ -328,12 +337,9 @@ vis.binds.starline = {
 				
 				$(".control-icon-webasto").click(function () {
 					vis.setValue(data.oid_control_webasto, 1);
-					//if (webasto == 0 || webasto == 2){
-					//	vis.setValue(data.oid + '.control.webasto', 1);
-					//}
-					//else {
-					//	vis.setValue(data.oid + '.control.webasto', 0);
-					//}
+					if (control.oid_car_state_webasto.val == 0 || control.oid_car_state_webasto.val == 2){
+						vis.setValue(data.oid_control_webasto, 1);
+					} else {vis.setValue(data.oid_control_webasto, 0);}
 				});
 				$(".control-icon-shock_bpass").click(function () {
 					if (control.oid_car_state_shock_bpass.val == 0 || control.oid_car_state_shock_bpass.val == 2){
