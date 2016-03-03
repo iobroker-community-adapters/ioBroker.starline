@@ -181,10 +181,16 @@ vis.binds.starline = {
 				if (states.oid_alr_state_shock_l.val == 1){
 					$('.car-hammer1-red').attr('style', 'opacity: 1');
 					$('.car-hammer1-red').addClass("blink_me");
-				} //else
+				} else {
+					$('.car-hammer1-red').attr('style', 'opacity: 0');
+					$('.car-hammer1-red').removeClass("blink_me");
+				}
 				if (states.oid_alr_state_shock_h.val == 1){
 					$('.car-hammer2-red').attr('style', 'opacity: 1');
 					$('.car-hammer2-red').addClass("blink_me");
+				} else {
+					$('.car-hammer2-red').attr('style', 'opacity: 0');
+					$('.car-hammer2-red').removeClass("blink_me");
 				}
 				if (states.oid_alr_state_tilt.val == 1){
 					$('.car-tiltsensor-red').attr('style', 'opacity: 1');
