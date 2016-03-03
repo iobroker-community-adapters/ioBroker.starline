@@ -109,7 +109,16 @@ vis.binds.starline = {
 				$(selector).removeClass('blink_me');
 			}
 		}
-
+			//***************
+			function Visible(selector){
+				$(selector).attr('style', 'opacity: 1');
+				if (arm) {$(selector).addClass("blink_me");}
+			}
+			function UnVisible(selector){
+				$(selector).attr('style', 'opacity: 0');
+				$(selector).removeClass("blink_me");
+			}
+			//*******************
 		function updateStates() {
 			var states = JSON.parse(JSON.stringify(vis.binds.starline.states));
 			var gsm = 0; 
@@ -128,31 +137,15 @@ vis.binds.starline = {
 			}
 
 			// convert gsm
-			if (states.oid_gsm_lvl.val >= 1  && states.oid_gsm_lvl.val <= 7)  {
-				gsm = 1;
-			} 
-			else if (states.oid_gsm_lvl.val >= 7  && states.oid_gsm_lvl.val <  14) {
-				gsm = 2;
-			} 
-			else if (states.oid_gsm_lvl.val >= 14 && states.oid_gsm_lvl.val <  21) {
-				gsm = 3;
-			} 
-			else if (states.oid_gsm_lvl.val >= 21 && states.oid_gsm_lvl.val <  28) {
-				gsm = 4;
-			} 
-			else if (states.oid_gsm_lvl.val >= 28 && states.oid_gsm_lvl.val <= 30) {
-				gsm = 5;
-			}
-
-			if (states.oid_gps_lvl.val >= 1  && states.oid_gps_lvl.val <= 7) {
-				gps = 1;
-			} 
-			else if (states.oid_gps_lvl.val >= 7  && states.oid_gps_lvl.val < 14) {
-				gps = 2;
-			} 
-			else if (states.oid_gps_lvl.val >= 14 && states.oid_gps_lvl.val < 21) {
-				gps = 3;
-			}
+			if 		(states.oid_gsm_lvl.val >= 1  && states.oid_gsm_lvl.val <= 7)  {gsm = 1;}
+			else if (states.oid_gsm_lvl.val >= 7  && states.oid_gsm_lvl.val <  14) {gsm = 2;} 
+			else if (states.oid_gsm_lvl.val >= 14 && states.oid_gsm_lvl.val <  21) {gsm = 3;} 
+			else if (states.oid_gsm_lvl.val >= 21 && states.oid_gsm_lvl.val <  28) {gsm = 4;} 
+			else if (states.oid_gsm_lvl.val >= 28 && states.oid_gsm_lvl.val <= 30) {gsm = 5;}
+			// convert gps
+			if 		(states.oid_gps_lvl.val >= 1  && states.oid_gps_lvl.val <= 7) {gps = 1;}
+			else if (states.oid_gps_lvl.val >= 7  && states.oid_gps_lvl.val < 14) {gps = 2;} 
+			else if (states.oid_gps_lvl.val >= 14 && states.oid_gps_lvl.val < 21) {gps = 3;}
 			
 			if (states.oid_gsm_lvl){
 				$('.gsm-status').attr('data-level', gsm);
@@ -177,16 +170,7 @@ vis.binds.starline = {
 			} else {
 				$('.hijack-border').hide();
 			}
-			//***************
-			function Visible(selector){
-				$(selector).attr('style', 'opacity: 1');
-				if (arm) {$(selector).addClass("blink_me");}
-			}
-			function UnVisible(selector){
-				$(selector).attr('style', 'opacity: 0');
-				$(selector).removeClass("blink_me");
-			}
-			//*******************
+
 			if (states.oid_car_state_arm.val == 1){
 				$('.car-arm').addClass("on");
 				arm = true;
