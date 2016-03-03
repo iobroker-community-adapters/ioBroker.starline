@@ -42,6 +42,7 @@ vis.binds.starline = {
 		oid_gsm_lvl:				{val: undefined, selector: '.gsm-status',			blink: false, objName: 'gsm_lvl'},
 		oid_gps_lvl: 				{val: undefined, selector: '.gps-status',	    	blink: false, objName: 'gps_lvl'},
 		oid_status: 				{val: undefined, selector: '.menu-status',			blink: false, objName: 'status'},
+		//
 		oid_car_state_arm:			{val: undefined, selector: '.car-arm > .s1, .car-arm > .s2, .car-arm > .s3, .car-arm > .s4, .car-arm > .s5', blink: false, objName: 'car_state.arm'},
 		oid_car_state_door:			{val: undefined, selector: '.car-doors',			blink: false, objName: 'car_state.door'},
 		oid_car_state_hijack:		{val: undefined, selector: '.hijack-border',		blink: false, objName: 'car_state.hijack'},
@@ -52,6 +53,7 @@ vis.binds.starline = {
 		oid_car_state_hbrake: 		{val: undefined, selector: '',						blink: false, objName: 'car_state.hbrake'},
 		oid_car_state_pbrake: 		{val: undefined, selector: '',						blink: false, objName: 'car_state.pbrake'},
 		oid_car_state_run: 			{val: undefined, selector: '.car-run',				blink: false, objName: 'car_state.run'},
+		//
 		oid_alr_state_door:			{val: undefined, selector: '.car-doors-red',		blink: false, objName: 'car_alr_state.door'},
 		oid_alr_state_add_h:		{val: undefined, selector: '',						blink: false, objName: 'car_alr_state.add_h'},
 		oid_alr_state_add_l:		{val: undefined, selector: '',						blink: false, objName: 'car_alr_state.add_l'},
@@ -64,6 +66,7 @@ vis.binds.starline = {
 		oid_alr_state_tilt:			{val: undefined, selector: '.car-tiltsensor-red',	blink: false, objName: 'car_alr_state.tilt'},
 		oid_alr_state_trunk:		{val: undefined, selector: '.car-trunk-red',		blink: false, objName: 'car_alr_state.trunk'},
 		oid_alr_state_hijack:		{val: undefined, selector: '',						blink: false, objName: 'car_alr_state.hijack'},
+		//
 		oid_checkballance: 			{val: undefined, selector: '',						blink: false, objName: 'control.checkballance'},
 		oid_checktemp: 				{val: undefined, selector: '',						blink: false, objName: 'control.checktemp'}
 	},
@@ -271,7 +274,7 @@ vis.binds.starline = {
                 vis.binds.starline.createWidgetControl(widgetID, view, data, style);
             }, 100);
         }
-		/*
+		
 		function updateStatesControl() {
 			var control = JSON.parse(JSON.stringify(vis.binds.starline.control));
 			
@@ -288,85 +291,69 @@ vis.binds.starline = {
 				if (states.oid_alr_state_tilt.val == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');}
 				if (states.oid_car_state_valet.val == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');}
 		}
-			
+				// on click button
 				$(".control-icon-hijack").click(function () {
-					vis.setValue(data.oid_control_hijack', 1);
+					vis.setValue(data.oid_control_hijack, 1);
 				});
 				
-			//	$( ".control-icon-hijack" ).bind( "click", function() {
-			//		vis.setValue(data.oid + '.control.hijack', 1);
-			//	});
 				$(".control-icon-arm").click(function () {
 					if (states.oid_car_state_arm.val == 0 || oid_car_state_arm == 2){
-						vis.setValue(data.oid_control_arm', 1);
-					} else {
-						vis.setValue(data.oid_control_arm', 0);
-					}
+						vis.setValue(data.oid_control_arm, 1);
+					} else {vis.setValue(data.oid_control_arm, 0);}
 				});
 				
+				$(".control-icon-ign").click(function () {
+					if (states.oid_control_ign.val == 0 || states.oid_control_ign.val == 2){
+						vis.setValue(data.oid_control_ign, 1);
+					} else {vis.setValue(data.oid_control_ign, 0);}
+				});
 				
-		/*		$( ".control-icon-ign" ).bind( "click", function() {
-					if (ign == 0 || ign == 2){
-						vis.setValue(data.oid + '.control.ign', 1);
-					}
-					else {
-						vis.setValue(data.oid + '.control.ign', 0);
-					}
+				$(".control-icon-poke").click(function () {
+					vis.setValue(data.oid_control_poke, 1);
 				});
-				$( ".control-icon-poke" ).bind( "click", function() {
-					vis.setValue(data.oid + '.control.poke', 1);
-				});		
-				$( ".control-icon-webasto" ).bind( "click", function() {
-					if (webasto == 0 || webasto == 2){
-						vis.setValue(data.oid + '.control.webasto', 1);
-					}
-					else {
-						vis.setValue(data.oid + '.control.webasto', 0);
-					}
+				
+				$(".control-icon-webasto").click(function () {
+					vis.setValue(data.oid_control_webasto, 1);
+					//if (webasto == 0 || webasto == 2){
+					//	vis.setValue(data.oid + '.control.webasto', 1);
+					//}
+					//else {
+					//	vis.setValue(data.oid + '.control.webasto', 0);
+					//}
 				});
-				$( ".control-icon-shock_bpass" ).bind( "click", function() {
-					if (shock_bpass == 0 || shock_bpass == 2){
-						vis.setValue(data.oid + '.control.shock_bpass', 1);
-					}
-					else {
-						vis.setValue(data.oid + '.control.shock_bpass', 0);
-					}
+				$(".control-icon-shock_bpass").click(function () {
+					if (states.oid_control_shock_bpass.val == 0 || states.oid_control_shock_bpass.val == 2){
+						vis.setValue(data.oid_control_shock_bpass, 1);
+					} else {vis.setValue(data.oid_control_shock_bpass, 0);}
 				});
-				$( ".control-icon-tilt_bpass" ).bind( "click", function() {
-					if (tilt_bpass == 0 || tilt_bpass == 2){
-						vis.setValue(data.oid + '.control.tilt_bpass', 1);
-					}
-					else {
-						vis.setValue(data.oid + '.control.tilt_bpass', 0);
-					}
+				$(".control-icon-tilt_bpass").click(function () {
+					if (states.oid_control_tilt_bpass.val == 0 || states.oid_control_tilt_bpass.val == 2){
+						vis.setValue(data.oid_control_tilt_bpass, 1);
+					} else {vis.setValue(data.oid_control_tilt_bpass, 0);}
 				});
-				$( ".control-icon-valet" ).bind( "click", function() {
-					if (tilt_bpass == 0 || tilt_bpass == 2){
-						vis.setValue(data.oid + '.control.valet', 1);
-					}
-					else {
-						vis.setValue(data.oid + '.control.valet', 0);
-					}
+				$(".control-icon-valet").click(function () {
+					if (states.oid_control_valet.val == 0 || states.oid_control_valet.val == 2){
+						vis.setValue(data.oid_control_valet, 1);
+					} else {vis.setValue(data.oid_control_valet, 0);}
 				});
-				$( ".control-icon-update_position" ).bind( "click", function() {
-					vis.setValue(data.oid + '.control.update_position', 1);
+				$(".control-icon-update_position").click(function () {
+					vis.setValue(data.oid_control_update_position, 1);
 				});
-				$( ".control-icon-out" ).bind( "click", function() {
-					vis.setValue(data.oid + '.control.out', 1);
+				$(".control-icon-out").click(function () {
+					vis.setValue(data.oid_control_out, 1);
 				});
-				$( ".control-button-toright" ).bind( "click", function() {
+				
+				$(".control-button-toright").click(function () {
 					$('.control-items').animate({ "marginLeft": "-=267px" }, "slow" );
 					$('.control-button-toleft').removeClass("off");
 					$('.control-button-toright').addClass("off");
 				});
-				$( ".control-button-toleft" ).bind( "click", function() {
+				$(".control-button-toleft").click(function () {
 					$('.control-items').animate({ "marginLeft": "+=267px" }, "slow" );
 					$('.control-button-toright').removeClass("off");
 					$('.control-button-toleft').addClass("off");
 				});
-		
-		
-		
+				
 		debugger;
 		    // subscribe on updates of values
 			for (var s in vis.binds.starline.control) {
@@ -376,10 +363,9 @@ vis.binds.starline = {
 					});
 				}
 			// initial update
-			updateStatesControl();*/
+			updateStatesControl();
     }
 	
-
 };
 
 if (vis.editMode) {
