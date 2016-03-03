@@ -1,7 +1,7 @@
 {
     "common": {
         "name":                     "starline",
-        "version":                  "0.1.1",
+        "version":                  "0.1.2",
         "title":                    "Autoalarm StarLine adapter",
         "desc":                     {
  			             "en": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
