@@ -42,6 +42,8 @@ vis.binds.starline = {
 		oid_gsm_lvl:				{val: undefined, selector: '.gsm-status',			blink: false, objName: 'gsm_lvl'},
 		oid_gps_lvl: 				{val: undefined, selector: '.gps-status',	    	blink: false, objName: 'gps_lvl'},
 		oid_status: 				{val: undefined, selector: '.menu-status',			blink: false, objName: 'status'},
+		oid_position_sat_qty: 		{val: undefined, selector: '.gps-status',			blink: false, objName: 'position.sat_qty'},
+		
 		//
 		oid_car_state_arm:			{val: undefined, selector: '.car-arm > .s1, .car-arm > .s2, .car-arm > .s3, .car-arm > .s4, .car-arm > .s5', blink: false, objName: 'car_state.arm'},
 		oid_car_state_door:			{val: undefined, selector: '.car-doors',			blink: false, objName: 'car_state.door'},
@@ -92,6 +94,9 @@ vis.binds.starline = {
 		oid_control_update_position:	{val: undefined, selector: '',		blink: false, objName: 'control.update_position'},
 		oid_control_out:				{val: undefined, selector: '',		blink: false, objName: 'control.out'}
 	},
+
+/********************createWidgetStatus****************************/
+
 	createWidgetStatus: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
 		// if nothing found => wait
@@ -152,12 +157,17 @@ vis.binds.starline = {
 			else if (states.oid_gps_lvl.val >= 14 && states.oid_gps_lvl.val < 21) {gps = 3;}
 			
 			if (states.oid_gsm_lvl){$('.gsm-status').attr('data-level', gsm);}
-			if (states.oid_gsm_lvl){$('.gps-status').attr('data-level', gps);}
+			if (states.oid_gsm_lvl){
+				$('.gps-status').attr('data-level', gps);
+				$('.gps-status').attr('title', 'Уровень сигнала GPS. ' + states.oid_position_sat_qty.val + ' спутников');
+				}
 
 			if (states.oid_status.val == 1){
 				$('.menu-status').removeClass('off').addClass('on');
+				$('.menu-status').attr('title', 'В сети');
 			} else {
 				$('.menu-status').removeClass('on').addClass('off');
+				$('.menu-status').attr('title', 'Не в сети');
 			}
 			
 			if (states.oid_car_state_valet.val == 1){
@@ -171,13 +181,13 @@ vis.binds.starline = {
 				$('.hijack-border').hide();
 			}
 
-			if (states.oid_car_state_arm.val == 1){
-				$('.car-arm').addClass("on");
-				arm = true;
-			} else if (states.oid_car_state_arm.val != 1){
-				$('.car-arm').removeClass("on");
-				arm = false;
-			}
+				if (states.oid_car_state_arm.val == 1){
+					$('.car-arm').addClass("on");
+					arm = true;
+				} else if (states.oid_car_state_arm.val != 1){
+					$('.car-arm').removeClass("on");
+					arm = false;
+				}
 				if (states.oid_alr_state_ign.val == 1 && arm){Visible('.car-key-red');
 				} else {UnVisible('.car-key-red');}
 				if (states.oid_alr_state_shock_l.val == 1 && arm){Visible('.car-hammer1-red');
@@ -198,64 +208,54 @@ vis.binds.starline = {
 				} else {UnVisible('.car-parking-red');}
 			
 			//******************************
-				if (states.oid_car_state_trunk.val == 1 && !arm){Visible('.car-trunk');
-				} else {UnVisible('.car-trunk');}
-				if (states.oid_car_state_door.val == 1 && !arm){Visible('.car-doors');
-				} else {UnVisible('.car-doors');}
-				if (states.oid_car_state_ign.val == 1 && !arm){Visible('.car-key');
-				} else {UnVisible('.car-key');}
-				if (states.oid_car_state_run.val == 1){
-					Visible('.car-run');
-					if (arm){
-						$('.car-ign > .light').attr('style', 'opacity: 1');
-						$('.car-ign > .light').addClass("blink_me");
-					}
-					else {
-						$('.car-ign > .light').attr('style', 'opacity: 0');
-						$('.car-ign > .light').removeClass("blink_me");
-					}
-				} else {
-					UnVisible('.car-run');
-					UnVisible('.car-ign > .light');
+			if (states.oid_car_state_trunk.val == 1 && !arm){Visible('.car-trunk');
+			} else {UnVisible('.car-trunk');}
+			if (states.oid_car_state_door.val == 1 && !arm){Visible('.car-doors');
+			} else {UnVisible('.car-doors');}
+			if (states.oid_car_state_ign.val == 1 && !arm){Visible('.car-key');
+			} else {UnVisible('.car-key');}
+			if (states.oid_car_state_run.val == 1){
+				Visible('.car-run');
+				if (arm){
+					$('.car-ign > .light').attr('style', 'opacity: 1');
+					$('.car-ign > .light').addClass("blink_me");
 				}
-				if (states.oid_car_state_hood.val == 1 && !arm){Visible('.car-hood');$('.car-hood').addClass("blink_me");
-				} else {$('.car-hood').removeClass("blink_me"); /*UnVisible('.car-hood');*/}
-				if ((states.oid_car_state_pbrake.val == 1 || states.oid_car_state_hbrake.val == 1) && !arm){Visible('.car-parking');
-				} else {UnVisible('.car-parking');}
+				else {
+					$('.car-ign > .light').attr('style', 'opacity: 0');
+					$('.car-ign > .light').removeClass("blink_me");
+				}
+			} else {
+				UnVisible('.car-run');
+				UnVisible('.car-ign > .light');
+			}
+			if (states.oid_car_state_hood.val == 1 && !arm){Visible('.car-hood');$('.car-hood').addClass("blink_me");
+			} else {$('.car-hood').removeClass("blink_me"); /*UnVisible('.car-hood');*/}
+			if ((states.oid_car_state_pbrake.val == 1 || states.oid_car_state_hbrake.val == 1) && !arm){Visible('.car-parking');
+			} else {UnVisible('.car-parking');}
 				
-			//******************
 			if (states.oid_balance.val <=60){
 				$('.balance_icon').addClass("blink_me");
 			} else {$('.balance_icon').removeClass("blink_me");}
 
 		/*	if (neutral == 1){$('.car-neutral').attr('style', 'opacity: 1');}
-			if (hfree == 1){$('.car-hfree').attr('style', 'opacity: 1');}*/
-
-			/*if (states.oid_car_state_arm.val) {
-				states.oid_car_state_trunk.val 	= false;
-				states.oid_car_state_door.val 	= false;
-				states.oid_car_state_run.val 	= false;
-				states.oid_car_state_hood.val 	= false;
-				states.oid_car_state_pbrake.val = false;
-			}*/
-
-			/*for (var s in states) {
-				if (states[s].selector) setVisible(states[s].selector, states[s].val, states[s].blink && states[s].val);
-			}*/
-			
+			if (hfree == 1){$('.car-hfree').attr('style', 'opacity: 1');}
+		*/
+			/*	for (var s in states) {
+					if (states[s].selector) setVisible(states[s].selector, states[s].val, states[s].blink && states[s].val);
+				}
+			*/
 			//setVisible('.car-doors',    oid_car_state_door);
 			$('.ctemp_value').html(states.oid_ctemp.val);
 			$('.etemp_value').html(states.oid_etemp.val);
 			$('.balance_value').html(states.oid_balance.val);
 			$('.battery_value').html(states.oid_battery.val);
 		}
-		
+		// on click button
 		if (data.oid_checkballance && data.oid_checkballance !== 'nothing_selected') {
 			$("li.balance").click(function () {
 				vis.setValue(data.oid_checkballance, 1);
 			});
 		}
-
 		if (data.oid_checktemp && data.oid_checktemp !== 'nothing_selected') {
 			$("li.ctemp, li.etemp").click(function () {
 				vis.setValue(data.oid_checktemp, 1);
@@ -274,7 +274,8 @@ vis.binds.starline = {
 		updateStates();
     },
 	
-////////////////////////////////**************************************************************************	
+/********************createWidgetControl****************************/
+
 	createWidgetControl: function (widgetID, view, data, style) {
 		var $div = $('#' + widgetID);
 		var control;
@@ -292,87 +293,82 @@ vis.binds.starline = {
 			for (var s in control) {
 				if (data[s] && data[s] !== 'nothing_selected') {control[s].val = vis.states[data[s] + '.val'];}
 			}
-
-				if (control.oid_car_state_hijack.val == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');
-				} else {$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px 0px;');}
-				
-				if (control.oid_car_state_arm.val == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');
-				} else {$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px 0px;');}
-				
-				if (control.oid_car_state_run.val == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');
-				} else {$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px 0px;');}
-				
-				if (control.oid_car_state_webasto.val == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -108px -35px;');
-				} else {$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -108px 0px;');}
-				
-				if (control.oid_car_state_shock_bpass.val == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');
-				} else {$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -252px 0px;');}
-				
-				if (control.oid_car_state_tilt_bpass.val == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');
-				} else {$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -324px 0px;');}
-				
-				if (control.oid_car_state_valet.val == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');
-				} else {$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -288px 0px;');}
+			//set icon button
+			if (control.oid_car_state_hijack.val == 1){$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px -35px;');
+			} else {$('.control-icon-hijack').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat 0px 0px;');}
+			if (control.oid_car_state_arm.val == 1){$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px -35px;');
+			} else {$('.control-icon-arm').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -72px 0px;');}
+			if (control.oid_car_state_run.val == 1){$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px -35px;');
+			} else {$('.control-icon-ign').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -36px 0px;');}
+			if (control.oid_car_state_webasto.val == 1){$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -108px -35px;');
+			} else {$('.control-icon-webasto').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -108px 0px;');}
+			if (control.oid_car_state_shock_bpass.val == 1){$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -252px -35px no-repeat;');
+			} else {$('.control-icon-shock_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -252px 0px;');}
+			if (control.oid_car_state_tilt_bpass.val == 1){$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -324px -35px no-repeat;');
+			} else {$('.control-icon-tilt_bpass').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -324px 0px;');}
+			if (control.oid_car_state_valet.val == 1){$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) -288px -35px no-repeat;');
+			} else {$('.control-icon-valet').attr('style', 'background:url(./widgets/starline/img/buttons-icon-set_white.png) no-repeat -288px 0px;');}
 		}
-				// on click button
-				$(".control-icon-hijack").click(function () {
-					vis.setValue(data.oid_control_hijack, 1);
-				});
-				
-				$(".control-icon-arm").click(function () {
-					if (control.oid_car_state_arm.val == 0 || control.oid_car_state_arm.val == 2){
-						vis.setValue(data.oid_control_arm, 1);
-					} else {vis.setValue(data.oid_control_arm, 0);}
-				});
-				
-				$(".control-icon-ign").click(function () {
-					if (control.oid_car_state_run.val == 0 || control.oid_car_state_run.val == 2){
-						vis.setValue(data.oid_control_ign, 1);
-					} else {vis.setValue(data.oid_control_ign, 0);}
-				});
-				
-				$(".control-icon-poke").click(function () {
-					vis.setValue(data.oid_control_poke, 1);
-				});
-				
-				$(".control-icon-webasto").click(function () {
+			
+			// on click button
+			$(".control-icon-hijack").click(function () {
+				vis.setValue(data.oid_control_hijack, 1);
+			});
+			
+			$(".control-icon-arm").click(function () {
+				if (control.oid_car_state_arm.val == 0 || control.oid_car_state_arm.val == 2){
+					vis.setValue(data.oid_control_arm, 1);
+				} else {vis.setValue(data.oid_control_arm, 0);}
+			});
+			
+			$(".control-icon-ign").click(function () {
+				if (control.oid_car_state_run.val == 0 || control.oid_car_state_run.val == 2){
+					vis.setValue(data.oid_control_ign, 1);
+				} else {vis.setValue(data.oid_control_ign, 0);}
+			});
+			
+			$(".control-icon-poke").click(function () {
+				vis.setValue(data.oid_control_poke, 1);
+			});
+			
+			$(".control-icon-webasto").click(function () {
+				vis.setValue(data.oid_control_webasto, 1);
+				if (control.oid_car_state_webasto.val == 0 || control.oid_car_state_webasto.val == 2){
 					vis.setValue(data.oid_control_webasto, 1);
-					if (control.oid_car_state_webasto.val == 0 || control.oid_car_state_webasto.val == 2){
-						vis.setValue(data.oid_control_webasto, 1);
-					} else {vis.setValue(data.oid_control_webasto, 0);}
-				});
-				$(".control-icon-shock_bpass").click(function () {
-					if (control.oid_car_state_shock_bpass.val == 0 || control.oid_car_state_shock_bpass.val == 2){
-						vis.setValue(data.oid_control_shock_bpass, 1);
-					} else {vis.setValue(data.oid_control_shock_bpass, 0);}
-				});
-				$(".control-icon-tilt_bpass").click(function () {
-					if (control.oid_car_state_tilt_bpass.val == 0 || control.oid_car_state_tilt_bpass.val == 2){
-						vis.setValue(data.oid_control_tilt_bpass, 1);
-					} else {vis.setValue(data.oid_control_tilt_bpass, 0);}
-				});
-				$(".control-icon-valet").click(function () {
-					if (control.oid_control_valet.val == 0 || control.oid_control_valet.val == 2){
-						vis.setValue(data.oid_control_valet, 1);
-					} else {vis.setValue(data.oid_control_valet, 0);}
-				});
-				$(".control-icon-update_position").click(function () {
-					vis.setValue(data.oid_control_update_position, 1);
-				});
-				$(".control-icon-out").click(function () {
-					vis.setValue(data.oid_control_out, 1);
-				});
-				
-				$(".control-button-toright").click(function () {
-					$('.control-items').animate({ "marginLeft": "-=267px" }, "slow" );
-					$('.control-button-toleft').removeClass("off");
-					$('.control-button-toright').addClass("off");
-				});
-				$(".control-button-toleft").click(function () {
-					$('.control-items').animate({ "marginLeft": "+=267px" }, "slow" );
-					$('.control-button-toright').removeClass("off");
-					$('.control-button-toleft').addClass("off");
-				});
+				} else {vis.setValue(data.oid_control_webasto, 0);}
+			});
+			$(".control-icon-shock_bpass").click(function () {
+				if (control.oid_car_state_shock_bpass.val == 0 || control.oid_car_state_shock_bpass.val == 2){
+					vis.setValue(data.oid_control_shock_bpass, 1);
+				} else {vis.setValue(data.oid_control_shock_bpass, 0);}
+			});
+			$(".control-icon-tilt_bpass").click(function () {
+				if (control.oid_car_state_tilt_bpass.val == 0 || control.oid_car_state_tilt_bpass.val == 2){
+					vis.setValue(data.oid_control_tilt_bpass, 1);
+				} else {vis.setValue(data.oid_control_tilt_bpass, 0);}
+			});
+			$(".control-icon-valet").click(function () {
+				if (control.oid_control_valet.val == 0 || control.oid_control_valet.val == 2){
+					vis.setValue(data.oid_control_valet, 1);
+				} else {vis.setValue(data.oid_control_valet, 0);}
+			});
+			$(".control-icon-update_position").click(function () {
+				vis.setValue(data.oid_control_update_position, 1);
+			});
+			$(".control-icon-out").click(function () {
+				vis.setValue(data.oid_control_out, 1);
+			});
+			
+			$(".control-button-toright").click(function () {
+				$('.control-items').animate({ "marginLeft": "-=267px" }, "slow" );
+				$('.control-button-toleft').removeClass("off");
+				$('.control-button-toright').addClass("off");
+			});
+			$(".control-button-toleft").click(function () {
+				$('.control-items').animate({ "marginLeft": "+=267px" }, "slow" );
+				$('.control-button-toright').removeClass("off");
+				$('.control-button-toleft').addClass("off");
+			});
 				
 		//debugger;
 		    // subscribe on updates of values
@@ -401,7 +397,6 @@ if (vis.editMode) {
  				vis.widgets[widgetID].data[s] 				= newId + vis.binds.starline.states[s].objName;
  			}
  		}
- 
  		return changed;
  	};
 	
@@ -417,7 +412,6 @@ if (vis.editMode) {
  				vis.widgets[widgetID].data[s] 				= newId + vis.binds.starline.control[s].objName;
  			}
  		}
- 
  		return changed2;
  	};
  }
