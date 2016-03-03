@@ -147,12 +147,8 @@ vis.binds.starline = {
 			else if (states.oid_gps_lvl.val >= 7  && states.oid_gps_lvl.val < 14) {gps = 2;} 
 			else if (states.oid_gps_lvl.val >= 14 && states.oid_gps_lvl.val < 21) {gps = 3;}
 			
-			if (states.oid_gsm_lvl){
-				$('.gsm-status').attr('data-level', gsm);
-			}
-			if (states.oid_gsm_lvl){
-				$('.gps-status').attr('data-level', gps);
-			}
+			if (states.oid_gsm_lvl){$('.gsm-status').attr('data-level', gsm);}
+			if (states.oid_gsm_lvl){$('.gps-status').attr('data-level', gps);}
 
 			if (states.oid_status.val == 1){
 				$('.menu-status').removeClass('off').addClass('on');
@@ -197,11 +193,11 @@ vis.binds.starline = {
 				} else {UnVisible('.car-parking-red');}
 			
 			//******************************
-				if (states.oid_car_state_trunk.val == 1){Visible('.car-trunk');
+				if (states.oid_car_state_trunk.val == 1 && !arm){Visible('.car-trunk');
 				} else {UnVisible('.car-trunk');}
-				if (states.oid_car_state_door.val == 1){Visible('.car-doors');
+				if (states.oid_car_state_door.val == 1 && !arm){Visible('.car-doors');
 				} else {UnVisible('.car-doors');}
-				if (states.oid_car_state_run.val == 1){
+				if (states.oid_car_state_run.val == 1 && !arm){
 					Visible('.car-run');
 					$('.car-ign > .light').attr('style', 'opacity: 1');
 					$('.car-ign > .light').addClass("blink_me");
@@ -209,13 +205,13 @@ vis.binds.starline = {
 					UnVisible('.car-run');
 					UnVisible('.car-ign > .light');
 				}
-				if (states.oid_car_state_hood.val == 1){Visible('.car-hood');
+				if (states.oid_car_state_hood.val == 1 && !arm){Visible('.car-hood');
 				} else {UnVisible('.car-hood');}
-				if (states.oid_car_state_pbrake.val == 1 || states.oid_car_state_hbrake.val == 1){Visible('.car-parking');
+				if ((states.oid_car_state_pbrake.val == 1 || states.oid_car_state_hbrake.val == 1) && !arm){Visible('.car-parking');
 				} else {UnVisible('.car-parking');}
-				if (states.oid_car_state_ign.val == 1){Visible('.car-key');
+				if (states.oid_car_state_ign.val == 1 && !arm){Visible('.car-key');
 				} else {UnVisible('.car-key');}
-			/******************
+			//******************
 			if (states.oid_balance.val <=60){
 				$('.balance_icon').addClass("blink_me");
 			} else {$('.balance_icon').removeClass("blink_me");}
