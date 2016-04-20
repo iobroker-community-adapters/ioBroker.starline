@@ -15,6 +15,9 @@
   - Отключение датчиков удара и наклона
 
 ## Changelog
+#### 0.1.3
+* (instalator) change package.json
+
 #### 0.1.2
 * (instalator) fix widget for new structure
 
