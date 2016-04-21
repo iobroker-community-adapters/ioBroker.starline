@@ -24,25 +24,18 @@
     "type": "git",
     "url": "https://github.com/instalator/ioBroker.starline"
   },
-  "dependencies": {},
+  "dependencies": {
+    
+  },
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-replace": "^0.9.3",
     "grunt-contrib-jshint": "^0.11.2",
     "grunt-jscs": "^2.0.0",
-    "grunt-http": "^1.6.0",
-    "grunt-contrib-clean": "^0.6.0",
-    "grunt-contrib-compress": "^0.13.0",
-    "grunt-contrib-copy": "^0.8.0",
-    "grunt-exec": "^0.4.6"
+    "grunt-http": "^1.6.0"
   },
   "bugs": {
     "url": "https://github.com/instalator/ioBroker.starline/issues"
   },
-  "readmeFilename": "README.md",
-  "readme": "![Logo](admin/starline_git.jpg)\n# ioBroker.starline/n/nДля работы драйвера необходимо установленное и настроенное противоугонное устройство поддерживающее сервис StarLine телематика 2.0./n/nДрайвер позволяет получать данные состояния автомобиля через сервис StarLine Телематика. https://starline-online.ru./n# Управление основными режимами работы автосигнализации:/n  - Постановка/снятие с охраны/n  - Активация функции AntiHiJack/n  - Автозапуск/n  - Активация сервисного режима (Valet)/n  - Активация доп. каналов/n  - Включение/отключение подогревателя Webasto (При его наличии)/n  - Запрос координат автомобиля/n  - Отключение датчиков удара и наклона\n",
-  "_id": "iobroker.starline@0.1.3",
-  "_shasum": "ee259b937322ee653d0338454f601ead2cd28b1f",
-  "_from": "https://github.com/instalator/ioBroker.starline/tarball/master",
-  "_resolved": "https://github.com/instalator/ioBroker.starline/tarball/master"
+  "readmeFilename": "README.md"
 }
