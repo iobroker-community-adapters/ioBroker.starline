@@ -463,19 +463,5 @@ function main() {
 		adapter.log.error('Error! Is not set LOGIN and PASSWORD!');	
 		return
 	}
-    // in this template all states changes inside the adapters namespace are subscribed
-    
-   /** adapter.subscribeStates('*');*/
-   
-   // adapter.subscribeStates(adapter.namespace + '.car_state.arm');
-
-    // examples for the checkPassword/checkGroup functions
-   adapter.checkPassword('admin', 'iobroker', function (res) {
-        console.log('check user admin pw ioboker: ' + res);
-    });
-
-    adapter.checkGroup('admin', 'admin', function (res) {
-        console.log('check group user admin group admin: ' + res);
-    });
 
 }
