@@ -280,9 +280,9 @@ function parse_data (getdata){
   			setObjectfun (device[t]+'.position.sat_qty',result.answer.devices[t].position.sat_qty);
   			setObjectfun (device[t]+'.position.ts',result.answer.devices[t].position.ts);
   			//setObjectfun (device[t]+'.position.x',result.answer.devices[t].position.x);
-  			adapter.setState(device[t]+'.position.longitude', {val: result.answer.devices[t].position.x, ack: true});
+  			setObjectfun (device[t]+'.position.longitude',result.answer.devices[t].position.x);
   			//setObjectfun (device[t]+'.position.y',result.answer.devices[t].position.y);
-  			adapter.setState(device[t]+'.position.latitude', {val: result.answer.devices[t].position.y, ack: true});
+  			setObjectfun (device[t]+'.position.latitude',result.answer.devices[t].position.y);
   			setObjectfun (device[t]+'.position.dir',result.answer.devices[t].position.dir);
   		}	
 		adapter.log.info('Data received restart in 1 minutes.');
@@ -345,6 +345,7 @@ function getSesId (head,notoken){
 		//return;
 }
 function setObjectfun (name,state,device){
+	var role = 'indicator';
   adapter.getState(device +'.alias', function (err, state) {
   		if ((err || !state) && device) {
 				  for (var t = 0; t < control_action.length; t++) {
@@ -366,16 +367,24 @@ function setObjectfun (name,state,device){
   		   }
   		}
 	});
-  adapter.setObject(name, {
-    	type: 'state',
-      	common: {
-      		name: name,
-      		type: 'state',
-      		role: 'indicator'
-      	},
-      native: {}
-  });
-	adapter.setState(name, {val: state, ack: true});
+		
+		if (~name.indexOf('longitude')){
+			role = 'value.gps.longitude';
+		}
+		if (~name.indexOf('latitude')){
+			role = 'value.gps.longitude';
+		}
+		
+		 adapter.setObject(name, {
+	    	type: 'state',
+	      	common: {
+	      		name: name,
+	      		type: 'state',
+	      		role: role
+	      	},
+	      native: {}
+	   });
+		adapter.setState(name, {val: state, ack: true});	
 }
 /******************************************************************/
 function send_command (device_id,action,value){ 
