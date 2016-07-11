@@ -279,8 +279,10 @@ function parse_data (getdata){
   			setObjectfun (device[t]+'.position.s',result.answer.devices[t].position.s);
   			setObjectfun (device[t]+'.position.sat_qty',result.answer.devices[t].position.sat_qty);
   			setObjectfun (device[t]+'.position.ts',result.answer.devices[t].position.ts);
-  			setObjectfun (device[t]+'.position.x',result.answer.devices[t].position.x);
-  			setObjectfun (device[t]+'.position.y',result.answer.devices[t].position.y);
+  			//setObjectfun (device[t]+'.position.x',result.answer.devices[t].position.x);
+  			adapter.setState(device[t]+'.position.longitude', {val: result.answer.devices[t].position.x, ack: true});
+  			//setObjectfun (device[t]+'.position.y',result.answer.devices[t].position.y);
+  			adapter.setState(device[t]+'.position.latitude', {val: result.answer.devices[t].position.y, ack: true});
   			setObjectfun (device[t]+'.position.dir',result.answer.devices[t].position.dir);
   		}	
 		adapter.log.info('Data received restart in 1 minutes.');
