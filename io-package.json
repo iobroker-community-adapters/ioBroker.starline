@@ -7,7 +7,7 @@
                 "en": "change position x and y to longitude and latitude",
                 "de": "change position x and y to longitude and latitude",
                 "ru": "Замена статусов местоположения авто position_x(y) на longitude и latitude"
-            },
+            }
         },
         "title":                    "Autoalarm StarLine adapter",
         "desc":                     {
