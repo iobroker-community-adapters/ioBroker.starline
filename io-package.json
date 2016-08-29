@@ -1,9 +1,9 @@
 {
     "common": {
         "name":                     "starline",
-        "version":                  "0.1.6",
+        "version":                  "0.1.7",
         "news": {
-        	"0.1.6": {
+        	"0.1.7": {
                 "en": "change position x and y to longitude and latitude",
                 "de": "change position x and y to longitude and latitude",
                 "ru": "Замена статусов местоположения авто position_x(y) на longitude и latitude"
