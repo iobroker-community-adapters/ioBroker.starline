@@ -2,6 +2,13 @@
     "common": {
         "name":                     "starline",
         "version":                  "0.1.5",
+        "news": {
+        	"0.1.6": {
+                "en": "change position x and y to longitude and latitude",
+                "de": "change position x and y to longitude and latitude",
+                "ru": "Замена статусов местоположения авто position_x(y) на longitude и latitude"
+            },
+        },
         "title":                    "Autoalarm StarLine adapter",
         "desc":                     {
  			             "en": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
