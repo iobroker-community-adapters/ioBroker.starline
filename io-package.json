@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "starline",
-        "version":                  "0.1.7",
+        "version":                  "0.1.8",
         "news": {
+		"0.1.8": {
+                "en": "change link get data",
+                "de": "change link get data",
+                "ru": "change link get data"
+            },
         	"0.1.7": {
                 "en": "change position x and y to longitude and latitude",
                 "de": "change position x and y to longitude and latitude",
