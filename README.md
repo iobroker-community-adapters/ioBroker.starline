@@ -20,6 +20,9 @@
   - Отключение датчиков удара и наклона
 
 ## Changelog
+#### 0.1.8
+* (instalator) change link getdata
+
 #### 0.1.7
 * (instalator) change position x and y to longitude and latitude
 
