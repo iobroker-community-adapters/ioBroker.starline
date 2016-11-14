@@ -173,7 +173,7 @@ function get_data (){
 var options = {
   hostname: 'starline-online.ru',
   port: 443,
-	path: '/device/list?tz=360&_='+eS,
+	path: '/device?tz=360&_='+eS, ///list
 	method: 'GET'
 };
 		options.headers = {
