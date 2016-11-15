@@ -217,7 +217,7 @@ function parse_data (getdata){
   		  adapter.log.debug('device- ' + device[t]);				
   			setObjectfun (device[t]+'.alias',result.answer.devices[t].alias,device[t]);
   			setObjectfun (device[t]+'.skey',result.answer.skey);
-  			setObjectfun (device[t]+'.balance',result.answer.devices[t].balance);
+  			setObjectfun (device[t]+'.balance',result.answer.devices[t].balance.active.value);
   			setObjectfun (device[t]+'.battery',result.answer.devices[t].battery);
   			setObjectfun (device[t]+'.device_id',result.answer.devices[t].device_id);
   			setObjectfun (device[t]+'.fw_version',result.answer.devices[t].fw_version);
