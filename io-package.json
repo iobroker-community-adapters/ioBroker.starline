@@ -1,8 +1,13 @@
 {
     "common": {
         "name":                     "starline",
-        "version":                  "0.1.8",
+        "version":                  "0.1.9",
         "news": {
+		"0.1.9": {
+                "en": "change send command, fix show balance",
+                "de": "change send command, fix show balance",
+                "ru": "change send command, fix show balance"
+            },
 		"0.1.8": {
                 "en": "change link get data",
                 "de": "change link get data",
