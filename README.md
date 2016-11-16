@@ -20,6 +20,11 @@
   - Отключение датчиков удара и наклона
 
 ## Changelog
+
+#### 0.1.9
+* (instalator) change send command, 
+* (instalator) fix parse balance"
+
 #### 0.1.8
 * (instalator) change link getdata
 
