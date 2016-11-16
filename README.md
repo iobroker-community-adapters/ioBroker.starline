@@ -21,6 +21,9 @@
 
 ## Changelog
 
+#### 0.2.0
+* (instalator) fix error sendCommand
+
 #### 0.1.9
 * (instalator) change send command, 
 * (instalator) fix parse balance"
