@@ -173,7 +173,7 @@ function get_data (){
 var options = {
   hostname: 'starline-online.ru',
   port: 443,
-	path: '/device?tz=360&_='+eS, ///list
+	path: '/device?tz=360&_='+eS, //list
 	method: 'GET'
 };
 		options.headers = {
@@ -389,7 +389,7 @@ function setObjectfun (name,state,device){
 /******************************************************************/
 function send_command (device_id,action,value){ 
   data = '';
-  var path = '/device/setCommand';
+  var path = '/device/'+device_id+'/executeCommand'; 
   var post_data;
   switch (action) {
       case 'checkballance':
@@ -406,9 +406,10 @@ function send_command (device_id,action,value){
         break;
       default:
           post_data = querystring.stringify({
-      		'device_id':device_id,
+      		/*'device_id':device_id,*/
       		'action':action,
-      		'value':value
+      		'value':value,
+			'password':''
         });
    }
 var options = {
