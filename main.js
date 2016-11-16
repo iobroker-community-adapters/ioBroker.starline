@@ -455,7 +455,6 @@ var options = {
             	}, 10000);
 			});
 		});
-	req.end();
 	req.on('error', function (err) {
      adapter.log.error('Error: send_command - ' + err);
 	});
