@@ -59,6 +59,9 @@ adapter.on('stateChange', function (id, state) {
       		  var deviceId = parseInt(state.val);
 			  //adapter.log.error('parseInt(state.val) ' + deviceId);  
 			  adapter.setState(alias +'.control.'+action, {ack: true});
+				if (action === 'ign' && value_command){
+					value_command = 1;
+				}
       		  send_command (deviceId,action,value_command);
       		}
       	});
