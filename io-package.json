@@ -30,6 +30,10 @@
  			             "de": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
  			             "ru": "ioBroker драйвер для автосигнализации StarLine Телематика 2.0"
 	},
+	"license":                  "MIT",
+	"authors": [
+            "instalator"
+        ],
         "platform":                 "Javascript/Node.js",
         "mode":                     "daemon",
         "icon":                     "logo-192x192.png",
