@@ -1,24 +1,24 @@
 {
     "common": {
-        "name":                     "starline",
-        "version":                  "0.2.0",
+        "name": "starline",
+        "version": "0.2.0",
         "news": {
-		"0.2.0": {
+            "0.2.0": {
                 "en": "fix error send command",
                 "de": "fix error send command",
                 "ru": "fix error send command"
             },
-		"0.1.9": {
+            "0.1.9": {
                 "en": "change send command, fix show balance",
                 "de": "change send command, fix show balance",
                 "ru": "change send command, fix show balance"
             },
-		"0.1.8": {
+            "0.1.8": {
                 "en": "change link get data",
                 "de": "change link get data",
                 "ru": "change link get data"
             },
-        	"0.1.7": {
+            "0.1.7": {
                 "en": "change position x and y to longitude and latitude",
                 "de": "change position x and y to longitude and latitude",
                 "ru": "Замена статусов местоположения авто position_x(y) на longitude и latitude"
@@ -49,6 +49,5 @@
         "login": "",
         "password": ""
     },
-    "objects": [
-    ]
+    "objects": []
 }
