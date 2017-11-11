@@ -42,7 +42,7 @@
 	"keywords":                 ["starline", "vis"],
         "readme":                   "https://github.com/instalator/ioBroker.starline/blob/master/README.md",
 	"loglevel":                 "info",
-        "type":                     "hardware",
+        "type":                     "alarm",
         "restartAdapters":          ["vis"]
     },
     "native": {
