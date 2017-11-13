@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "starline",
-        "version": "0.2.0",
+        "version": "1.0.0",
         "news": {
             "0.2.0": {
                 "en": "fix error send command",
