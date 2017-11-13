@@ -22,6 +22,9 @@
 
 ## Changelog
 
+#### 1.0.0
+* (instalator) up to stable
+
 #### 0.2.0
 * (instalator) fix error sendCommand
 
