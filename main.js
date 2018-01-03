@@ -28,7 +28,7 @@
 			'checktemp'
 	];
  
- var adapter = utils.adapter('starline');
+ var adapter = utils.Adapter('starline');
 // is called when adapter shuts down - callback has to be called under any circumstances!
 adapter.on('unload', function (callback) {
     try {
