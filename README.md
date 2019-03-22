@@ -1,6 +1,6 @@
 ![Logo](admin/starline_git.jpg)
 # ioBroker.starline
-
+![Number of Installations](http://iobroker.live/badges/starline-installed.svg) ![Number of Installations](http://iobroker.live/badges/starline-stable.svg) 
 [![NPM version](https://img.shields.io/npm/v/iobroker.starline.svg)](https://www.npmjs.com/package/iobroker.starline)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.starline.svg)](https://www.npmjs.com/package/iobroker.starline)
 [![Tests](http://img.shields.io/travis/instalator/ioBroker.starline/master.svg)](https://travis-ci.org/instalator/ioBroker.starline)
