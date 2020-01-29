@@ -24,7 +24,7 @@
                 "ru": "Замена статусов местоположения авто position_x(y) на longitude и latitude"
             }
         },
-        "title":                    "Autoalarm StarLine adapter",
+        "title":                    "Autoalarm StarLine",
         "desc":                     {
  			             "en": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
  			             "de": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
