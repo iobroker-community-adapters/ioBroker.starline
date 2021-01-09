@@ -6,12 +6,9 @@
  var utils = require('@iobroker/adapter-core'); // Get common adapter utils
  var https = require('https');
  var querystring = require('querystring');
- var sesId;
- var token;
- var header;
+ var sesId, token, header, reload_data;
  var data = '';
  var flag_subscribe = false;
- var reload_data;
 	var control_action = [
 			'valet', 
 			'hijack', 
