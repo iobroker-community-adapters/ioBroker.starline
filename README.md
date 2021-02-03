@@ -24,6 +24,9 @@
 
 ## Changelog
 
+#### 1.0.1
+* (instalator) fixed auth
+
 #### 1.0.0
 * (instalator) up to stable
 
