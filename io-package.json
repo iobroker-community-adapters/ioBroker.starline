@@ -49,7 +49,8 @@
     "type": "vehicle",
     "restartAdapters": [
       "vis"
-    ]
+    ],
+    "installedFrom": "https://github.com/instalator/ioBroker.starline/tarball/master"
   },
   "native": {
     "login": "",
