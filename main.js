@@ -81,7 +81,6 @@ function goto_web(){
             data += chunk;
         });
         res.on('end', () => {
-            //adapter.log.debug('Data:' + data);
             getSesId(res.headers, 'notoken', () => {
                 adapter.log.debug('goto_web-cookie: ' + header);
                 adapter.log.debug('auth_web (sesId)' + sesId);
