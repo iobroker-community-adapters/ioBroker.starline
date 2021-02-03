@@ -1,73 +1,64 @@
-/* jshint -W097 */// jshint strict:false
-/*jslint node: true */
 "use strict";
-let utils = require(__dirname + '/lib/utils'), https = require('https'), querystring = require('querystring'), sesId, userAgentId, header, data = '', flag_subscribe = false,
-    reload_data, control_action = [
-        'valet',
-        'hijack',
-        'update_position',
-        'shock_bpass',
-        'tilt_bpass',
-        'webasto',
-        'ign',
-        'arm',
-        'poke',
-        'add_sens_bpass',
-        'out',
-        'checkballance',
-        'checktemp'
-    ], adapter = utils.adapter('starline');
+const utils = require('@iobroker/adapter-core');
+let https = require('https');
+let adapter, sesId, userAgentId, header, data = '', flag_subscribe = false, reload_data, reAuth_TimeOut;
+let control_action = [
+    'valet',
+    'hijack',
+    'update_position',
+    'shock_bpass',
+    'tilt_bpass',
+    'webasto',
+    'ign',
+    'arm',
+    'poke',
+    'add_sens_bpass',
+    'out',
+    'checkballance',
+    'checktemp'
+];
 
-adapter.on('unload', (callback) => {
-    try {
-        adapter.log.info('cleaned everything up...');
-        callback();
-    } catch (e) {
-        callback();
-    }
-});
-
-adapter.on('objectChange', (id, obj) => {
-});
-
-adapter.on('stateChange', (id, state) => {
-    if (state && !state.ack){
-        let StateArray = id.split('.');
-        let action = '';
-        if (StateArray[3] === 'control'){
-            let alias = StateArray[2];
-            let value_command = state.val;
-            action = StateArray[4];
-            adapter.getState(alias + '.device_id', (err, state) => {
-                if (err || !state){
-                } else {
-                    let deviceId = parseInt(state.val);
-                    adapter.setState(alias + '.control.' + action, {ack: true});
-                    if (action === 'ign' && value_command){
-                        value_command = 1;
-                    }
-                    send_command(deviceId, action, value_command);
+function startAdapter(options){
+    return adapter = utils.adapter(Object.assign({}, options, {
+        systemConfig: true,
+        name:         'starline',
+        ready:        main,
+        unload:       callback => {
+            reload_data && clearTimeout(reload_data);
+            reAuth_TimeOut && clearTimeout(reAuth_TimeOut);
+            try {
+                debug('cleaned everything up...');
+                callback();
+            } catch (e) {
+                callback();
+            }
+        },
+        stateChange:  (id, state) => {
+            if (id && state && !state.ack){
+                debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+                let StateArray = id.split('.');
+                let action = '';
+                if (StateArray[3] === 'control'){
+                    let alias = StateArray[2];
+                    let value_command = state.val;
+                    action = StateArray[4];
+                    adapter.getState(alias + '.device_id', (err, state) => {
+                        if (err || !state){
+                        } else {
+                            let deviceId = parseInt(state.val);
+                            adapter.setState(alias + '.control.' + action, {ack: true});
+                            if (action === 'ign' && value_command){
+                                value_command = 1;
+                            }
+                            send_command(deviceId, action, value_command);
+                        }
+                    });
+                    adapter.log.info('stateChange ' + id + ' - ' + JSON.stringify(state));
                 }
-            });
-            adapter.log.info('stateChange ' + id + ' - ' + JSON.stringify(state));
-        }
-    }
-});
-
-adapter.on('message', (obj) => {
-    if (typeof obj === 'object' && obj.message){
-        if (obj.command === 'send'){
-            // e.g. send email or pushover or whatever
-            console.log('send command');
-            // Send response in callback if required
-            if (obj.callback) adapter.sendTo(obj.from, obj.command, 'Message received', obj.callback);
-        }
-    }
-});
-
-adapter.on('ready', () => {
-    main();
-});
+            }
+        },
+    }));
+}
 
 function goto_web(){
     let options = {
@@ -293,7 +284,7 @@ function parse_data(getdata){
 
 function reAuth(){
     adapter.log.error('Re-authorization, and receiving data in 10 minutes.');
-    setTimeout(() => {
+    reAuth_TimeOut = setTimeout(() => {
         clearTimeout(reload_data);
         goto_web();
     }, 600000);
@@ -469,4 +460,11 @@ function main(){
     } else {
         adapter.log.error('Error! Is not set LOGIN and PASSWORD!');
     }
+}
+
+
+if (module.parent){
+    module.exports = startAdapter;
+} else {
+    startAdapter();
 }

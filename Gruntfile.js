@@ -13,15 +13,15 @@ module.exports = function (grunt) {
     var iopackage = grunt.file.readJSON('io-package.json');
     var version   = (pkg && pkg.version) ? pkg.version : iopackage.common.version;
     var newname   = grunt.option('name');
-    var author    = grunt.option('author') || '@@Author@@';
-    var email     = grunt.option('email')  || '@@email@@';
+    var author    = grunt.option('author') || 'instalator';
+    var email     = grunt.option('email')  || 'vvvalt@mail.ru';
     var fs        = require('fs');
 
     // check arguments
     if (process.argv[2] == 'rename') {
 		console.log('Try to rename to "' + newname + '"');
         if (!newname) {
-            console.log('Please write the new template name, like: "grunt rename --name=mywidgetset" --author="Author Name"');
+            console.log('Please write the new synology name, like: "grunt rename --name=mywidgetset" --author="Author Name"');
             process.exit();
         }
         if (newname.indexOf(' ') != -1) {
@@ -32,17 +32,17 @@ module.exports = function (grunt) {
             console.log('Name must be lower case.');
             process.exit();
         }
-        if (fs.existsSync(__dirname + '/admin/starline.png')) {
-            fs.renameSync(__dirname + '/admin/starline.png',              __dirname + '/admin/' + newname + '.png');
+        if (fs.existsSync(__dirname + '/admin/synology.png')) {
+            fs.renameSync(__dirname + '/admin/synology.png',              __dirname + '/admin/' + newname + '.png');
         }
-        if (fs.existsSync(__dirname + '/widgets/starline.html')) {
-            fs.renameSync(__dirname + '/widgets/starline.html',           __dirname + '/widgets/' + newname + '.html');
+        if (fs.existsSync(__dirname + '/widgets/synology.html')) {
+            fs.renameSync(__dirname + '/widgets/synology.html',           __dirname + '/widgets/' + newname + '.html');
         }
-        if (fs.existsSync(__dirname + '/widgets/starline/js/starline.js')) {
-            fs.renameSync(__dirname + '/widgets/starline/js/starline.js', __dirname + '/widgets/starline/js/' + newname + '.js');
+        if (fs.existsSync(__dirname + '/widgets/synology/js/synology.js')) {
+            fs.renameSync(__dirname + '/widgets/synology/js/synology.js', __dirname + '/widgets/synology/js/' + newname + '.js');
         }
-        if (fs.existsSync(__dirname + '/widgets/starline')) {
-            fs.renameSync(__dirname + '/widgets/starline',                __dirname + '/widgets/' + newname);
+        if (fs.existsSync(__dirname + '/widgets/synology')) {
+            fs.renameSync(__dirname + '/widgets/synology',                __dirname + '/widgets/' + newname);
         }
     }
 
@@ -100,12 +100,12 @@ module.exports = function (grunt) {
                 options: {
                     patterns: [
                         {
-                            match: /starline/g,
+                            match: /synology/g,
                             replacement: newname
                         },
                         {
-                            match: /starline/g,
-                            replacement: newname ? (newname[0].toUpperCase() + newname.substring(1)) : 'Starline'
+                            match: /Synology/g,
+                            replacement: newname ? (newname[0].toUpperCase() + newname.substring(1)) : 'Synology'
                         },
                         {
                             match: /instalator/g,
@@ -126,7 +126,8 @@ module.exports = function (grunt) {
                                  srcDir + 'LICENSE',
                                  srcDir + 'package.json',
                                  srcDir + 'README.md',
-                                 srcDir + 'io-package.json'
+                                 srcDir + 'main.js',
+                                 srcDir + 'Gruntfile.js'
                         ],
                         dest:    srcDir
                     },

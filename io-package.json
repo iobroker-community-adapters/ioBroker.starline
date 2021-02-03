@@ -1,53 +1,59 @@
 {
-    "common": {
-        "name": "starline",
-        "version": "1.0.0",
-        "news": {
-            "0.2.0": {
-                "en": "fix error send command",
-                "de": "fix error send command",
-                "ru": "fix error send command"
-            },
-            "0.1.9": {
-                "en": "change send command, fix show balance",
-                "de": "change send command, fix show balance",
-                "ru": "change send command, fix show balance"
-            },
-            "0.1.8": {
-                "en": "change link get data",
-                "de": "change link get data",
-                "ru": "change link get data"
-            },
-            "0.1.7": {
-                "en": "change position x and y to longitude and latitude",
-                "de": "change position x and y to longitude and latitude",
-                "ru": "Замена статусов местоположения авто position_x(y) на longitude и latitude"
-            }
-        },
-        "title":                    "Autoalarm StarLine",
-        "desc":                     {
- 			             "en": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
- 			             "de": "ioBroker adapter for autoalarm StarLine Telematica 2.0",
- 			             "ru": "ioBroker драйвер для автосигнализации StarLine Телематика 2.0"
-	},
-	"license":                  "MIT",
-	"authors": [
-            "instalator"
-        ],
-        "platform":                 "Javascript/Node.js",
-        "mode":                     "daemon",
-        "icon":                     "logo-192x192.png",
-        "enabled":                  true,
-	"extIcon":                  "https://raw.githubusercontent.com/instalator/ioBroker.starline/master/admin/logo-192x192.png",
-	"keywords":                 ["starline", "vis"],
-        "readme":                   "https://github.com/instalator/ioBroker.starline/blob/master/README.md",
-	"loglevel":                 "info",
-        "type":                     "vehicle",
-        "restartAdapters":          ["vis"]
+  "common": {
+    "name": "starline",
+    "version": "1.0.1",
+    "news": {
+      "1.0.1": {
+        "en": "fixed auth",
+        "de": "fixed auth",
+        "ru": "fixed auth",
+        "pt": "fixed auth",
+        "nl": "fixed auth",
+        "fr": "fixed auth",
+        "it": "fixed auth",
+        "es": "fixed auth",
+        "pl": "fixed auth",
+        "zh-cn": "fixed auth"
+      }
     },
-    "native": {
-        "login": "",
-        "password": ""
+    "title": "Autoalarm StarLine",
+    "desc": {
+      "en": "Adapter for car alarm StarLine Telematics 2.0",
+      "de": "Adapter für Autoalarm StarLine Telematics 2.0",
+      "ru": "Адаптер для автосигнализации StarLine Telematics 2.0",
+      "pt": "Adaptador para alarme de carro StarLine Telematics 2.0",
+      "nl": "Adapter voor auto-alarm StarLine Telematics 2.0",
+      "fr": "Adaptateur pour alarme de voiture StarLine Telematics 2.0",
+      "it": "Adattatore per allarme auto StarLine Telematics 2.0",
+      "es": "Adaptador para alarma de coche StarLine Telematics 2.0",
+      "pl": "Adapter do alarmu samochodowego StarLine Telematics 2.0",
+      "zh-cn": "汽车警报器适配器StarLine Telematics 2.0"
     },
-    "objects": []
+    "license": "MIT",
+    "authors": [
+      "instalator"
+    ],
+    "platform": "Javascript/Node.js",
+    "mode": "daemon",
+    "icon": "logo-192x192.png",
+    "enabled": false,
+    "messagebox": false,
+    "compact": true,
+    "extIcon": "https://raw.githubusercontent.com/instalator/ioBroker.starline/master/admin/logo-192x192.png",
+    "keywords": [
+      "starline",
+      "vis"
+    ],
+    "readme": "https://github.com/instalator/ioBroker.starline/blob/master/README.md",
+    "loglevel": "info",
+    "type": "vehicle",
+    "restartAdapters": [
+      "vis"
+    ]
+  },
+  "native": {
+    "login": "",
+    "password": ""
+  },
+  "objects": []
 }
