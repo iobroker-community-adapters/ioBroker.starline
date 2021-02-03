@@ -24,8 +24,9 @@
 
 ## Changelog
 
-#### 1.0.1
+#### 1.1.0
 * (instalator) fixed auth
+* (instalator) added support admin3
 
 #### 1.0.0
 * (instalator) up to stable

@@ -1,19 +1,19 @@
 {
   "common": {
     "name": "starline",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "news": {
-      "1.0.1": {
-        "en": "fixed auth",
-        "de": "fixed auth",
-        "ru": "fixed auth",
-        "pt": "fixed auth",
-        "nl": "fixed auth",
-        "fr": "fixed auth",
-        "it": "fixed auth",
-        "es": "fixed auth",
-        "pl": "fixed auth",
-        "zh-cn": "fixed auth"
+      "1.1.0": {
+        "en": "fixed auth\nadded support admin3",
+        "de": "fixed auth\nadded support admin3",
+        "ru": "fixed auth\nadded support admin3",
+        "pt": "fixed auth\nadded support admin3",
+        "nl": "fixed auth\nadded support admin3",
+        "fr": "fixed auth\nadded support admin3",
+        "it": "fixed auth\nadded support admin3",
+        "es": "fixed auth\nadded support admin3",
+        "pl": "fixed auth\nadded support admin3",
+        "zh-cn": "fixed auth\nadded support admin3"
       }
     },
     "title": "Autoalarm StarLine",
