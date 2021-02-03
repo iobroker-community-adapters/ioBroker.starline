@@ -37,7 +37,6 @@
     "mode": "daemon",
     "icon": "logo-192x192.png",
     "enabled": false,
-    "messagebox": false,
     "compact": true,
     "materialize": true,
     "extIcon": "https://raw.githubusercontent.com/instalator/ioBroker.starline/master/admin/logo-192x192.png",
