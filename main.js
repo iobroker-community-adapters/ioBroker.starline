@@ -35,7 +35,7 @@ function startAdapter(options){
         },
         stateChange:  (id, state) => {
             if (id && state && !state.ack){
-                debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+                //debug(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
                 let StateArray = id.split('.');
                 let action = '';
                 if (StateArray[3] === 'control'){
