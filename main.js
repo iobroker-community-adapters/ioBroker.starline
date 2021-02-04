@@ -1,6 +1,7 @@
 "use strict";
 const utils = require('@iobroker/adapter-core');
 let https = require('https');
+var querystring = require('querystring');
 let adapter, sesId, userAgentId, header, data = '', flag_subscribe = false, reload_data, reAuth_TimeOut;
 let control_action = [
     'valet',
@@ -97,8 +98,9 @@ function goto_web(){
 
 function auth_web(){
     let post_data = {
-        'username': adapter.config.login,
-        'password': adapter.config.password
+        'username':   adapter.config.login,
+        'rememberMe': true,
+        'password':   adapter.config.password
     };
     let options = {
         hostname: 'starline-online.ru',
@@ -107,7 +109,6 @@ function auth_web(){
         method:   'POST'
     };
     options.headers = {
-        //'Host':             'starline-online.ru',
         'user-Agent':       'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36',
         'accept':           'application/json, text/javascript, */*; q=0.01',
         'origin':           'https://starline-online.ru',
@@ -125,7 +126,6 @@ function auth_web(){
             data += chunk;
         });
         res.on('end', () => {
-            //adapter.log.debug('Data:' + data);
             getSesId(res.headers, null, () => {
                 if (userAgentId && sesId){
                     adapter.log.debug('auth_web-cookie: ' + header);

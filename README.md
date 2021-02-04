@@ -24,6 +24,9 @@
 
 ## Changelog
 
+#### 1.1.1
+* (instalator) fixed send command
+
 #### 1.1.0
 * (instalator) fixed auth
 * (instalator) added support admin3

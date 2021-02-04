@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "starline",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "news": {
+      "1.1.1": {
+        "en": "fixed send command",
+        "de": "fixed send command",
+        "ru": "fixed send command",
+        "pt": "fixed send command",
+        "nl": "fixed send command",
+        "fr": "fixed send command",
+        "it": "fixed send command",
+        "es": "fixed send command",
+        "pl": "fixed send command",
+        "zh-cn": "fixed send command"
+      },
       "1.1.0": {
         "en": "fixed auth\nadded support admin3",
         "de": "fixed auth\nadded support admin3",
