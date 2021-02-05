@@ -199,6 +199,7 @@ function auth_web(){
                     adapter.log.debug('auth_web-cookie: ' + header);
                     adapter.log.debug('get_data (phpsesid) ' + sesId);
                     adapter.log.debug('get_data (token) ' + userAgentId);
+                    adapter.setState('info.connection', true, true);
                     get_data();
                 }
             });
@@ -349,6 +350,7 @@ function parse_data(getdata){
 }
 
 function reAuth(){
+    adapter.setState('info.connection', false, true);
     adapter.log.error('Re-authorization, and receiving data in 10 minutes.');
     reAuth_TimeOut = setTimeout(() => {
         reload_data && clearTimeout(reload_data);
