@@ -76,9 +76,9 @@ let states = {
     'car_alr_state.tilt':       {val: false, name: 'Состояние датчика наклона', role: "state", type: "boolean", read: true, write: false},
     'car_alr_state.trunk':      {val: false, name: 'Состояние зоны багажника', role: "state", type: "boolean", read: true, write: false},
 
-    'services.control':   {val: false, name: false, role: "state", type: "string", read: true, write: true},
-    'services.settings':  {val: false, name: false, role: "state", type: "string", read: true, write: true},
-    
+    'services.control':  {val: false, name: false, role: "state", type: "string", read: true, write: true},
+    'services.settings': {val: false, name: false, role: "state", type: "string", read: true, write: true},
+
     'position.dir':       {val: '', name: 'Данные о направлении движения в градусах ( 0 - Север, 180 - Юг )', role: "state", type: "number", read: true, write: true},
     'position.s':         {val: '', name: 'Скорость устройства, км/ч', role: "state", type: "number", read: true, write: true},
     'position.sat_qty':   {val: '', name: 'Число принимаемых спутников GPS', role: "state", type: "number", read: true, write: true},
