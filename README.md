@@ -24,6 +24,10 @@
 
 ## Changelog
 
+#### 1.1.2
+* (instalator) fixed objects
+* (instalator) fixed interval
+
 #### 1.1.1
 * (instalator) fixed send command
 

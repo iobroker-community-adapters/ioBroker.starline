@@ -1,8 +1,20 @@
 {
   "common": {
     "name": "starline",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "news": {
+      "1.1.2": {
+        "en": "fixed objects\nfixed interval",
+        "de": "fixed objects\nfixed interval",
+        "ru": "fixed objects\nfixed interval",
+        "pt": "fixed objects\nfixed interval",
+        "nl": "fixed objects\nfixed interval",
+        "fr": "fixed objects\nfixed interval",
+        "it": "fixed objects\nfixed interval",
+        "es": "fixed objects\nfixed interval",
+        "pl": "fixed objects\nfixed interval",
+        "zh-cn": "fixed objects\nfixed interval"
+      },
       "1.1.1": {
         "en": "fixed send command",
         "de": "fixed send command",
@@ -65,7 +77,8 @@
   },
   "native": {
     "login": "",
-    "password": ""
+    "password": "",
+    "interval": 60000
   },
   "objects": [],
   "instanceObjects": [

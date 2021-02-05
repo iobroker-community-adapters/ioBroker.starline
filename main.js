@@ -2,22 +2,90 @@
 const utils = require('@iobroker/adapter-core');
 let https = require('https');
 let querystring = require('querystring');
-let adapter, sesId, userAgentId, header, data = '', flag_subscribe = false, reload_data, reAuth_TimeOut;
-let control_action = [
-    'valet',
-    'hijack',
-    'update_position',
-    'shock_bpass',
-    'tilt_bpass',
-    'webasto',
-    'ign',
-    'arm',
-    'poke',
-    'add_sens_bpass',
-    'out',
-    'checkballance',
-    'checktemp'
-];
+let adapter, sesId, userAgentId, header, data = '', flag_subscribe = false, reload_data, reAuth_TimeOut, timePool = 10000;
+let control_action = {
+    'valet':           {val: false, name: "Режим валет", role: "command", type: "boolean", read: false, write: true},
+    'hijack':          {val: false, name: "Режим антиаграбление", role: "command", type: "boolean", read: false, write: true},
+    'update_position': {val: false, name: "Обновить местоположение авто", role: "command", type: "boolean", read: false, write: true},
+    'shock_bpass':     {val: false, name: "Отключение датчика удара", role: "command", type: "boolean", read: false, write: true},
+    'tilt_bpass':      {val: false, name: "Отключение датчика наклона", role: "command", type: "boolean", read: false, write: true},
+    'webasto':         {val: false, name: "Управление webasto", role: "command", type: "boolean", read: false, write: true},
+    'ign':             {val: false, name: "Автозапуск", role: "command", type: "boolean", read: false, write: true},
+    'arm':             {val: false, name: "Установливаемый статус охраны устройства", role: "command", type: "boolean", read: false, write: true},
+    'poke':            {val: false, name: "Сигнал", role: "command", type: "boolean", read: false, write: true},
+    'add_sens_bpass':  {val: false, name: "Выключение доп. датчика", role: "command", type: "boolean", read: false, write: true},
+    'out':             {val: false, name: "Управление доп. каналом", role: "command", type: "boolean", read: false, write: true},
+    'checkballance':   {val: false, name: "Запросить балланс", role: "button", type: "boolean", read: false, write: true},
+    'checktemp':       {val: false, name: "Запрос температуры", role: "button", type: "boolean", read: false, write: true},
+};
+
+let states = {
+    'alias':               {val: '', name: 'Имя устройства заданное пользователем при его добавлении или после эксплуатации', role: "state", type: "string", read: true, write: false},
+    'skey':                {val: false, name: false, role: "state", type: "string", read: true, write: false},
+    'balance':             {val: '', name: 'Баланс SIM-карты', role: "state", type: "number", read: true, write: false},
+    'battery':             {val: '', name: 'Напряжение АКБ охранно-телематического комплекса ( вольты ) или заряд батареи маяка ( в процентах )', role: "state", type: "number", read: true, write: false},
+    'device_id':           {val: '', name: 'Идентификатор устройства в SLNet', role: "state", type: "string", read: true, write: false},
+    'fw_version':          {val: '', name: 'Версия ПО устройства', role: "state", type: "string", read: true, write: false},
+    'imei':                {val: '', name: 'IMEI GSM-модуля устройства', role: "state", type: "string", read: true, write: false},
+    'mayak_temp':          {val: '', name: 'Температура маяка', role: "state", type: "number", read: true, write: false},
+    'mon_type':            {val: '', name: 'Тип режима мониторинга', role: "state", type: "number", read: true, write: false},
+    'type':                {val: '', name: 'Тип устройства', role: "state", type: "number", read: true, write: false},
+    '_controls':           {val: false, name: false, role: "state", type: "string", read: true, write: false},
+    'reg':                 {val: '', name: 'Уникальный идентификатор устройства', role: "state", type: "string", read: true, write: false},
+    'rpl_channel':         {val: '', name: 'Идентификатор канала Realplexor', role: "state", type: "string", read: true, write: false},
+    'sn':                  {val: '', name: 'Серийный номер устройства', role: "state", type: "string", read: true, write: false},
+    'ts_activity':         {val: '', name: 'Время последней активности устройства, число секунд прошедших с 01.01.1970 по UTC', role: "state", type: "number", read: true, write: false},
+    'shortParking':        {val: '', name: 'Длительность короткой стоянки, мин', role: "state", type: "number", read: true, write: false},
+    'longParking':         {val: '', name: 'Длительность долгой стоянки, мин', role: "state", type: "number", read: true, write: false},
+    'shared_for_me':       {val: false, name: false, role: "state", type: "string", read: true, write: false},
+    'showInsuranceEvents': {val: false, name: false, role: "state", type: "string", read: true, write: false},
+    'ctemp':               {val: '', name: 'Температура салона', role: "state", type: "number", read: true, write: false},
+    'etemp':               {val: '', name: 'Температура двигателя', role: "state", type: "number", read: true, write: false},
+    'gps_lvl':             {val: '', name: 'Уровень приёма GPS сигнала, соответвует числу спутников GPS', role: "state", type: "number", read: true, write: false},
+    'gsm_lvl':             {val: '', name: 'Уровень приёма GSM сигнала, соответвует числу спутников GSM', role: "state", type: "number", read: true, write: false},
+    'phone':               {val: '', name: 'Телефонный номер SIM-карты устройства', role: "state", type: "string", read: true, write: false},
+    'status':              {val: '', name: 'Статус соединения с сервером ( 1 - Online, 2 - Offline )', role: "state", type: "number", read: true, write: false},
+
+    'car_state.add_sens_bpass': {val: false, name: 'Состояние дополнительного датчика', role: "state", type: "boolean", read: true, write: false},
+    'car_state.alarm':          {val: false, name: 'Статус тревоги охранно-телематического комплекса', role: "state", type: "boolean", read: true, write: false},
+    'car_state.arm':            {val: false, name: 'Состояние режима охраны', role: "state", type: "boolean", read: true, write: false},
+    'car_state.door':           {val: false, name: 'Состояние дверей', role: "state", type: "boolean", read: true, write: false},
+    'car_state.hbrake':         {val: false, name: 'Состояние ручного тормоза', role: "state", type: "boolean", read: true, write: false},
+    'car_state.hijack':         {val: false, name: 'Состояние режима "Антиограбление"', role: "state", type: "boolean", read: true, write: false},
+    'car_state.hood':           {val: false, name: 'Состояние капота', role: "state", type: "boolean", read: true, write: false},
+    'car_state.ign':            {val: false, name: 'Состояние двигателя', role: "state", type: "boolean", read: true, write: false},
+    'car_state.out':            {val: false, name: 'Состояние доп. канала', role: "state", type: "boolean", read: true, write: false},
+    'car_state.pbrake':         {val: false, name: 'Состояние педали тормоза', role: "state", type: "boolean", read: true, write: false},
+    'car_state.r_start':        {val: false, name: 'Статус дистанционного запуска', role: "state", type: "boolean", read: true, write: false},
+    'car_state.run':            {val: false, name: 'Состояние зажигания', role: "state", type: "boolean", read: true, write: false},
+    'car_state.shock_bpass':    {val: false, name: 'Состояние датчика удара', role: "state", type: "boolean", read: true, write: false},
+    'car_state.tilt_bpass':     {val: false, name: 'Состояние датчика наклона', role: "state", type: "boolean", read: true, write: false},
+    'car_state.trunk':          {val: false, name: 'Состояние багажника', role: "state", type: "boolean", read: true, write: false},
+    'car_state.valet':          {val: false, name: 'Статус сервисного режима', role: "state", type: "boolean", read: true, write: false},
+    'car_state.webasto':        {val: false, name: 'Состояние предпускового подогревателя', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.add_h':      {val: false, name: 'Состояние тревожного уровня дополнительного датчика', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.add_l':      {val: false, name: 'Состояние предупредительного уровня дополнительного датчика', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.door':       {val: false, name: 'Состояние зоны дверей', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.hbrake':     {val: false, name: 'Состояние ручного тормоза', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.hijack':     {val: false, name: 'Состояние режима "Антиограбление"', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.hood':       {val: false, name: 'Состояние зоны капота', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.ign':        {val: false, name: 'Состояние зажигания', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.pbrake':     {val: false, name: 'Состояние педали тормоза', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.shock_h':    {val: false, name: 'Состояние тревожного уровня датчика удара', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.shock_l':    {val: false, name: 'Состояние предупредительного уровня датчика удара', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.tilt':       {val: false, name: 'Состояние датчика наклона', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.trunk':      {val: false, name: 'Состояние зоны багажника', role: "state", type: "boolean", read: true, write: false},
+
+    'services.control':   {val: false, name: false, role: "state", type: "string", read: true, write: true},
+    'services.settings':  {val: false, name: false, role: "state", type: "string", read: true, write: true},
+    
+    'position.dir':       {val: '', name: 'Данные о направлении движения в градусах ( 0 - Север, 180 - Юг )', role: "state", type: "number", read: true, write: true},
+    'position.s':         {val: '', name: 'Скорость устройства, км/ч', role: "state", type: "number", read: true, write: true},
+    'position.sat_qty':   {val: '', name: 'Число принимаемых спутников GPS', role: "state", type: "number", read: true, write: true},
+    'position.ts':        {val: '', name: 'Метка времени фиксации координат, число секунд прошедших с 01.01.1970 по UTC', role: "state", type: "number", read: true, write: true},
+    'position.longitude': {val: '', name: 'Координаты широты', role: "value.gps.longitude", type: "string", read: true, write: true},
+    'position.latitude':  {val: '', name: 'Координаты долготы', role: "value.gps.longitude", type: "string", read: true, write: true},
+};
 
 function startAdapter(options){
     return adapter = utils.adapter(Object.assign({}, options, {
@@ -129,8 +197,8 @@ function auth_web(){
             getSesId(res.headers, null, () => {
                 if (userAgentId && sesId){
                     adapter.log.debug('auth_web-cookie: ' + header);
-                    adapter.log.debug('get_data (phpsesid)' + sesId);
-                    adapter.log.debug('get_data (token)' + userAgentId);
+                    adapter.log.debug('get_data (phpsesid) ' + sesId);
+                    adapter.log.debug('get_data (token) ' + userAgentId);
                     get_data();
                 }
             });
@@ -262,12 +330,11 @@ function parse_data(getdata){
                 setObjectfun(device[t] + '.position.longitude', result.answer.devices[t].position.x);
                 //setObjectfun (device[t]+'.position.y',result.answer.devices[t].position.y);
                 setObjectfun(device[t] + '.position.latitude', result.answer.devices[t].position.y);
-                setObjectfun(device[t] + '.position.dir', result.answer.devices[t].position.dir);
             }
-            adapter.log.info('Data received restart in 1 minutes.');
+            adapter.log.info('Data received restart in ' + timePool / 1000 + ' sec.');
             reload_data = setTimeout(() => {
                 get_data();
-            }, 60000);
+            }, timePool);
         }
         if (result.result === 0){
             error('Error get Parse Data:' + result.answer.error);
@@ -276,7 +343,7 @@ function parse_data(getdata){
             reAuth();
         }
     } catch (e) {
-        adapter.log.error('Parse error DATA');
+        adapter.log.error('Parse error DATA' + JSON.stringify(getdata));
         reAuth();
     }
 }
@@ -284,7 +351,7 @@ function parse_data(getdata){
 function reAuth(){
     adapter.log.error('Re-authorization, and receiving data in 10 minutes.');
     reAuth_TimeOut = setTimeout(() => {
-        clearTimeout(reload_data);
+        reload_data && clearTimeout(reload_data);
         goto_web();
     }, 600000);
 }
@@ -329,19 +396,21 @@ function getSesId(head, notoken, cb){
 
 function setObjectfun(name, state, device){
     let role = 'indicator';
-    adapter.getState(device + '.alias', (err, state) => {
+    adapter.getObject(device + '.alias', (err, state) => {
         if ((err || !state) && device){
-            for (let t = 0; t < control_action.length; t++) {
-                adapter.setObject(device + '.control.' + control_action[t], {
+            for (let key in control_action) {
+                adapter.setObject(device + '.control.' + key, {
                     type:   'state',
                     common: {
-                        name: device + '.control.' + control_action[t],
-                        type: 'state',
-                        role: 'indicator'
+                        name:  control_action[key].name,
+                        type:  control_action[key].type,
+                        role:  control_action[key].role,
+                        read:  control_action[key].read,
+                        write: control_action[key].write
                     },
                     native: {}
                 });
-                adapter.setState(device + '.control.' + control_action[t], {val: false, ack: true});
+                adapter.setState(device + '.control.' + key, {val: false, ack: true});
             }
         } else {
             if (!flag_subscribe && device){
@@ -350,20 +419,21 @@ function setObjectfun(name, state, device){
             }
         }
     });
-
-    if (~name.indexOf('longitude')){
-        role = 'value.gps.longitude';
+    let _name = name.split('.');
+    let name_obj = '';
+    if (_name.length === 2){
+        name_obj = _name[_name.length - 1];
+    } else {
+        name_obj = _name[_name.length - 2] + '.' + _name[_name.length - 1];
     }
-    if (~name.indexOf('latitude')){
-        role = 'value.gps.longitude';
-    }
-
     adapter.setObject(name, {
         type:   'state',
         common: {
-            name: name,
-            type: 'state',
-            role: role
+            name:  states[name_obj].name ? states[name_obj].name :name,
+            type:  states[name_obj].type,
+            role:  states[name_obj].role,
+            read:  states[name_obj].read,
+            write: states[name_obj].write
         },
         native: {}
     });
@@ -455,6 +525,7 @@ function error(error){
 /*******************************************************************/
 function main(){
     if (adapter.config.login && adapter.config.password){
+        timePool = adapter.config.interval;
         goto_web();
     } else {
         adapter.log.error('Error! Is not set LOGIN and PASSWORD!');

@@ -1,6 +1,6 @@
 {
   "name": "iobroker.starline",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Control your car from iobroker with Starline Telematics",
   "author": {
     "name": "instalator",
