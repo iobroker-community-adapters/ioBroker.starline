@@ -256,8 +256,6 @@ function get_data(){
     });
 }
 
-
-
 function parse_data(getdata){
     let result;
     let device = [];
