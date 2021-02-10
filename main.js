@@ -243,6 +243,9 @@ function get_data(){
             if (res.statusCode === 200){
                 adapter.log.debug('Received data:' + getdata);
                 parse_data(getdata);
+            } else {
+                adapter.log.error('get_data - response statusCode: ' + res.statusCode);
+                reAuth();
             }
         });
     });
@@ -503,7 +506,7 @@ function send_command(device_id, action, value){
                     adapter.log.info('Error sending command - ' + result.desc.action[0]);
                 }
             } catch (e) {
-                adapter.log.error('Send command. Parsing error response' + JSON.stringify(e));
+                adapter.log.error('Send command. Parsing error: ' + JSON.stringify(e) + '. Incoming data: ' + JSON.stringify(data));
             }
             setTimeout(() => {
                 clearTimeout(reload_data);
