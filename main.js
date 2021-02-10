@@ -256,6 +256,8 @@ function get_data(){
     });
 }
 
+
+
 function parse_data(getdata){
     let result;
     let device = [];
@@ -267,8 +269,8 @@ function parse_data(getdata){
                 device[t] = result.answer.devices[t].alias;
                 adapter.log.debug('device- ' + device[t]);
                 setObjectfun(device[t] + '.alias', result.answer.devices[t].alias, device[t]);
-                setObjectfun(device[t] + '.skey', result.answer.skey);
-                setObjectfun(device[t] + '.balance', result.answer.devices[t].balance.active.value);
+                setObjectfun(device[t] + '.skey', result.answer.skey); //
+                setObjectfun(device[t] + '.balance', result.answer.devices[t].balance && result.answer.devices[t].balance.active.value);
                 setObjectfun(device[t] + '.battery', result.answer.devices[t].battery);
                 setObjectfun(device[t] + '.device_id', result.answer.devices[t].device_id);
                 setObjectfun(device[t] + '.fw_version', result.answer.devices[t].fw_version);
@@ -532,6 +534,7 @@ function main(){
     if (adapter.config.login && adapter.config.password){
         timePool = adapter.config.interval;
         goto_web();
+        //test();
     } else {
         adapter.log.error('Error! Is not set LOGIN and PASSWORD!');
     }
