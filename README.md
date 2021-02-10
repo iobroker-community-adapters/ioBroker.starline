@@ -25,6 +25,9 @@
 
 ## Changelog
 
+#### 1.1.3
+* (instalator) fixed error parse mayak
+
 #### 1.1.2
 * (instalator) fixed objects
 * (instalator) fixed interval
