@@ -10,6 +10,21 @@
 [![Donate](https://img.shields.io/badge/donate-YooMoney-green)](https://sobe.ru/na/instalator)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PFUALWTR2CTPY)
 
+Der Adapter erfordert eine installierte und konfigurierte Diebstahlsicherung, die den StarLine-Telematikdienst 2.0 unterstützt.
+
+Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdienst zu erhalten. https://starline-online.ru.
+##### Verwaltung der Hauptbetriebsarten der Autoalarmanlage:
+   - Scharf-/Unscharfschalten
+   - Aktivierung der AntiHiJack-Funktion
+   - Auto-Start
+   - Aktivierung des Servicemodus (Valet)
+   - Aktivierung von zusätzl. Kanäle
+   - Schalten Sie die Webasto-Heizung ein / aus (falls vorhanden)
+   - Fahrzeugkoordinaten anfordern
+   - Stoß- und Neigungssensoren deaktivieren
+
+----------------------
+
 Для работы драйвера необходимо установленное и настроенное противоугонное устройство поддерживающее сервис StarLine телематика 2.0.
 
 Драйвер позволяет получать данные состояния автомобиля через сервис StarLine Телематика. https://starline-online.ru.
@@ -24,6 +39,14 @@
   - Отключение датчиков удара и наклона
 
 ## Changelog
+
+<!--
+    Placeholder for the next version (at the beginning of the line):
+    ### **WORK IN PROGRESS**
+-->
+### **WORK IN PROGRESS**
+-   (mcm1957) changed: Testing has been changed to support node 16, 18 and 20
+-   (mcm1957) changed: Dependencies have been updated
 
 #### 1.1.3
 * (instalator) fixed error parse mayak
