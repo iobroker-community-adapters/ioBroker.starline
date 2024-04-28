@@ -47,6 +47,7 @@ Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdien
 ### **WORK IN PROGRESS**
 * (mcm1957) Adapter requires node.js >= 18 and js-controller >= 5 now
 * (mcm1957) Dependencies have been updated
+
 #### 1.1.3
 * (instalator) fixed error parse mayak
 
@@ -64,37 +65,6 @@ Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdien
 #### 1.0.0
 * (instalator) up to stable
 
-#### 0.2.0
-* (instalator) fix error sendCommand
-
-#### 0.1.9
-* (instalator) change send command, 
-* (instalator) fix parse balance"
-
-#### 0.1.8
-* (instalator) change link getdata
-
-#### 0.1.7
-* (instalator) change position x and y to longitude and latitude
-
-#### 0.1.5
-* (instalator) release
-
-#### 0.1.2
-* (instalator) fix widget for new structure
-
-#### 0.1.1
-* (Bluefox) changed the structure of the widget
-
-#### 0.1.0
-* (instalator) add widget
-
-#### 0.0.3
-* (instalator) added monitoring function
-* (instalator) added control function
-
-#### 0.0.2
-* (instalator) initial release
 
 ## License
 The MIT License (MIT)
