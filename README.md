@@ -45,9 +45,8 @@ Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdien
     ### **WORK IN PROGRESS**
 -->
 ### **WORK IN PROGRESS**
--   (mcm1957) changed: Testing has been changed to support node 16, 18 and 20
--   (mcm1957) changed: Dependencies have been updated
-
+* (mcm1957) Adapter requires node.js >= 18 and js-controller >= 5 now
+* (mcm1957) Dependencies have been updated
 #### 1.1.3
 * (instalator) fixed error parse mayak
 
@@ -100,6 +99,7 @@ Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdien
 ## License
 The MIT License (MIT)
 
+Copyright (c) 2023-2024 ioBroker Community Developers <iobroker-community-adapters@gmx.de>  
 Copyright (c) 2021 instalator <vvvalt@mail.ru>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

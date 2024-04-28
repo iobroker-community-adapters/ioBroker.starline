@@ -52,7 +52,6 @@
         "zh-cn": "fixed auth\nadded support admin3"
       }
     },
-    "title": "Autoalarm StarLine",
     "titleLang": {
       "en": "Autoalarm StarLine",
       "de": "Autoarm StarLine",
@@ -78,7 +77,10 @@
       "pl": "Adapter do alarmu samochodowego StarLine Telematics 2.0",
       "zh-cn": "汽车警报器适配器StarLine Telematics 2.0"
     },
-    "license": "MIT",
+    "licenseInformation": {
+      "license": "MIT",
+      "type": "free"
+    },
     "authors": [
       "instalator"
     ],
@@ -95,9 +97,21 @@
     ],
     "readme": "https://github.com/instalator/ioBroker.starline/blob/master/README.md",
     "loglevel": "info",
+    "tier": 2,
     "type": "vehicle",
     "restartAdapters": [
-      "vis"
+      "vis",
+      "vis-2"
+    ],
+    "dependencies": [
+      {
+        "js-controller": ">=5.0.19"
+      }
+    ],
+    "globalDependencies": [
+      {
+        "admin": ">=6.13.16"
+      }
     ]
   },
   "native": {
