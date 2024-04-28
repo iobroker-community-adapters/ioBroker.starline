@@ -31,3 +31,5 @@
 
 ### 0.0.2
 * (instalator) initial release
+## 1.0.0
+* (instalator) up to stable

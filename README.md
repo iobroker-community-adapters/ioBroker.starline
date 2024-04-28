@@ -30,7 +30,7 @@ Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdien
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-### **WORK IN PROGRESS**
+### 1.2.0 (2024-04-28)
 * (mcm1957) Adapter requires node.js >= 18 and js-controller >= 5 now
 * (mcm1957) Dependencies have been updated
 
@@ -47,10 +47,6 @@ Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdien
 ### 1.1.0
 * (instalator) fixed auth
 * (instalator) added support admin3
-
-### 1.0.0
-* (instalator) up to stable
-
 
 ## License
 The MIT License (MIT)
@@ -75,4 +71,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
