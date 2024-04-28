@@ -34,21 +34,21 @@ Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdien
 * (mcm1957) Adapter requires node.js >= 18 and js-controller >= 5 now
 * (mcm1957) Dependencies have been updated
 
-#### 1.1.3
+### 1.1.3
 * (instalator) fixed error parse mayak
 
-#### 1.1.2
+### 1.1.2
 * (instalator) fixed objects
 * (instalator) fixed interval
 
-#### 1.1.1
+### 1.1.1
 * (instalator) fixed send command
 
-#### 1.1.0
+### 1.1.0
 * (instalator) fixed auth
 * (instalator) added support admin3
 
-#### 1.0.0
+### 1.0.0
 * (instalator) up to stable
 
 
