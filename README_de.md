@@ -10,43 +10,23 @@
 [![Donate](https://img.shields.io/badge/donate-YooMoney-green)](https://sobe.ru/na/instalator)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PFUALWTR2CTPY)
 
-The adapter requires an anti-theft device installed and configured that supports StarLine Telematics Service 2.0.
+Der Adapter erfordert eine installierte und konfigurierte Diebstahlsicherung, die den StarLine-Telematikdienst 2.0 unterstützt.
 
-The adapter makes it possible to receive vehicle status data via the StarLine telematics service. https://starline-online.ru.
-
-##### Management of the main operating modes of the car alarm:
-   - Arming/Disarming
-   - Activation of the AntiHiJack function
+Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdienst zu erhalten. https://starline-online.ru.
+##### Verwaltung der Hauptbetriebsarten der Autoalarmanlage:
+   - Scharf-/Unscharfschalten
+   - Aktivierung der AntiHiJack-Funktion
    - Auto-Start
-   - Activation of service mode (Valet)
-   - Activation of additional channels
-   - Switching the Webasto heater on/off (if available)
-   - Request vehicle coordinates
-   - Disable shock and tilt sensors
+   - Aktivierung des Servicemodus (Valet)
+   - Aktivierung von zusätzl. Kanäle
+   - Schalten Sie die Webasto-Heizung ein / aus (falls vorhanden)
+   - Fahrzeugkoordinaten anfordern
+   - Stoß- und Neigungssensoren deaktivieren
+
 
 ## Changelog
 
-<!--
-    Placeholder for the next version (at the beginning of the line):
-    ### **WORK IN PROGRESS**
--->
-### 1.2.0 (2024-04-28)
-* (mcm1957) Adapter requires node.js >= 18 and js-controller >= 5 now
-* (mcm1957) Dependencies have been updated
-
-### 1.1.3
-* (instalator) fixed error parse mayak
-
-### 1.1.2
-* (instalator) fixed objects
-* (instalator) fixed interval
-
-### 1.1.1
-* (instalator) fixed send command
-
-### 1.1.0
-* (instalator) fixed auth
-* (instalator) added support admin3
+Der Changelog findest sich in der englischsprachigen README.md Datei.
 
 ## License
 The MIT License (MIT)
