@@ -59,7 +59,7 @@ The adapter makes it possible to receive vehicle status data via the StarLine te
 ## License
 The MIT License (MIT)
 
-Copyright (c) 2025 tglynx <github@neuronetix.de>
+Copyright (c) 2025 tglynx <github@neuronetix.de>  
 Copyright (c) 2023-2024 ioBroker Community Developers <iobroker-community-adapters@gmx.de>  
 Copyright (c) 2021 instalator <vvvalt@mail.ru>
 
