@@ -30,6 +30,15 @@ The adapter makes it possible to receive vehicle status data via the StarLine te
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
+## Changelog
+
+#### 2.1.0
+* (tglynx) modernized the adapter to support the current (August 2025) starline website api
+### **WORK IN PROGRESS**
+
+#### 2.0.0
+* (instalator) latest working version from 2021
+
 ### 1.2.0 (2024-04-28)
 * (mcm1957) Adapter requires node.js >= 18 and js-controller >= 5 now
 * (mcm1957) Dependencies have been updated
@@ -51,6 +60,7 @@ The adapter makes it possible to receive vehicle status data via the StarLine te
 ## License
 The MIT License (MIT)
 
+Copyright (c) 2025 tglynx <github@neuronetix.de>
 Copyright (c) 2023-2024 ioBroker Community Developers <iobroker-community-adapters@gmx.de>  
 Copyright (c) 2021 instalator <vvvalt@mail.ru>
 

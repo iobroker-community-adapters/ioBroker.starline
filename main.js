@@ -4,87 +4,87 @@ let https = require('https');
 let querystring = require('querystring');
 let adapter, sesId, userAgentId, header, data = '', flag_subscribe = false, reload_data, reAuth_TimeOut, timePool = 10000;
 let control_action = {
-    'valet':           {val: false, name: "Режим валет", role: "command", type: "boolean", read: false, write: true},
-    'hijack':          {val: false, name: "Режим антиаграбление", role: "command", type: "boolean", read: false, write: true},
-    'update_position': {val: false, name: "Обновить местоположение авто", role: "command", type: "boolean", read: false, write: true},
-    'shock_bpass':     {val: false, name: "Отключение датчика удара", role: "command", type: "boolean", read: false, write: true},
-    'tilt_bpass':      {val: false, name: "Отключение датчика наклона", role: "command", type: "boolean", read: false, write: true},
-    'webasto':         {val: false, name: "Управление webasto", role: "command", type: "boolean", read: false, write: true},
-    'ign':             {val: false, name: "Автозапуск", role: "command", type: "boolean", read: false, write: true},
-    'arm':             {val: false, name: "Установливаемый статус охраны устройства", role: "command", type: "boolean", read: false, write: true},
-    'poke':            {val: false, name: "Сигнал", role: "command", type: "boolean", read: false, write: true},
-    'add_sens_bpass':  {val: false, name: "Выключение доп. датчика", role: "command", type: "boolean", read: false, write: true},
-    'out':             {val: false, name: "Управление доп. каналом", role: "command", type: "boolean", read: false, write: true},
-    'checkballance':   {val: false, name: "Запросить балланс", role: "button", type: "boolean", read: false, write: true},
-    'checktemp':       {val: false, name: "Запрос температуры", role: "button", type: "boolean", read: false, write: true},
+    'valet':           {val: false, name: "Valet Mode", role: "command", type: "boolean", read: false, write: true},
+    'hijack':          {val: false, name: "Anti-Hijack Mode", role: "command", type: "boolean", read: false, write: true},
+    'update_position': {val: false, name: "Update Vehicle Position", role: "command", type: "boolean", read: false, write: true},
+    'shock_bpass':     {val: false, name: "Shock Sensor Bypass", role: "command", type: "boolean", read: false, write: true},
+    'tilt_bpass':      {val: false, name: "Tilt Sensor Bypass", role: "command", type: "boolean", read: false, write: true},
+    'webasto':         {val: false, name: "Webasto Control", role: "command", type: "boolean", read: false, write: true},
+    'ign':             {val: false, name: "Remote Start", role: "command", type: "boolean", read: false, write: true},
+    'arm':             {val: false, name: "Security System Status", role: "command", type: "boolean", read: false, write: true},
+    'poke':            {val: false, name: "Horn Signal", role: "command", type: "boolean", read: false, write: true},
+    'add_sens_bpass':  {val: false, name: "Additional Sensor Bypass", role: "command", type: "boolean", read: false, write: true},
+    'out':             {val: false, name: "Additional Channel Control", role: "command", type: "boolean", read: false, write: true},
+    'checkballance':   {val: false, name: "Check Balance", role: "button", type: "boolean", read: false, write: true},
+    'checktemp':       {val: false, name: "Check Temperature", role: "button", type: "boolean", read: false, write: true},
 };
 
 let states = {
-    'alias':               {val: '', name: 'Имя устройства заданное пользователем при его добавлении или после эксплуатации', role: "state", type: "string", read: true, write: false},
+    'alias':               {val: '', name: 'Device name set by user during addition or after operation', role: "state", type: "string", read: true, write: false},
     'skey':                {val: false, name: false, role: "state", type: "string", read: true, write: false},
-    'balance':             {val: '', name: 'Баланс SIM-карты', role: "state", type: "number", read: true, write: false},
-    'battery':             {val: '', name: 'Напряжение АКБ охранно-телематического комплекса ( вольты ) или заряд батареи маяка ( в процентах )', role: "state", type: "number", read: true, write: false},
-    'device_id':           {val: '', name: 'Идентификатор устройства в SLNet', role: "state", type: "string", read: true, write: false},
-    'fw_version':          {val: '', name: 'Версия ПО устройства', role: "state", type: "string", read: true, write: false},
-    'imei':                {val: '', name: 'IMEI GSM-модуля устройства', role: "state", type: "string", read: true, write: false},
-    'mayak_temp':          {val: '', name: 'Температура маяка', role: "state", type: "number", read: true, write: false},
-    'mon_type':            {val: '', name: 'Тип режима мониторинга', role: "state", type: "number", read: true, write: false},
-    'type':                {val: '', name: 'Тип устройства', role: "state", type: "number", read: true, write: false},
+    'balance':             {val: '', name: 'SIM card balance', role: "state", type: "number", read: true, write: false},
+    'battery':             {val: '', name: 'Battery voltage of security-telematics complex (volts) or beacon battery charge (percentage)', role: "state", type: "number", read: true, write: false},
+    'device_id':           {val: '', name: 'Device identifier in SLNet', role: "state", type: "number", read: true, write: false},
+    'fw_version':          {val: '', name: 'Device firmware version', role: "state", type: "string", read: true, write: false},
+    'imei':                {val: '', name: 'Device GSM module IMEI', role: "state", type: "string", read: true, write: false},
+    'mayak_temp':          {val: '', name: 'Beacon temperature', role: "state", type: "number", read: true, write: false},
+    'mon_type':            {val: '', name: 'Monitoring mode type', role: "state", type: "number", read: true, write: false},
+    'type':                {val: '', name: 'Device type', role: "state", type: "number", read: true, write: false},
     '_controls':           {val: false, name: false, role: "state", type: "string", read: true, write: false},
-    'reg':                 {val: '', name: 'Уникальный идентификатор устройства', role: "state", type: "string", read: true, write: false},
-    'rpl_channel':         {val: '', name: 'Идентификатор канала Realplexor', role: "state", type: "string", read: true, write: false},
-    'sn':                  {val: '', name: 'Серийный номер устройства', role: "state", type: "string", read: true, write: false},
-    'ts_activity':         {val: '', name: 'Время последней активности устройства, число секунд прошедших с 01.01.1970 по UTC', role: "state", type: "number", read: true, write: false},
-    'shortParking':        {val: '', name: 'Длительность короткой стоянки, мин', role: "state", type: "number", read: true, write: false},
-    'longParking':         {val: '', name: 'Длительность долгой стоянки, мин', role: "state", type: "number", read: true, write: false},
-    'shared_for_me':       {val: false, name: false, role: "state", type: "string", read: true, write: false},
-    'showInsuranceEvents': {val: false, name: false, role: "state", type: "string", read: true, write: false},
-    'ctemp':               {val: '', name: 'Температура салона', role: "state", type: "number", read: true, write: false},
-    'etemp':               {val: '', name: 'Температура двигателя', role: "state", type: "number", read: true, write: false},
-    'gps_lvl':             {val: '', name: 'Уровень приёма GPS сигнала, соответвует числу спутников GPS', role: "state", type: "number", read: true, write: false},
-    'gsm_lvl':             {val: '', name: 'Уровень приёма GSM сигнала, соответвует числу спутников GSM', role: "state", type: "number", read: true, write: false},
-    'phone':               {val: '', name: 'Телефонный номер SIM-карты устройства', role: "state", type: "string", read: true, write: false},
-    'status':              {val: '', name: 'Статус соединения с сервером ( 1 - Online, 2 - Offline )', role: "state", type: "number", read: true, write: false},
+    'reg':                 {val: '', name: 'Unique device identifier', role: "state", type: "string", read: true, write: false},
+    'rpl_channel':         {val: '', name: 'Realplexor channel identifier', role: "state", type: "string", read: true, write: false},
+    'sn':                  {val: '', name: 'Device serial number', role: "state", type: "string", read: true, write: false},
+    'ts_activity':         {val: '', name: 'Last device activity time, seconds since 01.01.1970 UTC', role: "state", type: "number", read: true, write: false},
+    'shortParking':        {val: '', name: 'Short parking duration, minutes', role: "state", type: "number", read: true, write: false},
+    'longParking':         {val: '', name: 'Long parking duration, minutes', role: "state", type: "number", read: true, write: false},
+    'shared_for_me':       {val: false, name: false, role: "state", type: "boolean", read: true, write: false},
+    'showInsuranceEvents': {val: false, name: false, role: "state", type: "boolean", read: true, write: false},
+    'ctemp':               {val: '', name: 'Interior temperature', role: "state", type: "number", read: true, write: false},
+    'etemp':               {val: '', name: 'Engine temperature', role: "state", type: "number", read: true, write: false},
+    'gps_lvl':             {val: '', name: 'GPS signal level, corresponds to number of GPS satellites', role: "state", type: "number", read: true, write: false},
+    'gsm_lvl':             {val: '', name: 'GSM signal level, corresponds to number of GSM satellites', role: "state", type: "number", read: true, write: false},
+    'phone':               {val: '', name: 'Device SIM card phone number', role: "state", type: "string", read: true, write: false},
+    'status':              {val: '', name: 'Server connection status (1 - Online, 2 - Offline)', role: "state", type: "number", read: true, write: false},
 
-    'car_state.add_sens_bpass': {val: false, name: 'Состояние дополнительного датчика', role: "state", type: "boolean", read: true, write: false},
-    'car_state.alarm':          {val: false, name: 'Статус тревоги охранно-телематического комплекса', role: "state", type: "boolean", read: true, write: false},
-    'car_state.arm':            {val: false, name: 'Состояние режима охраны', role: "state", type: "boolean", read: true, write: false},
-    'car_state.door':           {val: false, name: 'Состояние дверей', role: "state", type: "boolean", read: true, write: false},
-    'car_state.hbrake':         {val: false, name: 'Состояние ручного тормоза', role: "state", type: "boolean", read: true, write: false},
-    'car_state.hijack':         {val: false, name: 'Состояние режима "Антиограбление"', role: "state", type: "boolean", read: true, write: false},
-    'car_state.hood':           {val: false, name: 'Состояние капота', role: "state", type: "boolean", read: true, write: false},
-    'car_state.ign':            {val: false, name: 'Состояние двигателя', role: "state", type: "boolean", read: true, write: false},
-    'car_state.out':            {val: false, name: 'Состояние доп. канала', role: "state", type: "boolean", read: true, write: false},
-    'car_state.pbrake':         {val: false, name: 'Состояние педали тормоза', role: "state", type: "boolean", read: true, write: false},
-    'car_state.r_start':        {val: false, name: 'Статус дистанционного запуска', role: "state", type: "boolean", read: true, write: false},
-    'car_state.run':            {val: false, name: 'Состояние зажигания', role: "state", type: "boolean", read: true, write: false},
-    'car_state.shock_bpass':    {val: false, name: 'Состояние датчика удара', role: "state", type: "boolean", read: true, write: false},
-    'car_state.tilt_bpass':     {val: false, name: 'Состояние датчика наклона', role: "state", type: "boolean", read: true, write: false},
-    'car_state.trunk':          {val: false, name: 'Состояние багажника', role: "state", type: "boolean", read: true, write: false},
-    'car_state.valet':          {val: false, name: 'Статус сервисного режима', role: "state", type: "boolean", read: true, write: false},
-    'car_state.webasto':        {val: false, name: 'Состояние предпускового подогревателя', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.add_h':      {val: false, name: 'Состояние тревожного уровня дополнительного датчика', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.add_l':      {val: false, name: 'Состояние предупредительного уровня дополнительного датчика', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.door':       {val: false, name: 'Состояние зоны дверей', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.hbrake':     {val: false, name: 'Состояние ручного тормоза', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.hijack':     {val: false, name: 'Состояние режима "Антиограбление"', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.hood':       {val: false, name: 'Состояние зоны капота', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.ign':        {val: false, name: 'Состояние зажигания', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.pbrake':     {val: false, name: 'Состояние педали тормоза', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.shock_h':    {val: false, name: 'Состояние тревожного уровня датчика удара', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.shock_l':    {val: false, name: 'Состояние предупредительного уровня датчика удара', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.tilt':       {val: false, name: 'Состояние датчика наклона', role: "state", type: "boolean", read: true, write: false},
-    'car_alr_state.trunk':      {val: false, name: 'Состояние зоны багажника', role: "state", type: "boolean", read: true, write: false},
+    'car_state.add_sens_bpass': {val: false, name: 'Additional sensor status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.alarm':          {val: false, name: 'Security-telematics complex alarm status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.arm':            {val: false, name: 'Security mode status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.door':           {val: false, name: 'Door status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.hbrake':         {val: false, name: 'Handbrake status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.hijack':         {val: false, name: 'Anti-hijack mode status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.hood':           {val: false, name: 'Hood status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.ign':            {val: false, name: 'Engine status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.out':            {val: false, name: 'Additional channel status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.pbrake':         {val: false, name: 'Brake pedal status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.r_start':        {val: false, name: 'Remote start status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.run':            {val: false, name: 'Ignition status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.shock_bpass':    {val: false, name: 'Shock sensor status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.tilt_bpass':     {val: false, name: 'Tilt sensor status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.trunk':          {val: false, name: 'Trunk status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.valet':          {val: false, name: 'Service mode status', role: "state", type: "boolean", read: true, write: false},
+    'car_state.webasto':        {val: false, name: 'Pre-heater status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.add_h':      {val: false, name: 'Additional sensor alarm level status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.add_l':      {val: false, name: 'Additional sensor warning level status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.door':       {val: false, name: 'Door zone status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.hbrake':     {val: false, name: 'Handbrake status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.hijack':     {val: false, name: 'Anti-hijack mode status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.hood':       {val: false, name: 'Hood zone status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.ign':        {val: false, name: 'Ignition status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.pbrake':     {val: false, name: 'Brake pedal status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.shock_h':    {val: false, name: 'Shock sensor alarm level status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.shock_l':    {val: false, name: 'Shock sensor warning level status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.tilt':       {val: false, name: 'Tilt sensor status', role: "state", type: "boolean", read: true, write: false},
+    'car_alr_state.trunk':      {val: false, name: 'Trunk zone status', role: "state", type: "boolean", read: true, write: false},
 
     'services.control':  {val: false, name: false, role: "state", type: "string", read: true, write: true},
     'services.settings': {val: false, name: false, role: "state", type: "string", read: true, write: true},
 
-    'position.dir':       {val: '', name: 'Данные о направлении движения в градусах ( 0 - Север, 180 - Юг )', role: "state", type: "number", read: true, write: true},
-    'position.s':         {val: '', name: 'Скорость устройства, км/ч', role: "state", type: "number", read: true, write: true},
-    'position.sat_qty':   {val: '', name: 'Число принимаемых спутников GPS', role: "state", type: "number", read: true, write: true},
-    'position.ts':        {val: '', name: 'Метка времени фиксации координат, число секунд прошедших с 01.01.1970 по UTC', role: "state", type: "number", read: true, write: true},
-    'position.longitude': {val: '', name: 'Координаты широты', role: "value.gps.longitude", type: "string", read: true, write: true},
-    'position.latitude':  {val: '', name: 'Координаты долготы', role: "value.gps.longitude", type: "string", read: true, write: true},
+    'position.dir':       {val: '', name: 'Direction of movement in degrees (0 - North, 180 - South)', role: "state", type: "number", read: true, write: true},
+    'position.s':         {val: '', name: 'Device speed, km/h', role: "state", type: "number", read: true, write: true},
+    'position.sat_qty':   {val: '', name: 'Number of GPS satellites received', role: "state", type: "number", read: true, write: true},
+    'position.ts':        {val: '', name: 'Coordinate fixation timestamp, seconds since 01.01.1970 UTC', role: "state", type: "number", read: true, write: true},
+    'position.longitude': {val: '', name: 'Longitude coordinates', role: "value.gps.longitude", type: "number", read: true, write: true},
+    'position.latitude':  {val: '', name: 'Latitude coordinates', role: "value.gps.longitude", type: "number", read: true, write: true},
 };
 
 function startAdapter(options){
@@ -220,7 +220,7 @@ function get_data(){
     let options = {
         hostname: 'starline-online.ru',
         port:     443,
-        path:     '/device?tz=360&_=' + eS, //list
+        path:     '/device?tz=120&_=' + eS, //list
         method:   'GET'
     };
     options.headers = {
@@ -256,84 +256,140 @@ function get_data(){
     });
 }
 
+function getDetailedDeviceData(device_id, deviceAlias) {
+    let options = {
+        hostname: 'starline-online.ru',
+        port:     443,
+        path:     '/device/' + device_id,
+        method:   'GET'
+    };
+    options.headers = {
+        'Host':            'starline-online.ru',
+        'User-Agent':      'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0',
+        'Accept':          'application/json, text/javascript, */*; q=0.01',
+        'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
+        'Referer':         'https://starline-online.ru/site/map',
+        'Cookie':          'PHPSESSID=' + sesId + '; userAgentId=' + userAgentId + '; lang=ru;',
+        'Connection':      'keep-alive',
+        'x-requested-with': 'XMLHttpRequest'
+    };
+    
+    let req = https.request(options, (res) => {
+        let detailedData = '';
+        adapter.log.debug('Getting detailed data for device: ' + deviceAlias);
+        
+        res.on('data', (chunk) => {
+            detailedData += chunk;
+        });
+        res.on('end', () => {
+            if (res.statusCode === 200) {
+                try {
+                    let deviceData = JSON.parse(detailedData);
+                    adapter.log.debug('Received detailed data for ' + deviceAlias + ': ' + detailedData.substring(0, 500) + '...');
+                    processDetailedDeviceData(deviceData, deviceAlias);
+                } catch (e) {
+                    adapter.log.error('Error parsing detailed device data: ' + (e instanceof Error ? e.message : String(e)));
+                }
+            } else {
+                adapter.log.error('Failed to get detailed data for device ' + deviceAlias + ': ' + res.statusCode);
+            }
+        });
+    });
+    req.end();
+    req.on('error', (err) => {
+        adapter.log.error('Error getting detailed data for device ' + deviceAlias + ': ' + err);
+    });
+}
+
+function processDetailedDeviceData(deviceData, deviceAlias) {
+    // Basic device information
+    setObjectfun(deviceAlias + '.alias', deviceData.alias, deviceAlias);
+    setObjectfun(deviceAlias + '.device_id', deviceData.device_id);
+    setObjectfun(deviceAlias + '.status', deviceData.status);
+    setObjectfun(deviceAlias + '.shared_for_me', deviceData.shared_for_me);
+    setObjectfun(deviceAlias + '.battery', deviceData.battery || 0);
+    setObjectfun(deviceAlias + '.fw_version', deviceData.fw_version || '');
+    setObjectfun(deviceAlias + '.imei', deviceData.imei || '');
+    setObjectfun(deviceAlias + '.mon_type', deviceData.mon_type || 0);
+    setObjectfun(deviceAlias + '.type', deviceData.type || 0);
+    setObjectfun(deviceAlias + '.sn', deviceData.sn || '');
+    setObjectfun(deviceAlias + '.ts_activity', deviceData.ts_activity || 0);
+    setObjectfun(deviceAlias + '.showInsuranceEvents', deviceData.showInsuranceEvents || false);
+    setObjectfun(deviceAlias + '.ctemp', deviceData.ctemp || 0);
+    setObjectfun(deviceAlias + '.gps_lvl', deviceData.gps_lvl || 0);
+    setObjectfun(deviceAlias + '.gsm_lvl', deviceData.gsm_lvl || 0);
+    setObjectfun(deviceAlias + '.phone', deviceData.phone || '');
+    
+    // Position data
+    let positionData = deviceData.position || {};
+    setObjectfun(deviceAlias + '.position.sat_qty', positionData.sat_qty || 0);
+    setObjectfun(deviceAlias + '.position.ts', positionData.ts || 0);
+    setObjectfun(deviceAlias + '.position.longitude', positionData.x || 0);
+    setObjectfun(deviceAlias + '.position.latitude', positionData.y || 0);
+    setObjectfun(deviceAlias + '.position.dir', positionData.dir || 0);
+    setObjectfun(deviceAlias + '.position.s', positionData.s || 0);
+    
+    // Car state - now we have the real data!
+    let carState = deviceData.car_state || {};
+    adapter.log.debug('Processing car states for ' + deviceAlias + ': ' + JSON.stringify(carState));
+    
+    setObjectfun(deviceAlias + '.car_state.add_sens_bpass', carState.add_sens_bpass || false);
+    setObjectfun(deviceAlias + '.car_state.alarm', carState.alarm || false);
+    setObjectfun(deviceAlias + '.car_state.arm', carState.arm || false);
+    setObjectfun(deviceAlias + '.car_state.door', carState.door || false);
+    setObjectfun(deviceAlias + '.car_state.hbrake', carState.hbrake || false);
+    setObjectfun(deviceAlias + '.car_state.hijack', carState.hijack || false);
+    setObjectfun(deviceAlias + '.car_state.hood', carState.hood || false);
+    setObjectfun(deviceAlias + '.car_state.ign', carState.ign || false);
+    setObjectfun(deviceAlias + '.car_state.out', carState.out || false);
+    setObjectfun(deviceAlias + '.car_state.pbrake', carState.pbrake || false);
+    setObjectfun(deviceAlias + '.car_state.r_start', carState.r_start || false);
+    setObjectfun(deviceAlias + '.car_state.run', carState.run || false);
+    setObjectfun(deviceAlias + '.car_state.shock_bpass', carState.shock_bpass || false);
+    setObjectfun(deviceAlias + '.car_state.tilt_bpass', carState.tilt_bpass || false);
+    setObjectfun(deviceAlias + '.car_state.trunk', carState.trunk || false);
+    setObjectfun(deviceAlias + '.car_state.valet', carState.valet || false);
+    setObjectfun(deviceAlias + '.car_state.webasto', carState.webasto || false);
+    
+    // Car alarm state
+    let carAlrState = deviceData.car_alr_state || {};
+    setObjectfun(deviceAlias + '.car_alr_state.add_h', carAlrState.add_h || false);
+    setObjectfun(deviceAlias + '.car_alr_state.add_l', carAlrState.add_l || false);
+    setObjectfun(deviceAlias + '.car_alr_state.door', carAlrState.door || false);
+    setObjectfun(deviceAlias + '.car_alr_state.hbrake', carAlrState.hbrake || false);
+    setObjectfun(deviceAlias + '.car_alr_state.hijack', carAlrState.hijack || false);
+    setObjectfun(deviceAlias + '.car_alr_state.hood', carAlrState.hood || false);
+    setObjectfun(deviceAlias + '.car_alr_state.ign', carAlrState.ign || false);
+    setObjectfun(deviceAlias + '.car_alr_state.pbrake', carAlrState.pbrake || false);
+    setObjectfun(deviceAlias + '.car_alr_state.shock_h', carAlrState.shock_h || false);
+    setObjectfun(deviceAlias + '.car_alr_state.shock_l', carAlrState.shock_l || false);
+    setObjectfun(deviceAlias + '.car_alr_state.tilt', carAlrState.tilt || false);
+    setObjectfun(deviceAlias + '.car_alr_state.trunk', carAlrState.trunk || false);
+    
+    // Services
+    let services = deviceData.services || {};
+    setObjectfun(deviceAlias + '.services.control', String(services.control || ''));
+    setObjectfun(deviceAlias + '.services.settings', String(services.settings || ''));
+    
+    adapter.log.info('Successfully processed detailed data for device: ' + deviceAlias);
+}
+
 function parse_data(getdata){
     let result;
     let device = [];
     try {
+        adapter.log.debug('Attempting to parse data: ' + getdata.substring(0, 200) + '...');
         result = JSON.parse(getdata);
         if (result.result){
             let numdevice = result.answer.devices.length;
+            adapter.log.debug('Processing ' + numdevice + ' devices');
             for (let t = 0; t < numdevice; t++) {
-                device[t] = result.answer.devices[t].alias;
+                let deviceData = result.answer.devices[t];
+                device[t] = deviceData.alias;
                 adapter.log.debug('device- ' + device[t]);
-                setObjectfun(device[t] + '.alias', result.answer.devices[t].alias, device[t]);
-                setObjectfun(device[t] + '.skey', result.answer.skey); //
-                setObjectfun(device[t] + '.balance', result.answer.devices[t].balance && result.answer.devices[t].balance.active.value);
-                setObjectfun(device[t] + '.battery', result.answer.devices[t].battery);
-                setObjectfun(device[t] + '.device_id', result.answer.devices[t].device_id);
-                setObjectfun(device[t] + '.fw_version', result.answer.devices[t].fw_version);
-                setObjectfun(device[t] + '.imei', result.answer.devices[t].imei);
-                setObjectfun(device[t] + '.mayak_temp', result.answer.devices[t].mayak_temp);
-                setObjectfun(device[t] + '.mon_type', result.answer.devices[t].mon_type);
-                setObjectfun(device[t] + '.type', result.answer.devices[t].type);
-                setObjectfun(device[t] + '._controls', result.answer.devices[t]._controls);
-                setObjectfun(device[t] + '.reg', result.answer.devices[t].reg);
-                setObjectfun(device[t] + '.rpl_channel', result.answer.devices[t].rpl_channel);
-                setObjectfun(device[t] + '.sn', result.answer.devices[t].sn);
-                setObjectfun(device[t] + '.ts_activity', result.answer.devices[t].ts_activity);
-                setObjectfun(device[t] + '.shortParking', result.answer.devices[t].shortParking);
-                setObjectfun(device[t] + '.longParking', result.answer.devices[t].longParking);
-                setObjectfun(device[t] + '.shared_for_me', result.answer.devices[t].shared_for_me);
-                setObjectfun(device[t] + '.showInsuranceEvents', result.answer.devices[t].showInsuranceEvents);
-                setObjectfun(device[t] + '.ctemp', result.answer.devices[t].ctemp);
-                setObjectfun(device[t] + '.etemp', result.answer.devices[t].etemp);
-                setObjectfun(device[t] + '.gps_lvl', result.answer.devices[t].gps_lvl);
-                setObjectfun(device[t] + '.gsm_lvl', result.answer.devices[t].gsm_lvl);
-                setObjectfun(device[t] + '.phone', result.answer.devices[t].phone);
-                setObjectfun(device[t] + '.status', result.answer.devices[t].status);
-                //car_state
-                setObjectfun(device[t] + '.car_state.add_sens_bpass', result.answer.devices[t].car_state.add_sens_bpass);
-                setObjectfun(device[t] + '.car_state.alarm', result.answer.devices[t].car_state.alarm);
-                setObjectfun(device[t] + '.car_state.arm', result.answer.devices[t].car_state.arm);
-                setObjectfun(device[t] + '.car_state.door', result.answer.devices[t].car_state.door);
-                setObjectfun(device[t] + '.car_state.hbrake', result.answer.devices[t].car_state.hbrake);
-                setObjectfun(device[t] + '.car_state.hijack', result.answer.devices[t].car_state.hijack);
-                setObjectfun(device[t] + '.car_state.hood', result.answer.devices[t].car_state.hood);
-                setObjectfun(device[t] + '.car_state.ign', result.answer.devices[t].car_state.ign);
-                setObjectfun(device[t] + '.car_state.out', result.answer.devices[t].car_state.out);
-                setObjectfun(device[t] + '.car_state.pbrake', result.answer.devices[t].car_state.pbrake);
-                setObjectfun(device[t] + '.car_state.r_start', result.answer.devices[t].car_state.r_start);
-                setObjectfun(device[t] + '.car_state.run', result.answer.devices[t].car_state.run);
-                setObjectfun(device[t] + '.car_state.shock_bpass', result.answer.devices[t].car_state.shock_bpass);
-                setObjectfun(device[t] + '.car_state.tilt_bpass', result.answer.devices[t].car_state.tilt_bpass);
-                setObjectfun(device[t] + '.car_state.trunk', result.answer.devices[t].car_state.trunk);
-                setObjectfun(device[t] + '.car_state.valet', result.answer.devices[t].car_state.valet);
-                setObjectfun(device[t] + '.car_state.webasto', result.answer.devices[t].car_state.webasto);
-                //car_alr_state
-                setObjectfun(device[t] + '.car_alr_state.add_h', result.answer.devices[t].car_alr_state.add_h);
-                setObjectfun(device[t] + '.car_alr_state.add_l', result.answer.devices[t].car_alr_state.add_l);
-                setObjectfun(device[t] + '.car_alr_state.door', result.answer.devices[t].car_alr_state.door);
-                setObjectfun(device[t] + '.car_alr_state.hbrake', result.answer.devices[t].car_alr_state.hbrake);
-                setObjectfun(device[t] + '.car_alr_state.hijack', result.answer.devices[t].car_alr_state.hijack);
-                setObjectfun(device[t] + '.car_alr_state.hood', result.answer.devices[t].car_alr_state.hood);
-                setObjectfun(device[t] + '.car_alr_state.ign', result.answer.devices[t].car_alr_state.ign);
-                setObjectfun(device[t] + '.car_alr_state.pbrake', result.answer.devices[t].car_alr_state.pbrake);
-                setObjectfun(device[t] + '.car_alr_state.shock_h', result.answer.devices[t].car_alr_state.shock_h);
-                setObjectfun(device[t] + '.car_alr_state.shock_l', result.answer.devices[t].car_alr_state.shock_l);
-                setObjectfun(device[t] + '.car_alr_state.tilt', result.answer.devices[t].car_alr_state.tilt);
-                setObjectfun(device[t] + '.car_alr_state.trunk', result.answer.devices[t].car_alr_state.trunk);
-                //services
-                setObjectfun(device[t] + '.services.control', result.answer.devices[t].services.control);
-                setObjectfun(device[t] + '.services.settings', result.answer.devices[t].services.settings);
-                //position
-                setObjectfun(device[t] + '.position.dir', result.answer.devices[t].position.dir);
-                setObjectfun(device[t] + '.position.s', result.answer.devices[t].position.s);
-                setObjectfun(device[t] + '.position.sat_qty', result.answer.devices[t].position.sat_qty);
-                setObjectfun(device[t] + '.position.ts', result.answer.devices[t].position.ts);
-                //setObjectfun (device[t]+'.position.x',result.answer.devices[t].position.x);
-                setObjectfun(device[t] + '.position.longitude', result.answer.devices[t].position.x);
-                //setObjectfun (device[t]+'.position.y',result.answer.devices[t].position.y);
-                setObjectfun(device[t] + '.position.latitude', result.answer.devices[t].position.y);
+                
+                // Get detailed device data including car states
+                getDetailedDeviceData(deviceData.device_id, device[t]);
             }
             adapter.log.info('Data received restart in ' + timePool / 1000 + ' sec.');
             reload_data = setTimeout(() => {
@@ -348,6 +404,7 @@ function parse_data(getdata){
         }
     } catch (e) {
         adapter.log.error('Parse error DATA' + JSON.stringify(getdata));
+        adapter.log.error('Parse error details: ' + e.message);
         reAuth();
     }
 }
@@ -431,14 +488,24 @@ function setObjectfun(name, state, device){
     } else {
         name_obj = _name[_name.length - 2] + '.' + _name[_name.length - 1];
     }
+    
+    // Check if the state definition exists, if not use defaults
+    let stateDef = states[name_obj] || {
+        name: name,
+        type: 'string',
+        role: 'state',
+        read: true,
+        write: false
+    };
+    
     adapter.setObject(name, {
         type:   'state',
         common: {
-            name:  states[name_obj].name ? states[name_obj].name :name,
-            type:  states[name_obj].type,
-            role:  states[name_obj].role,
-            read:  states[name_obj].read,
-            write: states[name_obj].write
+            name:  stateDef.name ? stateDef.name : name,
+            type:  stateDef.type,
+            role:  stateDef.role,
+            read:  stateDef.read,
+            write: stateDef.write
         },
         native: {}
     });
@@ -456,20 +523,32 @@ function send_command(device_id, action, value){
             post_data = querystring.stringify({
                 'device_id': device_id
             });
+            adapter.log.debug('Balance check command - Path: ' + path + ', Data: ' + post_data);
             break;
         case 'checktemp':
             path = '/device/batteryTemperature';
             post_data = querystring.stringify({
                 'device_id': device_id
             });
+            adapter.log.debug('Temperature check command - Path: ' + path + ', Data: ' + post_data);
+            break;
+        case 'arm':
+            // Arm command - just arm/disarm the security system
+            let armValue = value === true ? 1 : (value === false ? 0 : value);
+            post_data = querystring.stringify({
+                'value':    armValue,
+                'action':   action
+            });
+            adapter.log.debug('Arm command - Path: ' + path + ', Data: ' + post_data);
             break;
         default:
+            // Convert boolean values to 1/0 for API compatibility
+            let apiValue = value === true ? 1 : (value === false ? 0 : value);
             post_data = querystring.stringify({
-                /*'device_id':device_id,*/
-                'action':   action,
-                'value':    value,
-                'password': ''
+                'value':    apiValue,
+                'action':   action
             });
+            adapter.log.debug('Default command - Path: ' + path + ', Action: ' + action + ', Data: ' + post_data);
     }
     let options = {
         hostname: 'starline-online.ru',
@@ -491,22 +570,74 @@ function send_command(device_id, action, value){
     };
     let req = https.request(options, (res) => {
         //res.setEncoding('utf8');
-        adapter.log.debug('send_command - response from the server statusCode: ' + res.statusCode);
+        adapter.log.debug('send_command - Response statusCode: ' + res.statusCode);
 
         res.on('data', (chunk) => {
             data += chunk;
         });
         res.on('end', () => {
+            adapter.log.debug('send_command - Response data: ' + JSON.stringify(data));
+            
+            // Handle 204 No Content and 202 Accepted (success) responses
+            if (res.statusCode === 204 || res.statusCode === 202) {
+                adapter.log.info('Command executed successfully (' + res.statusCode + ' ' + (res.statusCode === 204 ? 'No Content' : 'Accepted') + '): Device ' + device_id + ' * Command ' + action + ' * Value ' + value);
+                
+                // Immediately update the control state to reflect the command
+                adapter.getState('info.connection', (err, state) => {
+                    if (!err && state && state.val) {
+                        // Find the device alias for this device_id
+                        adapter.getObject('', (err, obj) => {
+                            if (!err && obj && obj.children) {
+                                for (let deviceAlias in obj.children) {
+                                    if (obj.children[deviceAlias].children && 
+                                        obj.children[deviceAlias].children.device_id && 
+                                        obj.children[deviceAlias].children.device_id.native) {
+                                        let deviceId = obj.children[deviceAlias].children.device_id.native;
+                                        if (deviceId == device_id) {
+                                            // Update the control state immediately
+                                            adapter.setState(deviceAlias + '.control.' + action, {val: value, ack: true});
+                                            adapter.log.info('Immediately updated control state: ' + deviceAlias + '.control.' + action + ' = ' + value);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                });
+                
+                setTimeout(() => {
+                    clearTimeout(reload_data);
+                    get_data();
+                }, 10000);
+                return;
+            }
+            
+            // Handle other responses with JSON parsing
             let result;
             try {
                 result = JSON.parse(data);
-                if (result.state){
-                    adapter.log.info('It sent command: Device number - ' + device_id + ' * Command - ' + action + ' * Value - ' + value);
+                
+                // Handle different response formats
+                if (result.state === true || result.state === 'true') {
+                    adapter.log.info('Command executed successfully: Device ' + device_id + ' * Command ' + action + ' * Value ' + value);
+                } else if (result.status === 400) {
+                    // Handle API error responses
+                    let errorMsg = result.message || 'Unknown error';
+                    if (result.message === 'device.command.execFailed') {
+                        errorMsg = 'Command execution failed. This might be due to vehicle state or ignition requirements.';
+                        if (result.minIgnTimer && result.maxIgnTimer) {
+                            errorMsg += ` Ignition timer range: ${result.minIgnTimer}-${result.maxIgnTimer} seconds.`;
+                        }
+                    }
+                    adapter.log.warn('Command failed: ' + errorMsg + ' (Device: ' + device_id + ', Command: ' + action + ', Value: ' + value + ')');
+                } else if (result.desc && result.desc.action) {
+                    adapter.log.warn('Command error: ' + result.desc.action[0] + ' (Device: ' + device_id + ', Command: ' + action + ', Value: ' + value + ')');
                 } else {
-                    adapter.log.info('Error sending command - ' + result.desc.action[0]);
+                    adapter.log.info('Command response received: ' + JSON.stringify(result) + ' (Device: ' + device_id + ', Command: ' + action + ', Value: ' + value + ')');
                 }
             } catch (e) {
-                adapter.log.error('Send command. Parsing error: ' + JSON.stringify(e) + '. Incoming data: ' + JSON.stringify(data));
+                adapter.log.error('Send command. Parsing error: ' + e.message + '. Incoming data: ' + JSON.stringify(data));
             }
             setTimeout(() => {
                 clearTimeout(reload_data);

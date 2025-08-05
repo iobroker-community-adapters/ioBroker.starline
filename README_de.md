@@ -13,6 +13,7 @@
 Der Adapter erfordert eine installierte und konfigurierte Diebstahlsicherung, die den StarLine-Telematikdienst 2.0 unterstützt.
 
 Der Adapter ermöglicht es, Fahrzeugstatusdaten über den StarLine-Telematikdienst zu erhalten. https://starline-online.ru.
+
 ##### Verwaltung der Hauptbetriebsarten der Autoalarmanlage:
    - Scharf-/Unscharfschalten
    - Aktivierung der AntiHiJack-Funktion
@@ -31,6 +32,7 @@ Der Changelog findest sich in der englischsprachigen README.md Datei.
 ## License
 The MIT License (MIT)
 
+Copyright (c) 2025 tglynx <github@neuronetix.de>
 Copyright (c) 2023-2024 ioBroker Community Developers <iobroker-community-adapters@gmx.de>  
 Copyright (c) 2021 instalator <vvvalt@mail.ru>
 
