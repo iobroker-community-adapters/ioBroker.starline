@@ -30,7 +30,6 @@ The adapter makes it possible to receive vehicle status data via the StarLine te
     Placeholder for the next version (at the beginning of the line):
     ### **WORK IN PROGRESS**
 -->
-## Changelog
 
 #### 2.1.0
 * (tglynx) modernized the adapter to support the current (August 2025) starline website api
