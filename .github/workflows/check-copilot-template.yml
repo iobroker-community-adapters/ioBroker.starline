@@ -74,7 +74,7 @@ jobs:
       - name: Check for existing issues
         if: steps.repo-check.outputs.is_iobroker_adapter == 'true' && steps.version-check.outputs.update_needed != 'false'
         id: issue-check
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const updateNeeded = '${{ steps.version-check.outputs.update_needed }}';
@@ -110,7 +110,7 @@ jobs:
             
       - name: Create setup issue
         if: steps.repo-check.outputs.is_iobroker_adapter == 'true' && steps.version-check.outputs.update_needed == 'setup_needed' && steps.issue-check.outputs.existing_issue == 'none'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const title = '🤖 Setup ioBroker GitHub Copilot Instructions';
@@ -147,7 +147,7 @@ jobs:
             
       - name: Create update issue  
         if: steps.repo-check.outputs.is_iobroker_adapter == 'true' && steps.version-check.outputs.update_needed == 'update_needed' && steps.issue-check.outputs.existing_issue == 'none'
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const title = '🤖 Update ioBroker Copilot Instructions';
