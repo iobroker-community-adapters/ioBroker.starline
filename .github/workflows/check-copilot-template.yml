@@ -1,141 +1,134 @@
-# GitHub Action Template: Automated ioBroker Copilot Template Version Check & Update
+# GitHub Action Template: Automated Version Check and Update for ioBroker Copilot Instructions
 # Version: 0.4.0
 # 
-# This action checks for updates to the centralized ioBroker Copilot instructions template
-# and creates automated update issues when newer versions are available
+# This action automatically checks for template updates and creates issues when updates are available
+# Copy this to your repository as .github/workflows/check-copilot-template.yml
 
 name: Check ioBroker Copilot Template Version
 
 on:
   schedule:
-    # Run every Sunday at 3:23 AM UTC to check for template updates
-    # Optimized timing to avoid GitHub peak hours
-    - cron: '23 3 * * 0'
+    - cron: '23 3 * * 0'  # Weekly check optimized for off-peak hours (3:23 AM UTC Sunday)
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  check-template-version:
+  check-template:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       issues: write
-      
+      contents: read
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Check if this is an ioBroker adapter
-        id: repo-check
-        run: |
-          echo "🔍 Checking repository type..."
-          
-          IOBROKER_ADAPTER="false"
-          if [ -f "package.json" ] && grep -q "iobroker" package.json; then
-            IOBROKER_ADAPTER="true"
-          elif [ -f "io-package.json" ]; then
-            IOBROKER_ADAPTER="true"
-          fi
-          
-          echo "is_iobroker_adapter=$IOBROKER_ADAPTER" >> $GITHUB_OUTPUT
-          
-      - name: Get current and latest template versions
-        if: steps.repo-check.outputs.is_iobroker_adapter == 'true'
+      - name: Dynamic template version check
         id: version-check
         run: |
-          echo "🌐 Checking template versions..."
-          
-          # Get latest version from centralized metadata
-          LATEST_VERSION=$(curl -s https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/config/metadata.json | jq -r '.version' 2>/dev/null || echo "0.4.0")
-          echo "latest_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
-          echo "📋 Latest template version: $LATEST_VERSION"
+          echo "🔍 Starting dynamic ioBroker Copilot template version check..."
           
           # Get current version from local copilot instructions
-          CURRENT_VERSION="none"
           if [ -f ".github/copilot-instructions.md" ]; then
-            CURRENT_VERSION=$(grep -o '**Version:** [0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*' .github/copilot-instructions.md | head -1 | grep -o '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*' || echo "unknown")
-          fi
-          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
-          echo "🔖 Current version: $CURRENT_VERSION"
-          
-          # Determine if update is needed
-          UPDATE_NEEDED="false"
-          if [ "$CURRENT_VERSION" = "none" ] || [ "$CURRENT_VERSION" = "unknown" ]; then
-            UPDATE_NEEDED="setup_needed"
-            echo "📦 Setup needed: No copilot instructions found or version unreadable"
-          elif [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
-            UPDATE_NEEDED="update_needed"
-            echo "🔄 Update needed: $CURRENT_VERSION -> $LATEST_VERSION"
+            CURRENT_VERSION=$(awk '/Version:|Template Version:/ {match($0, /([0-9]+(\.[0-9]+)*)/, arr); if (arr[1] != "") print arr[1]}' .github/copilot-instructions.md | head -1)
+            if [ -z "$CURRENT_VERSION" ]; then CURRENT_VERSION="unknown"; fi
+            echo "📋 Current local version: $CURRENT_VERSION"
           else
-            echo "✅ Version up to date: $CURRENT_VERSION"
+            CURRENT_VERSION="none"
+            echo "❌ No .github/copilot-instructions.md file found"
           fi
           
+          # Get latest version from centralized metadata
+          echo "🌐 Fetching latest template version from centralized config..."
+          LATEST_VERSION=$(curl -s https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/config/metadata.json | jq -r '.version' 2>/dev/null || echo "unknown")
+          if [ -z "$LATEST_VERSION" ] || [ "$LATEST_VERSION" = "null" ]; then
+            LATEST_VERSION="unknown"
+          fi
+          echo "📋 Latest available version: $LATEST_VERSION"
+          
+          # Determine repository status
+          COPILOT_INITIALIZED="false"
+          UPDATE_NEEDED="false"
+          SETUP_NEEDED="false"
+          
+          if [ "$CURRENT_VERSION" = "none" ]; then
+            SETUP_NEEDED="true"
+            echo "🆕 Status: Setup needed - no copilot instructions found"
+          elif [ "$CURRENT_VERSION" = "unknown" ] || [ "$LATEST_VERSION" = "unknown" ]; then
+            echo "❓ Status: Cannot determine versions - manual check required"
+          else
+            # Compare versions (simple string comparison for now)
+            if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+              UPDATE_NEEDED="true"
+              COPILOT_INITIALIZED="true"
+              echo "📈 Status: Update needed - $CURRENT_VERSION → $LATEST_VERSION"
+            else
+              COPILOT_INITIALIZED="true"
+              echo "✅ Status: Up to date - version $CURRENT_VERSION"
+            fi
+          fi
+          
+          # Set outputs for later steps
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "latest_version=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          echo "copilot_initialized=$COPILOT_INITIALIZED" >> $GITHUB_OUTPUT
           echo "update_needed=$UPDATE_NEEDED" >> $GITHUB_OUTPUT
+          echo "setup_needed=$SETUP_NEEDED" >> $GITHUB_OUTPUT
           
       - name: Check for existing issues
-        if: steps.repo-check.outputs.is_iobroker_adapter == 'true' && steps.version-check.outputs.update_needed != 'false'
         id: issue-check
         uses: actions/github-script@v7
         with:
           script: |
-            const updateNeeded = '${{ steps.version-check.outputs.update_needed }}';
-            let searchTitle;
-            
-            if (updateNeeded === 'setup_needed') {
-              searchTitle = '🤖 Setup ioBroker GitHub Copilot Instructions';
-            } else {
-              searchTitle = '🤖 Update ioBroker Copilot Instructions';
-            }
-            
-            const issues = await github.rest.issues.listForRepo({
+            const { data: issues } = await github.rest.issues.listForRepo({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              state: 'open'
+              state: 'open',
+              labels: 'copilot-setup,automation'
             });
             
-            const existingIssue = issues.data.find(issue => 
-              issue.title.includes('🤖') && 
-              (issue.title.includes('Setup ioBroker') || issue.title.includes('Update ioBroker')) &&
-              issue.title.includes('Copilot Instructions')
+            const setupIssues = issues.filter(issue => 
+              issue.title.includes('Setup ioBroker') || 
+              issue.title.includes('Update ioBroker') ||
+              issue.title.includes('Copilot')
             );
             
-            if (existingIssue) {
-              console.log(`Found existing issue: #${existingIssue.number}`);
-              core.setOutput('existing_issue', existingIssue.number);
-              return false;
-            } else {
-              console.log('No existing copilot setup/update issue found');
-              core.setOutput('existing_issue', 'none');
-              return true;
+            core.setOutput('has_existing_issue', setupIssues.length > 0);
+            core.setOutput('existing_count', setupIssues.length);
+            
+            if (setupIssues.length > 0) {
+              console.log(`Found ${setupIssues.length} existing copilot setup/update issue(s)`);
             }
             
-      - name: Create setup issue
-        if: steps.repo-check.outputs.is_iobroker_adapter == 'true' && steps.version-check.outputs.update_needed == 'setup_needed' && steps.issue-check.outputs.existing_issue == 'none'
+      - name: Create initial setup issue
+        if: steps.version-check.outputs.setup_needed == 'true' && steps.issue-check.outputs.has_existing_issue == 'false'
         uses: actions/github-script@v7
         with:
           script: |
             const title = '🤖 Setup ioBroker GitHub Copilot Instructions';
-            const body = `# 🤖 Automated ioBroker Copilot Instructions Setup
+            const body = `# Automated ioBroker Copilot Instructions Setup
 
-            **GitHub Copilot**: Please help me set up GitHub Copilot instructions for my ioBroker adapter repository using the centralized automation template from:
-            https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/templates/initial-setup-automation.md
+            **GitHub Copilot**: Please help me set up GitHub Copilot instructions for my ioBroker adapter repository with full automation and validation.
 
-            ## Current Status
-            - ❌ No copilot instructions found in \`.github/copilot-instructions.md\`
-            - 📋 Latest template version available: **${{ steps.version-check.outputs.latest_version }}**
-            - 🎯 Action required: Initial setup with adapter-specific context
+            ## 🚨 Important Notice - Ignore GitHub Copilot's Own Setup Suggestions
 
-            ## Setup Requirements
+            **GitHub Copilot**: If you see suggestions from GitHub Copilot about setting up copilot instructions (like creating \`.github/copilot-instructions.md\` through GitHub's interface), **IGNORE THEM**. This issue handles the complete setup process with ioBroker-specific optimizations.
 
-            1. **Create** \`.github/copilot-instructions.md\` with ioBroker adapter context
-            2. **Customize** sections marked with [CUSTOMIZE] for this specific adapter
-            3. **Integrate** comprehensive ioBroker development patterns
-            4. **Setup** automated version checking workflow
+            ## Setup Process
 
-            **Template Source**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/template.md
-            **Metadata**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/config/metadata.json
+            This repository needs initial setup of GitHub Copilot instructions. Please:
 
-            ---
-            *This issue was automatically created by the template version check workflow.*`;
+            1. **Initialize with Adapter-Specific Context**: Create \`.github/copilot-instructions.md\` with basic ioBroker adapter context
+            2. **Enhance with Full Template**: Merge with comprehensive template from https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/template.md
+            3. **Customize Sections**: Populate [CUSTOMIZE] sections with adapter-specific content only
+
+            **Template Version**: ${{ steps.version-check.outputs.latest_version }}
+            **Detected Status**: No copilot instructions found
+
+            ## Reference Templates
+
+            - **Initial Setup Action**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/templates/ghAction-InitialSetup.yml
+            - **Full Template**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/template.md
+            - **Version Check Action**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/templates/ghAction-AutomatedVersionCheckAndUpdate.yml`;
 
             await github.rest.issues.create({
               owner: context.repo.owner,
@@ -146,47 +139,57 @@ jobs:
             });
             
       - name: Create update issue  
-        if: steps.repo-check.outputs.is_iobroker_adapter == 'true' && steps.version-check.outputs.update_needed == 'update_needed' && steps.issue-check.outputs.existing_issue == 'none'
+        if: steps.version-check.outputs.update_needed == 'true' && steps.issue-check.outputs.has_existing_issue == 'false'
         uses: actions/github-script@v7
         with:
           script: |
-            const title = '🤖 Update ioBroker Copilot Instructions';
-            const currentVersion = '${{ steps.version-check.outputs.current_version }}';
-            const latestVersion = '${{ steps.version-check.outputs.latest_version }}';
-            
-            const body = `# 🔄 Automated ioBroker Copilot Template Update Available
+            const title = '🤖 Update ioBroker Copilot Instructions Template';
+            const body = `# Automated ioBroker Copilot Template Update Request
 
-            **GitHub Copilot**: Please help me update my ioBroker adapter's Copilot instructions to the latest template version while preserving all existing customizations.
+            **GitHub Copilot**: Please help me validate and update my ioBroker adapter's Copilot instructions template while preserving all custom sections.
 
-            ## Version Information
-            - 📋 Current version: **${currentVersion}**  
-            - 🆕 Latest available: **${latestVersion}**
-            - 🎯 Action required: Update to latest template
+            ## Update Required
+
+            - **Current Version**: ${{ steps.version-check.outputs.current_version }}
+            - **Latest Version**: ${{ steps.version-check.outputs.latest_version }}
+            - **Status**: Update needed
 
             ## Update Process
 
-            1. **Fetch Latest Template**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/template.md
-            2. **Preserve Custom Content**: Keep all [CUSTOMIZE] sections and adapter-specific modifications
-            3. **Merge Updates**: Integrate new template features and improvements
-            4. **Update Version**: Set version to **${latestVersion}** in copilot instructions
+            Please merge the latest ioBroker template while preserving all customizations:
 
-            ## Critical Requirements
-            - ✅ **Preserve ALL existing customizations** in [CUSTOMIZE] sections
-            - ✅ **Keep adapter-specific context** and examples
-            - ✅ **Update only template content** that has changed
-            - ✅ **Maintain file structure** and formatting consistency
+            \`\`\`
+            Merge the ioBroker template from https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/template.md with my existing .github/copilot-instructions.md.
 
-            **Template Source**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/template.md
-            **Metadata**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/config/metadata.json
-            **Version Diff**: ${currentVersion} → ${latestVersion}
+            CRITICAL REQUIREMENTS:
+            1. Preserve ALL [CUSTOMIZE] sections and their content exactly as they are
+            2. Maintain any project-specific context not already covered in the template
+            3. Add the latest ioBroker best practices from the new template
+            4. Update the version number to ${{ steps.version-check.outputs.latest_version }}
+            5. Keep the Template Source reference up-to-date
+            6. Ensure no custom content is lost during the merge
+            7. REMOVE any duplicate content from [CUSTOMIZE] sections that already exists in the standard template
+            \`\`\`
 
-            ---
-            *This issue was automatically created by the template version check workflow.*`;
+            ## Reference Templates
+
+            - **Latest Template**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/template.md
+            - **Update Template**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/templates/automated-template-update.md
+            - **Version Check Action**: https://raw.githubusercontent.com/DrozmotiX/ioBroker-Copilot-Instructions/main/templates/ghAction-AutomatedVersionCheckAndUpdate.yml`;
 
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: title,
               body: body,
-              labels: ['copilot-update', 'automation', 'template-update']
+              labels: ['template-update', 'automation']
             });
+            
+      - name: Summary
+        run: |
+          echo "🎯 Template Version Check Complete"
+          echo "   Current: ${{ steps.version-check.outputs.current_version }}"
+          echo "   Latest: ${{ steps.version-check.outputs.latest_version }}" 
+          echo "   Setup needed: ${{ steps.version-check.outputs.setup_needed }}"
+          echo "   Update needed: ${{ steps.version-check.outputs.update_needed }}"
+          echo "   Existing issues: ${{ steps.issue-check.outputs.existing_count }}"
