@@ -1,7 +1,7 @@
 "use strict";
 const utils = require('@iobroker/adapter-core');
-let https = require('https');
-let querystring = require('querystring');
+let https = require('node:https');
+let querystring = require('node:querystring');
 let adapter, sesId, userAgentId, header, data = '', flag_subscribe = false, reload_data, reAuth_TimeOut, timePool = 10000;
 let control_action = {
     'valet':           {val: false, name: "Режим валет", role: "command", type: "boolean", read: false, write: true},
