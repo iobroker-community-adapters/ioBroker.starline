@@ -54,6 +54,8 @@ The adapter makes it possible to receive vehicle status data via the StarLine te
 * (instalator) fixed auth
 * (instalator) added support admin3
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
 The MIT License (MIT)
 
